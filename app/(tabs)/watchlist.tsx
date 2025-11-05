@@ -4,32 +4,30 @@
 // ============================================
 
 import EmptyState from '@/components/common/EmptyState';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
 import StockCard from '@/components/common/StockCard';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import {
-  addStockToWatchlist,
-  createWatchlist,
-  deleteWatchlist,
-  removeStockFromWatchlist,
-  setActiveWatchlist,
-  updateWatchlist,
+    createWatchlist,
+    deleteWatchlist,
+    removeStockFromWatchlist,
+    setActiveWatchlist,
+    updateWatchlist
 } from '@/src/store/slices/watchlistSlice';
 import type { Stock, Watchlist } from '@/src/types';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-  Alert,
-  FlatList,
-  Modal,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
+    Alert,
+    FlatList,
+    Modal,
+    Platform,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 
 export default function WatchlistScreen() {

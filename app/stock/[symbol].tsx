@@ -7,19 +7,19 @@ import EmptyState from '@/components/common/EmptyState';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import { addStockToWatchlist, removeStockFromWatchlist } from '@/src/store/slices/watchlistSlice';
-import type { Stock, Watchlist } from '@/src/types';
+import type { Stock } from '@/src/types';
 import { formatCurrency, formatLargeNumber, formatPercent, getProfitColor } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-  Platform,
-  SafeAreaView,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    Platform,
+    SafeAreaView,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 
 type TimeRange = '1D' | '1W' | '1M' | '3M' | '1Y' | 'ALL';

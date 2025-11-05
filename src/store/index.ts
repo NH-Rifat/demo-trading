@@ -6,10 +6,10 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice';
 import marketReducer from './slices/marketSlice';
-import portfolioReducer from './slices/portfolioSlice';
 import ordersReducer from './slices/ordersSlice';
-import watchlistReducer from './slices/watchlistSlice';
+import portfolioReducer from './slices/portfolioSlice';
 import transactionsReducer from './slices/transactionsSlice';
+import watchlistReducer from './slices/watchlistSlice';
 
 export const store = configureStore({
   reducer: {
@@ -25,8 +25,17 @@ export const store = configureStore({
       serializableCheck: {
         // Ignore these action types
         ignoredActions: ['market/updatePrices'],
-        // Ignore these paths in the state
-        ignoredPaths: ['market.stocks', 'portfolio.positions'],
+        // Ignore these field paths in all actions
+        ignoredActionPaths: ['payload.timestamp', 'meta.arg', 'meta.baseQueryMeta'],
+        // Ignore these paths in the state (Date objects)
+        ignoredPaths: [
+          'market.stocks',
+          'portfolio.portfolio.positions',
+          'portfolio.positions',
+          'orders.orders',
+          'watchlist.watchlists',
+          'transactions.transactions',
+        ],
       },
     }),
 });

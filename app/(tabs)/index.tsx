@@ -3,30 +3,32 @@
 // Features: Real-time stock list, category filters, search, pull-to-refresh
 // ============================================
 
-import React, { useState, useEffect, useCallback } from 'react';
+import CategoryFilter from '@/components/common/CategoryFilter';
+import EmptyState from '@/components/common/EmptyState';
+import LoadingSpinner from '@/components/common/LoadingSpinner';
+import SearchBar from '@/components/common/SearchBar';
+import StockCard from '@/components/common/StockCard';
+import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
+import { updatePrices } from '@/src/store/slices/marketSlice';
+import type { MarketCategory, Stock } from '@/src/types';
+import { Ionicons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
+import React, { useCallback, useEffect, useState } from 'react';
 import {
-  View,
-  Text,
   FlatList,
+  Platform,
   RefreshControl,
   StyleSheet,
-  Platform,
+  Text,
   TouchableOpacity,
+  View,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import { useAppSelector, useAppDispatch } from '@/src/store/hooks';
-import { updatePrices } from '@/src/store/slices/marketSlice';
-import StockCard from '@/components/common/StockCard';
-import CategoryFilter from '@/components/common/CategoryFilter';
-import SearchBar from '@/components/common/SearchBar';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
-import EmptyState from '@/components/common/EmptyState';
-import type { Stock, MarketCategory } from '@/src/types';
 
 export default function MarketScreen() {
+  const router = useRouter();
   const dispatch = useAppDispatch();
   const stocks = useAppSelector((state) => state.market.stocks);
-  const watchlistItems = useAppSelector((state) => state.watchlist.items);
+  const watchlistItems = useAppSelector((state) => state.watchlist.watchlists);
   
   const [selectedCategory, setSelectedCategory] = useState<MarketCategory>('GAINER');
   const [searchQuery, setSearchQuery] = useState('');
@@ -116,9 +118,7 @@ export default function MarketScreen() {
 
   // Handle stock card press (navigate to detail screen - to be implemented)
   const handleStockPress = (stock: Stock) => {
-    console.log('Stock pressed:', stock.symbol);
-    // TODO: Navigate to stock detail screen
-    // router.push(`/stock/${stock.symbol}`);
+    router.push(`/stock/${stock.symbol}`);
   };
 
   // Handle watchlist toggle

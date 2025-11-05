@@ -3,7 +3,7 @@
 // ============================================
 
 import React from 'react';
-import { View, ActivityIndicator, Text, StyleSheet } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
 interface LoadingSpinnerProps {
   size?: 'small' | 'large';

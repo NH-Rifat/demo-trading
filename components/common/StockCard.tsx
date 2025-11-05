@@ -2,11 +2,11 @@
 // STOCK CARD - Reusable Stock Display Card
 // ============================================
 
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { Stock } from '@/src/types';
 import { formatCurrency, formatPercent, getProfitColor } from '@/src/utils/helpers';
+import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface StockCardProps {
   stock: Stock;

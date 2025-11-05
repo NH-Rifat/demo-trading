@@ -3,8 +3,8 @@
 // ============================================
 
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Stock, MarketCategory } from '../../types';
 import { MOCK_STOCKS } from '../../data/mockStocks';
+import { MarketCategory, Stock } from '../../types';
 
 interface MarketState {
   stocks: Stock[];

@@ -2,15 +2,15 @@
 // SEARCH BAR - Stock Search Component
 // ============================================
 
+import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import {
-  View,
-  TextInput,
-  StyleSheet,
-  TouchableOpacity,
-  Platform,
+    Platform,
+    StyleSheet,
+    TextInput,
+    TouchableOpacity,
+    View,
 } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 
 interface SearchBarProps {
   value: string;

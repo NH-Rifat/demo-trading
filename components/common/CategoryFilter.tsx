@@ -2,10 +2,10 @@
 // CATEGORY FILTER - Market Category Tabs
 // ============================================
 
-import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
 import { MarketCategory } from '@/src/types';
+import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 interface CategoryFilterProps {
   selected: MarketCategory;

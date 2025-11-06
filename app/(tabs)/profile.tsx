@@ -18,10 +18,9 @@ import {
 } from 'react-native';
 
 export default function ProfileScreen() {
-  const user = useAppSelector((state) => state.auth.user);
-  const portfolio = useAppSelector((state) => state.portfolio.portfolio);
-  const orders = useAppSelector((state) => state.orders.orders);
-  const transactions = useAppSelector((state) => state.transactions.transactions);
+  const user = useAppSelector((state: any) => state.auth.user);
+  const portfolio = useAppSelector((state: any) => state.portfolio.portfolio);
+  const orders = useAppSelector((state: any) => state.orders.orders);
 
   const handleLogout = () => {
     Alert.alert(
@@ -60,7 +59,6 @@ export default function ProfileScreen() {
     (o: any) => o.status === 'PENDING' || o.status === 'PROCESSING'
   ).length;
   const completedOrders = orders.filter((o: any) => o.status === 'COMPLETED').length;
-  const totalTransactions = transactions.length;
 
   return (
     <View style={styles.container}>

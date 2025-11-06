@@ -29,9 +29,9 @@ type OrderType = 'MARKET' | 'LIMIT';
 
 export default function TradeScreen() {
   const dispatch = useAppDispatch();
-  const stocks = useAppSelector((state) => state.market.stocks);
-  const portfolio = useAppSelector((state) => state.portfolio.portfolio);
-  const user = useAppSelector((state) => state.auth.user);
+  const stocks = useAppSelector((state: any) => state.market.stocks);
+  const portfolio = useAppSelector((state: any) => state.portfolio.portfolio);
+  const user = useAppSelector((state: any) => state.auth.user);
 
   const [tradeType, setTradeType] = useState<TradeType>('BUY');
   const [selectedStock, setSelectedStock] = useState<Stock | null>(null);

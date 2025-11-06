@@ -8,3 +8,6 @@ import type { AppDispatch, RootState } from './index';
 // Use throughout your app instead of plain `useDispatch` and `useSelector`
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
+
+// Export RootState type for use in components
+export type { RootState } from './index';

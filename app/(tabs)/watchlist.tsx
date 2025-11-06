@@ -34,9 +34,9 @@ export default function WatchlistScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
 
-  const watchlists = useAppSelector((state) => state.watchlist.watchlists);
-  const activeWatchlistId = useAppSelector((state) => state.watchlist.activeWatchlistId);
-  const stocks = useAppSelector((state) => state.market.stocks);
+  const watchlists = useAppSelector((state: any) => state.watchlist.watchlists);
+  const activeWatchlistId = useAppSelector((state: any) => state.watchlist.activeWatchlistId);
+  const stocks = useAppSelector((state: any) => state.market.stocks);
 
   const [isCreateModalVisible, setIsCreateModalVisible] = useState(false);
   const [isEditModalVisible, setIsEditModalVisible] = useState(false);
@@ -50,7 +50,7 @@ export default function WatchlistScreen() {
   const watchlistStocks = activeWatchlist
     ? activeWatchlist.stocks
         .map((stockId: string) => stocks.find((s: Stock) => s.id === stockId))
-        .filter((s): s is Stock => s !== undefined)
+        .filter((s: any): s is Stock => s !== undefined)
     : [];
 
   // Handle create watchlist

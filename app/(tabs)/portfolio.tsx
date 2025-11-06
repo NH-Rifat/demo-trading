@@ -11,19 +11,19 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useMemo } from 'react';
 import {
-  FlatList,
-  Platform,
-  RefreshControl,
-  ScrollView,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
+    FlatList,
+    Platform,
+    RefreshControl,
+    ScrollView,
+    StyleSheet,
+    Text,
+    TouchableOpacity,
+    View,
 } from 'react-native';
 
 export default function PortfolioScreen() {
-  const portfolio = useAppSelector((state) => state.portfolio.portfolio);
-  const stocks = useAppSelector((state) => state.market.stocks);
+  const portfolio = useAppSelector((state: any) => state.portfolio.portfolio);
+  const stocks = useAppSelector((state: any) => state.market.stocks);
   const [refreshing, setRefreshing] = React.useState(false);
 
   // Calculate total portfolio value with current prices

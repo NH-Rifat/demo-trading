@@ -29,8 +29,8 @@ export default function StockDetailScreen() {
   const { symbol } = useLocalSearchParams<{ symbol: string }>();
   const dispatch = useAppDispatch();
 
-  const stocks = useAppSelector((state) => state.market.stocks);
-  const watchlistItems = useAppSelector((state) => state.watchlist.watchlists);
+  const stocks = useAppSelector((state: any) => state.market.stocks);
+  const watchlistItems = useAppSelector((state: any) => state.watchlist.watchlists);
 
   const [selectedRange, setSelectedRange] = useState<TimeRange>('1D');
   const [isLoading, setIsLoading] = useState(true);

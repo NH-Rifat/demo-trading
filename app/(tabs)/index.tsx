@@ -27,8 +27,8 @@ import {
 export default function MarketScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const stocks = useAppSelector((state) => state.market.stocks);
-  const watchlistItems = useAppSelector((state) => state.watchlist.watchlists);
+  const stocks = useAppSelector((state: any) => state.market.stocks);
+  const watchlistItems = useAppSelector((state: any) => state.watchlist.watchlists);
   
   const [selectedCategory, setSelectedCategory] = useState<MarketCategory>('GAINER');
   const [searchQuery, setSearchQuery] = useState('');

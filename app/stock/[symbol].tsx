@@ -3,11 +3,14 @@
 // Features: Price chart, company info, buy/sell buttons, technical indicators
 // ============================================
 
+import CandlestickChart from '@/components/charts/CandlestickChart';
+import VolumeChart from '@/components/charts/VolumeChart';
 import EmptyState from '@/components/common/EmptyState';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import { addStockToWatchlist, removeStockFromWatchlist } from '@/src/store/slices/watchlistSlice';
 import type { Stock } from '@/src/types';
+import { generateVolumeData, getChartDataForRange } from '@/src/utils/chartDataGenerator';
 import { formatCurrency, formatLargeNumber, formatPercent, getProfitColor } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -37,6 +40,10 @@ export default function StockDetailScreen() {
 
   // Find the stock by symbol
   const stock = stocks.find((s: Stock) => s.symbol === symbol);
+
+  // Generate chart data based on stock price
+  const candleData = stock ? getChartDataForRange(stock.price, selectedRange) : [];
+  const volumeData = generateVolumeData(candleData);
 
   // Check if stock is in any watchlist
   const isInWatchlist = watchlistItems.some((item: any) =>
@@ -182,17 +189,14 @@ export default function StockDetailScreen() {
           </ScrollView>
         </View>
 
-        {/* Chart Placeholder */}
+        {/* Price Chart */}
         <View style={styles.chartSection}>
-          <View style={styles.chartPlaceholder}>
-            <Ionicons name="trending-up" size={48} color="#d1d5db" />
-            <Text style={styles.chartPlaceholderText}>
-              Chart coming soon
-            </Text>
-            <Text style={styles.chartPlaceholderSubtext}>
-              {selectedRange} view
-            </Text>
-          </View>
+          <CandlestickChart data={candleData} height={280} />
+        </View>
+
+        {/* Volume Chart */}
+        <View style={styles.chartSection}>
+          <VolumeChart data={volumeData} height={180} />
         </View>
 
         {/* Key Statistics */}

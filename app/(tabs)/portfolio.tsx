@@ -3,23 +3,43 @@
 // Features: Holdings list, total P&L, performance metrics, diversification
 // ============================================
 
+import PerformanceChart from '@/components/charts/PerformanceChart';
+import PieChart from '@/components/charts/PieChart';
 import EmptyState from '@/components/common/EmptyState';
 import { useAppSelector } from '@/src/store/hooks';
 import type { Position } from '@/src/types';
+import { generatePerformanceData } from '@/src/utils/chartDataGenerator';
 import { formatCurrency, formatPercent, getProfitColor } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useMemo } from 'react';
 import {
-    FlatList,
-    Platform,
-    RefreshControl,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  FlatList,
+  Platform,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+
+// Helper function to get sector colors
+function getSectorColor(sector: string): string {
+  const colors: { [key: string]: string } = {
+    Technology: '#3b82f6',
+    Healthcare: '#10b981',
+    Finance: '#8b5cf6',
+    'Consumer Goods': '#f59e0b',
+    Energy: '#ef4444',
+    Telecommunications: '#06b6d4',
+    Industrials: '#f97316',
+    Materials: '#14b8a6',
+    'Real Estate': '#ec4899',
+    Utilities: '#6366f1',
+  };
+  return colors[sector] || '#6b7280';
+}
 
 export default function PortfolioScreen() {
   const portfolio = useAppSelector((state: any) => state.portfolio.portfolio);
@@ -107,6 +127,20 @@ export default function PortfolioScreen() {
       }))
       .sort((a, b) => b.value - a.value);
   }, [positionsWithCurrentData, stocks, portfolioValue.currentValue]);
+
+  // Generate performance data for chart
+  const performanceData = useMemo(() => {
+    return generatePerformanceData(portfolioValue.totalInvested, 30);
+  }, [portfolioValue.totalInvested]);
+
+  // Prepare sector data for pie chart
+  const sectorPieData = useMemo(() => {
+    return sectorAllocation.map((item) => ({
+      label: item.sector,
+      value: item.value,
+      color: getSectorColor(item.sector),
+    }));
+  }, [sectorAllocation]);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -310,6 +344,14 @@ export default function PortfolioScreen() {
           </View>
         </View>
 
+        {/* Portfolio Performance Chart */}
+        <PerformanceChart
+          data={performanceData}
+          height={220}
+          title="Portfolio Performance"
+          color="#10b981"
+        />
+
         {/* Holdings Section */}
         <View style={styles.section}>
           <View style={styles.sectionHeader}>
@@ -331,6 +373,13 @@ export default function PortfolioScreen() {
             <Text style={styles.sectionTitle}>Sector Allocation</Text>
             <Ionicons name="pie-chart-outline" size={20} color="#6b7280" />
           </View>
+
+          {/* Sector Pie Chart */}
+          {sectorPieData.length > 0 && (
+            <PieChart data={sectorPieData} size={220} />
+          )}
+
+          {/* Sector Details List */}
           <FlatList
             data={sectorAllocation}
             keyExtractor={(item) => item.sector}
@@ -344,21 +393,6 @@ export default function PortfolioScreen() {
       </ScrollView>
     </View>
   );
-}
-
-// Helper function to get sector colors
-function getSectorColor(sector: string): string {
-  const colors: { [key: string]: string } = {
-    Technology: '#3b82f6',
-    Healthcare: '#10b981',
-    Finance: '#8b5cf6',
-    'Consumer Goods': '#f59e0b',
-    Energy: '#ef4444',
-    Telecommunications: '#06b6d4',
-    Automotive: '#6366f1',
-    Semiconductors: '#ec4899',
-  };
-  return colors[sector] || '#6b7280';
 }
 
 const styles = StyleSheet.create({

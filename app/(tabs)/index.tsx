@@ -3,6 +3,7 @@
 // Features: Real-time stock list, category filters, search, pull-to-refresh
 // ============================================
 
+import MarketOverview from '@/components/charts/MarketOverview';
 import CategoryFilter from '@/components/common/CategoryFilter';
 import EmptyState from '@/components/common/EmptyState';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
@@ -13,7 +14,7 @@ import { updatePrices } from '@/src/store/slices/marketSlice';
 import type { MarketCategory, Stock } from '@/src/types';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {
   FlatList,
   Platform,
@@ -34,6 +35,18 @@ export default function MarketScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [refreshing, setRefreshing] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+
+  // Calculate market stats
+  const marketStats = useMemo(() => {
+    const gainers = stocks.filter((s: Stock) => s.changePercent > 0).length;
+    const losers = stocks.filter((s: Stock) => s.changePercent < 0).length;
+    const unchanged = stocks.filter((s: Stock) => s.changePercent === 0).length;
+    const totalChange = stocks.reduce((sum: number, s: Stock) => sum + s.changePercent, 0);
+    const avgChange = totalChange / stocks.length;
+    const marketTrend = avgChange > 0.5 ? 'up' : avgChange < -0.5 ? 'down' : 'neutral';
+
+    return { gainers, losers, unchanged, marketTrend };
+  }, [stocks]);
 
   // Initial loading simulation
   useEffect(() => {
@@ -138,30 +151,13 @@ export default function MarketScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* Market Summary Stats */}
-      <View style={styles.statsContainer}>
-        <View style={styles.statBox}>
-          <Ionicons name="trending-up" size={20} color="#10b981" />
-          <Text style={styles.statLabel}>Gainers</Text>
-          <Text style={styles.statValue}>
-            {stocks.filter((s: Stock) => s.changePercent > 0).length}
-          </Text>
-        </View>
-        <View style={styles.statBox}>
-          <Ionicons name="trending-down" size={20} color="#ef4444" />
-          <Text style={styles.statLabel}>Losers</Text>
-          <Text style={styles.statValue}>
-            {stocks.filter((s: Stock) => s.changePercent < 0).length}
-          </Text>
-        </View>
-        <View style={styles.statBox}>
-          <Ionicons name="remove" size={20} color="#6b7280" />
-          <Text style={styles.statLabel}>Unchanged</Text>
-          <Text style={styles.statValue}>
-            {stocks.filter((s: Stock) => s.changePercent === 0).length}
-          </Text>
-        </View>
-      </View>
+      {/* Market Overview Chart */}
+      <MarketOverview
+        topGainers={marketStats.gainers}
+        topLosers={marketStats.losers}
+        unchanged={marketStats.unchanged}
+        marketTrend={marketStats.marketTrend as 'up' | 'down' | 'neutral'}
+      />
 
       {/* Search Bar */}
       <SearchBar

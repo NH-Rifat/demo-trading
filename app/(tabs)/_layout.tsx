@@ -74,13 +74,6 @@ export default function TabLayout() {
           ),
         }}
       />
-      {/* Hide old screens */}
-      <Tabs.Screen
-        name="explore"
-        options={{
-          href: null, // Hide from tabs
-        }}
-      />
     </Tabs>
   );
 }

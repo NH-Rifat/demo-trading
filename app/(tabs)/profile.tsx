@@ -3,9 +3,11 @@
 // Features: User info, account balance, orders, transactions, settings
 // ============================================
 
-import { useAppSelector } from '@/src/store/hooks';
+import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
+import { logout } from '@/src/store/slices/authSlice';
 import { formatCurrency } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
+import { router } from 'expo-router';
 import React from 'react';
 import {
     Alert,
@@ -18,6 +20,7 @@ import {
 } from 'react-native';
 
 export default function ProfileScreen() {
+  const dispatch = useAppDispatch();
   const user = useAppSelector((state: any) => state.auth.user);
   const portfolio = useAppSelector((state: any) => state.portfolio.portfolio);
   const orders = useAppSelector((state: any) => state.orders.orders);
@@ -32,8 +35,10 @@ export default function ProfileScreen() {
           text: 'Logout',
           style: 'destructive',
           onPress: () => {
-            // Handle logout logic
-            Alert.alert('Success', 'Logged out successfully');
+            // Dispatch logout action
+            dispatch(logout());
+            // Navigate to login screen
+            router.replace('/login');
           },
         },
       ]

@@ -12,15 +12,8 @@ interface AuthState {
 }
 
 const initialState: AuthState = {
-  user: {
-    id: 'USER001',
-    name: 'Demo User',
-    email: 'demo@xperttrading.com',
-    accountNumber: 'XT-2025-001234',
-    balance: 50000.00,
-    isAuthenticated: true,
-  },
-  isAuthenticated: true, // Auto-login for demo
+  user: null,
+  isAuthenticated: false, // Require login
   isLoading: false,
 };
 

@@ -1,18 +1,30 @@
 import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
+import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import { useEffect } from 'react';
 import 'react-native-reanimated';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { store } from '@/src/store';
 
-export const unstable_settings = {
-  initialRouteName: 'login',
-};
-
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
+  const router = useRouter();
+  const segments = useSegments();
+  const isAuthenticated = useSelector((state: any) => state.auth.isAuthenticated);
+
+  useEffect(() => {
+    const inAuthGroup = segments[0] === '(tabs)';
+
+    if (!isAuthenticated && inAuthGroup) {
+      // Redirect to login if not authenticated and trying to access protected routes
+      router.replace('/login');
+    } else if (isAuthenticated && segments[0] === 'login') {
+      // Redirect to tabs if authenticated and on login screen
+      router.replace('/(tabs)');
+    }
+  }, [isAuthenticated, segments, router]);
 
   return (
     <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>

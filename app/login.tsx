@@ -3,11 +3,11 @@
 // Features: Email/password login, validation, demo credentials
 // ============================================
 
-import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
+import { useAppDispatch } from '@/src/store/hooks';
 import { login } from '@/src/store/slices/authSlice';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import {
     Alert,
     KeyboardAvoidingView,
@@ -26,20 +26,12 @@ const DEMO_PASSWORD = 'demo123';
 
 export default function LoginScreen() {
   const dispatch = useAppDispatch();
-  const isAuthenticated = useAppSelector((state: any) => state.auth.isAuthenticated);
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({ email: '', password: '' });
-
-  // Redirect if already authenticated
-  useEffect(() => {
-    if (isAuthenticated) {
-      router.replace('/(tabs)');
-    }
-  }, [isAuthenticated]);
 
   // Auto-fill demo credentials
   const handleFillDemo = () => {

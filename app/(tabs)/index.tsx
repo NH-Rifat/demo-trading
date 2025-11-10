@@ -24,10 +24,12 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function MarketScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const insets = useSafeAreaInsets();
   const stocks = useAppSelector((state: any) => state.market.stocks);
   const watchlistItems = useAppSelector((state: any) => state.watchlist.watchlists);
   
@@ -180,7 +182,7 @@ export default function MarketScreen() {
   }
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, { paddingTop: insets.top }]}>
       <FlatList
         data={filteredStocks}
         keyExtractor={(item) => item.id}

@@ -2,6 +2,7 @@ import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import 'react-native-reanimated';
 import { Provider, useSelector } from 'react-redux';
 
@@ -34,15 +35,17 @@ function RootLayoutNav() {
         <Stack.Screen name="stock/[symbol]" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
       </Stack>
-      <StatusBar style="auto" />
+      <StatusBar style="dark" translucent backgroundColor="transparent" />
     </ThemeProvider>
   );
 }
 
 export default function RootLayout() {
   return (
-    <Provider store={store}>
-      <RootLayoutNav />
-    </Provider>
+    <SafeAreaProvider>
+      <Provider store={store}>
+        <RootLayoutNav />
+      </Provider>
+    </SafeAreaProvider>
   );
 }

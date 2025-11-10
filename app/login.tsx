@@ -19,6 +19,7 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Demo credentials
 const DEMO_EMAIL = 'demo@xperttrading.com';
@@ -26,6 +27,7 @@ const DEMO_PASSWORD = 'demo123';
 
 export default function LoginScreen() {
   const dispatch = useAppDispatch();
+  const insets = useSafeAreaInsets();
   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -89,7 +91,7 @@ export default function LoginScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={styles.container}
+      style={[styles.container, { paddingTop: insets.top }]}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView

@@ -25,12 +25,40 @@ export default function MarketScreen() {
   const [refreshing, setRefreshing] = useState(false);
   const [selectedExchange, setSelectedExchange] = useState<'DSE' | 'CSE'>('DSE');
   const [selectedTab, setSelectedTab] = useState<'gainer' | 'loser' | 'trade' | 'value' | 'volume'>('gainer');
+  const [showAllSectors, setShowAllSectors] = useState(false);
+
+  // Top Invested Sectors Data - Initial data
+  const initialSectorsData = [
+    { name: 'Engineering', value: 24.75, color: '#ef4444', maxValue: 25 },
+    { name: 'PharmaChem', value: 23.23, color: '#10b981', maxValue: 25 },
+    { name: 'FuelPower', value: 14.74, color: '#f59e0b', maxValue: 25 },
+    { name: 'Bank', value: 13.4, color: '#84cc16', maxValue: 25 },
+    { name: 'Textile', value: 11.58, color: '#3b82f6', maxValue: 25 },
+    { name: 'Insurance', value: 11.27, color: '#b96991ff', maxValue: 25 },
+    { name: 'PaperPrint', value: 9.24, color: '#14b8a6', maxValue: 25 },
+    { name: 'Misc', value: 7.12, color: '#f97316', maxValue: 25 },
+    { name: 'ServRealEst', value: 6.72, color: '#8b5cf6', maxValue: 25 },
+    { name: 'FoodAllied', value: 6.02, color: '#ef4444', maxValue: 25 },
+    { name: 'Financial In', value: 3.33, color: '#3b82f6', maxValue: 25 },
+    { name: 'IT', value: 3.31, color: '#ec4899', maxValue: 25 },
+    { name: 'Telecom', value: 2.74, color: '#c084fc', maxValue: 25 },
+    { name: 'Jute', value: 2.3, color: '#14b8a6', maxValue: 25 },
+    { name: 'TravelLeisur', value: 2.21, color: '#ef4444', maxValue: 25 },
+    { name: 'MutFund', value: 2.2, color: '#f59e0b', maxValue: 25 },
+    { name: 'Ceramic', value: 72.74, color: '#10b981', maxValue: 150 },
+    { name: 'Tannery', value: 54.08, color: '#ef4444', maxValue: 150 },
+    { name: 'Cement', value: 46.54, color: '#14b8a6', maxValue: 150 },
+    { name: 'CorpBond', value: 8.81, color: '#6b7280', maxValue: 150 },
+  ];
+
+  // State for sectors with real-time updates
+  const [topSectorsData, setTopSectorsData] = useState(initialSectorsData);
 
   // Featured Lists Data
   const featuredListsData = {
     gainer: [
       { symbol: 'POWERGRID', price: 31.9, change: 3.7, changePercent: 13.1, hasChart: true },
-      { symbol: 'UTTARAFIN', price: 11.1, change: 0.7, changePercent: 6.7, hasChart: false },
+      { symbol: 'UTTARAFIN', price: 11.1, change: 0.7, changePercent: 6.7, hasChart: true },
       { symbol: 'ORIONINFU', price: 393.4, change: 18.5, changePercent: 4.9, hasChart: true },
       { symbol: 'PRIMETEX', price: 12.7, change: 0.5, changePercent: 4.1, hasChart: true },
       { symbol: '1JANATAMF', price: 2.7, change: 0.1, changePercent: 3.9, hasChart: true },
@@ -38,27 +66,27 @@ export default function MarketScreen() {
     loser: [
       { symbol: 'BEACHHATCH', price: 28.5, change: -4.2, changePercent: -12.8, hasChart: true },
       { symbol: 'CENTRALINS', price: 45.3, change: -3.8, changePercent: -7.7, hasChart: true },
-      { symbol: 'PARAMOUNT', price: 8.6, change: -0.6, changePercent: -6.5, hasChart: false },
+      { symbol: 'PARAMOUNT', price: 8.6, change: -0.6, changePercent: -6.5, hasChart: true },
       { symbol: 'LEGACYFOOT', price: 15.2, change: -0.8, changePercent: -5.0, hasChart: true },
       { symbol: 'PHOENIX', price: 102.7, change: -4.5, changePercent: -4.2, hasChart: true },
     ],
     trade: [
       { symbol: 'BATBC', price: 567.8, value: 45670, hasChart: true },
       { symbol: 'SQURPHARMA', price: 234.5, value: 38920, hasChart: true },
-      { symbol: 'BEXIMCO', price: 89.4, value: 32150, hasChart: false },
+      { symbol: 'BEXIMCO', price: 89.4, value: 32150, hasChart: true },
       { symbol: 'CITYBANK', price: 23.6, value: 28730, hasChart: true },
       { symbol: 'GPH', price: 45.8, value: 25480, hasChart: true },
     ],
     value: [
       { symbol: 'GRAMEENPHONE', price: 289.5, value: 156.8, hasChart: true },
       { symbol: 'ROBI', price: 45.7, value: 98.3, hasChart: true },
-      { symbol: 'BRACBANK', price: 42.3, value: 76.5, hasChart: false },
+      { symbol: 'BRACBANK', price: 42.3, value: 76.5, hasChart: true },
       { symbol: 'BRAC', price: 56.9, value: 65.2, hasChart: true },
       { symbol: 'ISLAMIBANK', price: 38.4, value: 54.9, hasChart: true },
     ],
     volume: [
       { symbol: 'BEXIMCO', price: 89.4, value: 8.52, hasChart: true },
-      { symbol: 'PENINSULA', price: 12.3, value: 6.78, hasChart: false },
+      { symbol: 'PENINSULA', price: 12.3, value: 6.78, hasChart: true },
       { symbol: 'ACTIVEFINE', price: 7.8, value: 5.34, hasChart: true },
       { symbol: 'FORTUNE', price: 5.4, value: 4.91, hasChart: true },
       { symbol: 'GENERATION', price: 34.6, value: 4.23, hasChart: true },
@@ -242,6 +270,30 @@ export default function MarketScreen() {
     setRefreshing(false);
   };
 
+  // Real-time continuous sector updates (like live survey)
+  useEffect(() => {
+    const updateInterval = setInterval(() => {
+      setTopSectorsData(prevData => {
+        // Create a copy of the data
+        const updatedData = prevData.map(sector => {
+          // Random value change (±10% of current value)
+          const changePercent = (Math.random() - 0.5) * 0.2; // -10% to +10%
+          const newValue = Math.max(0.1, sector.value * (1 + changePercent));
+          
+          return {
+            ...sector,
+            value: parseFloat(newValue.toFixed(2))
+          };
+        });
+        
+        // Sort by value to create natural position shuffling
+        return updatedData.sort((a, b) => b.value - a.value);
+      });
+    }, 1000); // Update every 2 seconds for smooth real-time effect
+
+    return () => clearInterval(updateInterval);
+  }, []);
+
   const generateMiniChartPath = (isPositive: boolean = true, seed: number = 0) => {
     const points = [];
     const numPoints = 25;
@@ -405,9 +457,9 @@ export default function MarketScreen() {
 
               return (
                 <React.Fragment key={index}>
-                  <Rect x={x} y={150 - negHeight} width={barWidth} height={negHeight} fill="#ef4444" />
-                  <Rect x={x} y={150 - negHeight - ncHeight} width={barWidth} height={ncHeight} fill="#6b7280" />
-                  <Rect x={x} y={150 - negHeight - ncHeight - posHeight} width={barWidth} height={posHeight} fill="#10b981" />
+                  <Rect x={x} y={150 - negHeight} width={barWidth} height={negHeight} fill="#ea6565ff" />
+                  <Rect x={x} y={150 - negHeight - ncHeight} width={barWidth} height={ncHeight} fill="#7b7f87ff" />
+                  <Rect x={x} y={150 - negHeight - ncHeight - posHeight} width={barWidth} height={posHeight} fill="#7dc4acff" />
                   {item.neg > 0 && <SvgText x={x + barWidth / 2} y={150 - negHeight / 2} fontSize="10" fill="#fff" textAnchor="middle">{item.neg}</SvgText>}
                   {item.nc > 0 && <SvgText x={x + barWidth / 2} y={150 - negHeight - ncHeight / 2} fontSize="10" fill="#fff" textAnchor="middle">{item.nc}</SvgText>}
                   {item.pos > 0 && <SvgText x={x + barWidth / 2} y={150 - negHeight - ncHeight - posHeight / 2} fontSize="10" fill="#fff" textAnchor="middle">{item.pos}</SvgText>}
@@ -432,6 +484,8 @@ export default function MarketScreen() {
             </View>
           </View>
         </View>
+
+        
 
         {/* Top Featured Lists */}
         <View style={styles.featuredListsContainer}>
@@ -547,6 +601,63 @@ export default function MarketScreen() {
           </View>
         </View>
 
+        {/* Top Invested Sectors */}
+        <View style={styles.topSectorsContainer}>
+          <View style={styles.sectorHeader}>
+            <Text style={styles.sectorTitle}>Top Invested Sectors</Text>
+            <TouchableOpacity>
+              <Ionicons name="chevron-forward" size={24} color="#111827" />
+            </TouchableOpacity>
+          </View>
+
+          <View style={styles.sectorsList}>
+            {(() => {
+              // Get the sectors to display
+              const displayedSectors = topSectorsData.slice(0, showAllSectors ? topSectorsData.length : 8);
+              // Find the maximum value among displayed sectors for proper bar scaling
+              const maxDisplayedValue = Math.max(...displayedSectors.map(s => s.value));
+              
+              return displayedSectors.map((sector, index) => {
+                // Calculate bar width based on the highest value in the displayed list
+                const barWidth = (sector.value / maxDisplayedValue) * 100;
+                const displayValue = sector.value >= 10 
+                  ? `${sector.value.toFixed(2)}cr` 
+                  : sector.value >= 1 
+                  ? `${sector.value.toFixed(1)}cr`
+                  : sector.value.toLocaleString();
+
+                return (
+                  <View 
+                    key={sector.name} 
+                    style={styles.sectorRow}
+                  >
+                    <Text style={styles.sectorName}>{sector.name}</Text>
+                    <View style={styles.sectorBarContainer}>
+                      <View style={[styles.sectorBar, { width: `${barWidth}%`, backgroundColor: sector.color }]} />
+                    </View>
+                    <Text style={styles.sectorValue}>{displayValue}</Text>
+                  </View>
+                );
+              });
+            })()}
+          </View>
+
+          {/* Show More / Show Less Button */}
+          <TouchableOpacity 
+            style={styles.showMoreButton}
+            onPress={() => setShowAllSectors(!showAllSectors)}
+          >
+            <Text style={styles.showMoreText}>
+              {showAllSectors ? 'Show Less' : 'Show More'}
+            </Text>
+            <Ionicons 
+              name={showAllSectors ? 'chevron-up' : 'chevron-down'} 
+              size={18} 
+              color="#10b981" 
+            />
+          </TouchableOpacity>
+        </View>
+
         <View style={{ height: 100 }} />
       </ScrollView>
     </View>
@@ -598,6 +709,18 @@ const styles = StyleSheet.create({
   legendText: { fontSize: 13, fontWeight: '600', color: '#111827' },
   earningSection: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#ffffff', borderRadius: 12, padding: 20, marginHorizontal: 16, marginTop: 16, ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 }, android: { elevation: 2 } }) },
   earningTitle: { fontSize: 18, fontWeight: '700', color: '#111827' },
+  // Top Invested Sectors
+  topSectorsContainer: { backgroundColor: '#ffffff', borderRadius: 12, padding: 16, marginHorizontal: 16, marginTop: 16, ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 }, android: { elevation: 2 } }) },
+  sectorHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 },
+  sectorTitle: { fontSize: 18, fontWeight: '700', color: '#111827' },
+  sectorsList: { gap: 12 },
+  sectorRow: { flexDirection: 'row', alignItems: 'center', gap: 8 },
+  sectorName: { width: 90, fontSize: 13, fontWeight: '600', color: '#111827', textAlign: 'right' },
+  sectorBarContainer: { flex: 1, height: 20, backgroundColor: '#f3f4f6', borderRadius: 10, overflow: 'hidden' },
+  sectorBar: { height: '100%', borderRadius: 10 },
+  sectorValue: { width: 70, fontSize: 13, fontWeight: '600', color: '#111827', textAlign: 'left' },
+  showMoreButton: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, marginTop: 16, paddingVertical: 8 },
+  showMoreText: { fontSize: 14, fontWeight: '600', color: '#10b981' },
   // Top Featured Lists
   featuredListsContainer: { backgroundColor: '#ffffff', borderRadius: 12, padding: 16, marginHorizontal: 16, marginTop: 16, ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 }, android: { elevation: 2 } }) },
   featuredHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 },
@@ -608,13 +731,13 @@ const styles = StyleSheet.create({
   tabText: { fontSize: 13, fontWeight: '600', color: '#6b7280', fontStyle: 'italic' },
   tabTextActive: { color: '#1d4ed8' },
   stockList: { gap: 0 },
-  stockRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
-  stockLeft: { flex: 1 },
+  stockRow: { flexDirection: 'row', alignItems: 'center', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
+  stockLeft: { width: 100 },
   stockSymbol: { fontSize: 14, fontWeight: '700', color: '#111827', marginBottom: 2 },
   stockPrice: { fontSize: 12, color: '#6b7280' },
-  stockChart: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
+  stockChart: { flex: 1, alignItems: 'center', justifyContent: 'center' },
   chartSvg: { overflow: 'visible' },
-  stockRight: { alignItems: 'flex-end' },
+  stockRight: { width: 80, alignItems: 'flex-end' },
   stockChange: { fontSize: 14, fontWeight: '700', marginBottom: 2 },
   stockChangePercent: { fontSize: 11, fontWeight: '600' },
 });

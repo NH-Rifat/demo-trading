@@ -24,6 +24,7 @@ export default function MarketScreen() {
   const insets = useSafeAreaInsets();
   const [refreshing, setRefreshing] = useState(false);
   const [selectedExchange, setSelectedExchange] = useState<'DSE' | 'CSE'>('DSE');
+  const [selectedTab, setSelectedTab] = useState<'gainer' | 'loser' | 'trade' | 'value' | 'volume'>('gainer');
 
   // Mock data with real-time updates
   const [marketData, setMarketData] = useState({
@@ -43,16 +44,16 @@ export default function MarketScreen() {
       nc: 56,
       pos: 45,
       distribution: [
-        { range: '<-10%', neg: 20, nc: 0, pos: 0 },
+        { range: '<-10%', neg: 20, nc: 0, pos: 6 },
         { range: '-10--7', neg: 35, nc: 0, pos: 0 },
         { range: '-7--5', neg: 87, nc: 0, pos: 0 },
         { range: '-5--2', neg: 138, nc: 0, pos: 0 },
         { range: '-2-0', neg: 56, nc: 0, pos: 0 },
         { range: '0-2%', neg: 32, nc: 56, pos: 12 },
         { range: '2-5%', neg: 11, nc: 0, pos: 32 },
-        { range: '5-7%', neg: 1, nc: 0, pos: 0 },
-        { range: '7-10%', neg: 0, nc: 0, pos: 1 },
-        { range: '>10%', neg: 0, nc: 0, pos: 0 },
+        { range: '5-7%', neg: 4, nc: 0, pos: 25 },
+        { range: '7-10%', neg: 35, nc: 0, pos: 10 },
+        // { range: '>10%', neg: 0, nc: 0, pos: 0 },
       ]
     }
   });
@@ -341,7 +342,9 @@ export default function MarketScreen() {
           <Text style={styles.sectionTitle}>Advance Decline</Text>
           <Svg height="250" width={width - 32}>
             {marketData.advanceDecline.distribution.map((item, index) => {
-              const barWidth = 30;
+              const barWidth = 25
+              
+              ;
               const spacing = (width - 32) / 10;
               const x = index * spacing + (spacing - barWidth) / 2;
               const total = item.neg + item.nc + item.pos;
@@ -358,7 +361,7 @@ export default function MarketScreen() {
                   {item.neg > 0 && <SvgText x={x + barWidth / 2} y={150 - negHeight / 2} fontSize="10" fill="#fff" textAnchor="middle">{item.neg}</SvgText>}
                   {item.nc > 0 && <SvgText x={x + barWidth / 2} y={150 - negHeight - ncHeight / 2} fontSize="10" fill="#fff" textAnchor="middle">{item.nc}</SvgText>}
                   {item.pos > 0 && <SvgText x={x + barWidth / 2} y={150 - negHeight - ncHeight - posHeight / 2} fontSize="10" fill="#fff" textAnchor="middle">{item.pos}</SvgText>}
-                  <SvgText x={x + barWidth / 2} y={170} fontSize="9" fill="#6b7280" textAnchor="middle">{item.range}</SvgText>
+                  <SvgText x={x + barWidth / 2} y={170} fontSize="9" fill="#34363bff" textAnchor="middle">{item.range}</SvgText>
                 </React.Fragment>
               );
             })}
@@ -380,11 +383,85 @@ export default function MarketScreen() {
           </View>
         </View>
 
-        {/* Earning This Week */}
-        <TouchableOpacity style={styles.earningSection}>
-          <Text style={styles.earningTitle}>Earning This Week</Text>
-          <Ionicons name="chevron-forward" size={24} color="#6b7280" />
-        </TouchableOpacity>
+        {/* Top Featured Lists */}
+        <View style={styles.featuredListsContainer}>
+          <View style={styles.featuredHeader}>
+            <Text style={styles.featuredTitle}>Top Featured Lists</Text>
+            <TouchableOpacity>
+              <Ionicons name="chevron-forward" size={24} color="#6b7280" />
+            </TouchableOpacity>
+          </View>
+
+          {/* Tabs */}
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabsContainer}>
+            <TouchableOpacity 
+              style={[styles.tab, selectedTab === 'gainer' && styles.tabActive]}
+              onPress={() => setSelectedTab('gainer')}
+            >
+              <Text style={[styles.tabText, selectedTab === 'gainer' && styles.tabTextActive]}>Top Gainer</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.tab, selectedTab === 'loser' && styles.tabActive]}
+              onPress={() => setSelectedTab('loser')}
+            >
+              <Text style={[styles.tabText, selectedTab === 'loser' && styles.tabTextActive]}>Top Loser</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.tab, selectedTab === 'trade' && styles.tabActive]}
+              onPress={() => setSelectedTab('trade')}
+            >
+              <Text style={[styles.tabText, selectedTab === 'trade' && styles.tabTextActive]}>Top Trade</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.tab, selectedTab === 'value' && styles.tabActive]}
+              onPress={() => setSelectedTab('value')}
+            >
+              <Text style={[styles.tabText, selectedTab === 'value' && styles.tabTextActive]}>Top Value</Text>
+            </TouchableOpacity>
+            <TouchableOpacity 
+              style={[styles.tab, selectedTab === 'volume' && styles.tabActive]}
+              onPress={() => setSelectedTab('volume')}
+            >
+              <Text style={[styles.tabText, selectedTab === 'volume' && styles.tabTextActive]}>Top Volume</Text>
+            </TouchableOpacity>
+          </ScrollView>
+
+          {/* Stock List */}
+          <View style={styles.stockList}>
+            {[
+              { symbol: 'POWERGRID', price: 31.9, change: 3.7, changePercent: 13.1, hasChart: true },
+              { symbol: 'UTTARAFIN', price: 11.1, change: 0.7, changePercent: 6.7, hasChart: false },
+              { symbol: 'ORIONINFU', price: 393.4, change: 18.5, changePercent: 4.9, hasChart: true },
+              { symbol: 'PRIMETEX', price: 12.7, change: 0.5, changePercent: 4.1, hasChart: true },
+              { symbol: '1JANATAMF', price: 2.7, change: 0.1, changePercent: 3.9, hasChart: true },
+            ].map((stock, index) => (
+              <TouchableOpacity key={index} style={styles.stockRow}>
+                <View style={styles.stockLeft}>
+                  <Text style={styles.stockSymbol}>{stock.symbol}</Text>
+                  <Text style={styles.stockPrice}>{stock.price}</Text>
+                </View>
+
+                {stock.hasChart && (
+                  <View style={styles.stockChart}>
+                    <Svg height="40" width="120">
+                      <Polyline 
+                        points={generateMiniChartPath()} 
+                        fill="none" 
+                        stroke="#10b981" 
+                        strokeWidth="2" 
+                      />
+                    </Svg>
+                  </View>
+                )}
+
+                <View style={styles.stockRight}>
+                  <Text style={[styles.stockChange, { color: '#10b981' }]}>{stock.change}</Text>
+                  <Text style={[styles.stockChangePercent, { color: '#10b981' }]}>({stock.changePercent}%)</Text>
+                </View>
+              </TouchableOpacity>
+            ))}
+          </View>
+        </View>
 
         <View style={{ height: 100 }} />
       </ScrollView>
@@ -431,10 +508,28 @@ const styles = StyleSheet.create({
   statType: { fontSize: 9, fontWeight: '600', color: '#6b7280', letterSpacing: 0.5 },
   advanceDeclineContainer: { backgroundColor: '#ffffff', borderRadius: 12, padding: 16, marginHorizontal: 16, marginTop: 16, ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 }, android: { elevation: 2 } }) },
   sectionTitle: { fontSize: 18, fontWeight: '700', color: '#111827', marginBottom: 16 },
-  legend: { flexDirection: 'row', justifyContent: 'center', gap: 24, marginTop: 16 },
+  legend: { flexDirection: 'row', justifyContent: 'center', gap: 4, marginTop: 6 },
   legendItem: { flexDirection: 'row', alignItems: 'center', gap: 6 },
   legendDot: { width: 16, height: 16, borderRadius: 4 },
   legendText: { fontSize: 13, fontWeight: '600', color: '#111827' },
   earningSection: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#ffffff', borderRadius: 12, padding: 20, marginHorizontal: 16, marginTop: 16, ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 }, android: { elevation: 2 } }) },
   earningTitle: { fontSize: 18, fontWeight: '700', color: '#111827' },
+  // Top Featured Lists
+  featuredListsContainer: { backgroundColor: '#ffffff', borderRadius: 12, padding: 16, marginHorizontal: 16, marginTop: 16, ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 }, android: { elevation: 2 } }) },
+  featuredHeader: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 },
+  featuredTitle: { fontSize: 18, fontWeight: '700', color: '#111827' },
+  tabsContainer: { marginBottom: 16 },
+  tab: { paddingHorizontal: 16, paddingVertical: 8, marginRight: 8, backgroundColor: '#f3f4f6', borderRadius: 20 },
+  tabActive: { backgroundColor: '#bfdbfe' },
+  tabText: { fontSize: 13, fontWeight: '600', color: '#6b7280', fontStyle: 'italic' },
+  tabTextActive: { color: '#1d4ed8' },
+  stockList: { gap: 0 },
+  stockRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingVertical: 12, borderBottomWidth: 1, borderBottomColor: '#f3f4f6' },
+  stockLeft: { flex: 1 },
+  stockSymbol: { fontSize: 14, fontWeight: '700', color: '#111827', marginBottom: 2 },
+  stockPrice: { fontSize: 12, color: '#6b7280' },
+  stockChart: { flex: 1, alignItems: 'center' },
+  stockRight: { alignItems: 'flex-end' },
+  stockChange: { fontSize: 14, fontWeight: '700', marginBottom: 2 },
+  stockChangePercent: { fontSize: 11, fontWeight: '600' },
 });

@@ -3,14 +3,16 @@
 // Features: User info, account balance, orders, transactions, settings
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import { logout } from '@/src/store/slices/authSlice';
 import { formatCurrency } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Alert,
+  Modal,
   Platform,
   ScrollView,
   StyleSheet,
@@ -23,6 +25,8 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 export default function ProfileScreen() {
   const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
+  const { theme, themeMode, setThemeMode, colors } = useTheme();
+  const [showThemeModal, setShowThemeModal] = useState(false);
   const user = useAppSelector((state: any) => state.auth.user);
   const portfolio = useAppSelector((state: any) => state.portfolio.portfolio);
   const orders = useAppSelector((state: any) => state.orders.orders);
@@ -192,36 +196,52 @@ export default function ProfileScreen() {
         </View>
 
         <View style={styles.section}>
-          <Text style={styles.sectionTitle}>Settings</Text>
+          <Text style={[styles.sectionTitle, { color: colors.textTertiary }]}>Settings</Text>
           
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity style={[styles.menuItem, { backgroundColor: colors.surface, borderBottomColor: colors.borderLight }]}>
             <View style={styles.menuItemLeft}>
-              <Ionicons name="notifications-outline" size={22} color="#6b7280" />
-              <Text style={styles.menuItemText}>Notifications</Text>
+              <Ionicons name="notifications-outline" size={22} color={colors.textSecondary} />
+              <Text style={[styles.menuItemText, { color: colors.text }]}>Notifications</Text>
             </View>
             <View style={styles.menuItemRight}>
-              <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
+              <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity style={[styles.menuItem, { backgroundColor: colors.surface, borderBottomColor: colors.borderLight }]}>
             <View style={styles.menuItemLeft}>
-              <Ionicons name="shield-checkmark-outline" size={22} color="#6b7280" />
-              <Text style={styles.menuItemText}>Security</Text>
+              <Ionicons name="shield-checkmark-outline" size={22} color={colors.textSecondary} />
+              <Text style={[styles.menuItemText, { color: colors.text }]}>Security</Text>
             </View>
             <View style={styles.menuItemRight}>
-              <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
+              <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.menuItem}>
+          <TouchableOpacity 
+            style={[styles.menuItem, { backgroundColor: colors.surface, borderBottomColor: colors.borderLight }]}
+            onPress={() => setShowThemeModal(true)}
+          >
             <View style={styles.menuItemLeft}>
-              <Ionicons name="language-outline" size={22} color="#6b7280" />
-              <Text style={styles.menuItemText}>Language</Text>
+              <Ionicons name="color-palette-outline" size={22} color={colors.textSecondary} />
+              <Text style={[styles.menuItemText, { color: colors.text }]}>Theme</Text>
             </View>
             <View style={styles.menuItemRight}>
-              <Text style={styles.menuItemValue}>English</Text>
-              <Ionicons name="chevron-forward" size={20} color="#9ca3af" />
+              <Text style={[styles.menuItemValue, { color: colors.textSecondary }]}>
+                {themeMode === 'system' ? 'System' : themeMode === 'light' ? 'Light' : 'Dark'}
+              </Text>
+              <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
+            </View>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.menuItem, { backgroundColor: colors.surface, borderBottomColor: colors.borderLight }]}>
+            <View style={styles.menuItemLeft}>
+              <Ionicons name="language-outline" size={22} color={colors.textSecondary} />
+              <Text style={[styles.menuItemText, { color: colors.text }]}>Language</Text>
+            </View>
+            <View style={styles.menuItemRight}>
+              <Text style={[styles.menuItemValue, { color: colors.textSecondary }]}>English</Text>
+              <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
             </View>
           </TouchableOpacity>
         </View>
@@ -269,6 +289,91 @@ export default function ProfileScreen() {
 
         <View style={{ height: 40 }} />
       </ScrollView>
+
+      {/* Theme Selection Modal */}
+      <Modal
+        visible={showThemeModal}
+        animationType="slide"
+        transparent={true}
+        onRequestClose={() => setShowThemeModal(false)}
+      >
+        <View style={styles.modalOverlay}>
+          <View style={[styles.themeModalContent, { backgroundColor: colors.surface }]}>
+            <View style={styles.themeModalHeader}>
+              <Text style={[styles.themeModalTitle, { color: colors.text }]}>Select Theme</Text>
+              <TouchableOpacity onPress={() => setShowThemeModal(false)}>
+                <Ionicons name="close" size={24} color={colors.textSecondary} />
+              </TouchableOpacity>
+            </View>
+
+            <TouchableOpacity
+              style={[
+                styles.themeOption,
+                { backgroundColor: colors.surfaceSecondary, borderColor: themeMode === 'light' ? colors.primary : 'transparent' }
+              ]}
+              onPress={() => {
+                setThemeMode('light');
+                setShowThemeModal(false);
+              }}
+            >
+              <Ionicons name="sunny" size={24} color={colors.warning} />
+              <View style={styles.themeOptionText}>
+                <Text style={[styles.themeOptionTitle, { color: colors.text }]}>Light</Text>
+                <Text style={[styles.themeOptionDescription, { color: colors.textSecondary }]}>
+                  Always use light theme
+                </Text>
+              </View>
+              {themeMode === 'light' && (
+                <Ionicons name="checkmark-circle" size={24} color={colors.primary} />
+              )}
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.themeOption,
+                { backgroundColor: colors.surfaceSecondary, borderColor: themeMode === 'dark' ? colors.primary : 'transparent' }
+              ]}
+              onPress={() => {
+                setThemeMode('dark');
+                setShowThemeModal(false);
+              }}
+            >
+              <Ionicons name="moon" size={24} color={colors.info} />
+              <View style={styles.themeOptionText}>
+                <Text style={[styles.themeOptionTitle, { color: colors.text }]}>Dark</Text>
+                <Text style={[styles.themeOptionDescription, { color: colors.textSecondary }]}>
+                  Always use dark theme
+                </Text>
+              </View>
+              {themeMode === 'dark' && (
+                <Ionicons name="checkmark-circle" size={24} color={colors.primary} />
+              )}
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[
+                styles.themeOption,
+                { backgroundColor: colors.surfaceSecondary, borderColor: themeMode === 'system' ? colors.primary : 'transparent' }
+              ]}
+              onPress={() => {
+                setThemeMode('system');
+                setShowThemeModal(false);
+              }}
+            >
+              <Ionicons name="phone-portrait" size={24} color={colors.textSecondary} />
+              <View style={styles.themeOptionText}>
+                <Text style={[styles.themeOptionTitle, { color: colors.text }]}>System</Text>
+                <Text style={[styles.themeOptionDescription, { color: colors.textSecondary }]}>
+                  Use device theme settings
+                </Text>
+              </View>
+              {themeMode === 'system' && (
+                <Ionicons name="checkmark-circle" size={24} color={colors.primary} />
+              )}
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </View>
   );
 }
@@ -553,5 +658,56 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '700',
     color: '#ef4444',
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+  themeModalContent: {
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    padding: 24,
+    ...Platform.select({
+      ios: {
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: -4 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 8,
+      },
+    }),
+  },
+  themeModalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 24,
+  },
+  themeModalTitle: {
+    fontSize: 20,
+    fontWeight: '700',
+  },
+  themeOption: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderRadius: 12,
+    marginBottom: 12,
+    borderWidth: 2,
+  },
+  themeOptionText: {
+    flex: 1,
+    marginLeft: 12,
+  },
+  themeOptionTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    marginBottom: 4,
+  },
+  themeOptionDescription: {
+    fontSize: 13,
   },
 });

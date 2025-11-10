@@ -1,4 +1,4 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import { DarkTheme, DefaultTheme, ThemeProvider as NavigationThemeProvider } from '@react-navigation/native';
 import { Stack, useRouter, useSegments } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
@@ -7,6 +7,7 @@ import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Provider, useSelector } from 'react-redux';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { ThemeProvider } from '@/src/contexts/ThemeContext';
 import { store } from '@/src/store';
 
 function RootLayoutNav() {
@@ -28,7 +29,7 @@ function RootLayoutNav() {
   }, [isAuthenticated, segments, router]);
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <NavigationThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -36,7 +37,7 @@ function RootLayoutNav() {
         <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
       </Stack>
       <StatusBar style="dark" translucent backgroundColor="transparent" />
-    </ThemeProvider>
+    </NavigationThemeProvider>
   );
 }
 
@@ -44,7 +45,9 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <Provider store={store}>
-        <RootLayoutNav />
+        <ThemeProvider>
+          <RootLayoutNav />
+        </ThemeProvider>
       </Provider>
     </SafeAreaProvider>
   );

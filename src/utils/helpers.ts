@@ -2,14 +2,12 @@
 // UTILITIES - Helper Functions
 // ============================================
 
-// Format currency with proper symbols
-export const formatCurrency = (amount: number, currency: string = 'USD'): string => {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency,
+// Format currency with Taka symbol (৳)
+export const formatCurrency = (amount: number): string => {
+  return `৳${amount.toLocaleString('en-US', {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
-  }).format(amount);
+  })}`;
 };
 
 // Format large numbers with K, M, B suffixes

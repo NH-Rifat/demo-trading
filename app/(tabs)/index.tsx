@@ -1,312 +1,440 @@
 // ============================================
-// MARKET ANALYSIS SCREEN - Main Trading Dashboard
-// Features: Real-time stock list, category filters, search, pull-to-refresh
+// MARKET DASHBOARD - Home Screen (UFFAST Style)
+// Features: Fixed header, index tickers, market stats, advance decline chart
 // ============================================
 
-import MarketOverview from '@/components/charts/MarketOverview';
-import CategoryFilter from '@/components/common/CategoryFilter';
-import EmptyState from '@/components/common/EmptyState';
-import LoadingSpinner from '@/components/common/LoadingSpinner';
-import SearchBar from '@/components/common/SearchBar';
-import StockCard from '@/components/common/StockCard';
-import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
-import { updatePrices } from '@/src/store/slices/marketSlice';
-import type { MarketCategory, Stock } from '@/src/types';
 import { Ionicons } from '@expo/vector-icons';
-import { useRouter } from 'expo-router';
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
-    FlatList,
-    Platform,
-    RefreshControl,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Dimensions,
+  Platform,
+  RefreshControl,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Svg, { Line, Polyline, Rect, Text as SvgText } from 'react-native-svg';
+
+const { width } = Dimensions.get('window');
 
 export default function MarketScreen() {
-  const router = useRouter();
-  const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
-  const stocks = useAppSelector((state: any) => state.market.stocks);
-  const watchlistItems = useAppSelector((state: any) => state.watchlist.watchlists);
-  
-  const [selectedCategory, setSelectedCategory] = useState<MarketCategory>('GAINER');
-  const [searchQuery, setSearchQuery] = useState('');
   const [refreshing, setRefreshing] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [selectedExchange, setSelectedExchange] = useState<'DSE' | 'CSE'>('DSE');
 
-  // Calculate market stats
-  const marketStats = useMemo(() => {
-    const gainers = stocks.filter((s: Stock) => s.changePercent > 0).length;
-    const losers = stocks.filter((s: Stock) => s.changePercent < 0).length;
-    const unchanged = stocks.filter((s: Stock) => s.changePercent === 0).length;
-    const totalChange = stocks.reduce((sum: number, s: Stock) => sum + s.changePercent, 0);
-    const avgChange = totalChange / stocks.length;
-    const marketTrend = avgChange > 0.5 ? 'up' : avgChange < -0.5 ? 'down' : 'neutral';
+  // Mock data with real-time updates
+  const [marketData, setMarketData] = useState({
+    cashLimit: 2.05,
+    cscx: { value: -12.62, change: -0.69 },
+    dsex: { value: -33.92, change: -0.69 },
+    indices: {
+      dsex: { value: 4866.00, change: -33.92, changePercent: -0.69 },
+      ds30: { value: 1919.48, change: -9.31, changePercent: -0.48 },
+      dses: { value: 1013.62, change: -8.99, changePercent: -0.88 },
+    },
+    turnover: { value: 146.16, percent: 40.17 },
+    volume: { value: 5.49 },
+    trade: { value: 55670, percent: 59.83 },
+    advanceDecline: {
+      neg: 280,
+      nc: 56,
+      pos: 45,
+      distribution: [
+        { range: '<-10%', neg: 20, nc: 0, pos: 0 },
+        { range: '-10--7', neg: 35, nc: 0, pos: 0 },
+        { range: '-7--5', neg: 87, nc: 0, pos: 0 },
+        { range: '-5--2', neg: 138, nc: 0, pos: 0 },
+        { range: '-2-0', neg: 56, nc: 0, pos: 0 },
+        { range: '0-2%', neg: 32, nc: 56, pos: 12 },
+        { range: '2-5%', neg: 11, nc: 0, pos: 32 },
+        { range: '5-7%', neg: 1, nc: 0, pos: 0 },
+        { range: '7-10%', neg: 0, nc: 0, pos: 1 },
+        { range: '>10%', neg: 0, nc: 0, pos: 0 },
+      ]
+    }
+  });
 
-    return { gainers, losers, unchanged, marketTrend };
-  }, [stocks]);
-
-  // Initial loading simulation
+  // Asynchronous real-time data updates - different intervals for each value
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1000);
-    return () => clearTimeout(timer);
+    const randomChange = () => (Math.random() - 0.5) * 1.5;
+
+    // CSCX updates every 300ms
+    const cscxInterval = setInterval(() => {
+      setMarketData(prev => ({
+        ...prev,
+        cscx: {
+          value: prev.cscx.value + randomChange(),
+          change: prev.cscx.value + randomChange(),
+        },
+      }));
+    }, 300);
+
+    // DSEX updates every 500ms
+    const dsexInterval = setInterval(() => {
+      setMarketData(prev => ({
+        ...prev,
+        dsex: {
+          value: prev.dsex.value + randomChange(),
+          change: prev.dsex.value + randomChange(),
+        },
+      }));
+    }, 500);
+
+    // DSEX Index updates every 700ms
+    const dsexIndexInterval = setInterval(() => {
+      setMarketData(prev => ({
+        ...prev,
+        indices: {
+          ...prev.indices,
+          dsex: {
+            value: prev.indices.dsex.value + randomChange() * 2,
+            change: prev.indices.dsex.change + randomChange() * 0.5,
+            changePercent: (prev.indices.dsex.change / prev.indices.dsex.value) * 100,
+          },
+        },
+      }));
+    }, 700);
+
+    // DS30 updates every 450ms
+    const ds30Interval = setInterval(() => {
+      setMarketData(prev => ({
+        ...prev,
+        indices: {
+          ...prev.indices,
+          ds30: {
+            value: prev.indices.ds30.value + randomChange() * 1.5,
+            change: prev.indices.ds30.change + randomChange() * 0.4,
+            changePercent: (prev.indices.ds30.change / prev.indices.ds30.value) * 100,
+          },
+        },
+      }));
+    }, 450);
+
+    // DSES updates every 600ms
+    const dsesInterval = setInterval(() => {
+      setMarketData(prev => ({
+        ...prev,
+        indices: {
+          ...prev.indices,
+          dses: {
+            value: prev.indices.dses.value + randomChange() * 1.2,
+            change: prev.indices.dses.change + randomChange() * 0.3,
+            changePercent: (prev.indices.dses.change / prev.indices.dses.value) * 100,
+          },
+        },
+      }));
+    }, 600);
+
+    // Turnover (value) updates every 600ms
+    const turnoverValueInterval = setInterval(() => {
+      setMarketData(prev => ({
+        ...prev,
+        turnover: {
+          ...prev.turnover,
+          value: Math.max(0, prev.turnover.value + randomChange() * 5),
+        },
+      }));
+    }, 600);
+
+    // BUY PRESSURE (turnover percent) updates every 800ms
+    const buyPressureInterval = setInterval(() => {
+      setMarketData(prev => ({
+        ...prev,
+        turnover: {
+          ...prev.turnover,
+          percent: Math.max(0, Math.min(100, prev.turnover.percent + randomChange() * 2)),
+        },
+      }));
+    }, 800);
+
+    // Volume updates every 600ms
+    const volumeInterval = setInterval(() => {
+      setMarketData(prev => ({
+        ...prev,
+        volume: {
+          value: Math.max(0, prev.volume.value + randomChange() * 0.2),
+        },
+      }));
+    }, 600);
+
+    // Trade (value) updates every 900ms
+    const tradeValueInterval = setInterval(() => {
+      setMarketData(prev => ({
+        ...prev,
+        trade: {
+          ...prev.trade,
+          value: Math.max(0, Math.round(prev.trade.value + randomChange() * 100)),
+        },
+      }));
+    }, 900);
+
+    // SELL PRESSURE (trade percent) updates every 900ms
+    const sellPressureInterval = setInterval(() => {
+      setMarketData(prev => ({
+        ...prev,
+        trade: {
+          ...prev.trade,
+          percent: Math.max(0, Math.min(100, prev.trade.percent + randomChange() * 2)),
+        },
+      }));
+    }, 900);
+
+    return () => {
+      clearInterval(cscxInterval);
+      clearInterval(dsexInterval);
+      clearInterval(dsexIndexInterval);
+      clearInterval(ds30Interval);
+      clearInterval(dsesInterval);
+      clearInterval(turnoverValueInterval);
+      clearInterval(buyPressureInterval);
+      clearInterval(volumeInterval);
+      clearInterval(tradeValueInterval);
+      clearInterval(sellPressureInterval);
+    };
   }, []);
 
-  // Simulate real-time price updates every 5 seconds
-  useEffect(() => {
-    const interval = setInterval(() => {
-      dispatch(updatePrices());
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [dispatch]);
-
-  // Filter stocks by category
-  const getFilteredStocks = useCallback((): Stock[] => {
-    let filtered = [...stocks];
-
-    // Apply category filter
-    switch (selectedCategory) {
-      case 'GAINER':
-        filtered = filtered.filter((s) => s.changePercent > 0);
-        filtered.sort((a, b) => b.changePercent - a.changePercent);
-        break;
-      case 'LOSER':
-        filtered = filtered.filter((s) => s.changePercent < 0);
-        filtered.sort((a, b) => a.changePercent - b.changePercent);
-        break;
-      case 'UNCHANGED':
-        filtered = filtered.filter((s) => s.changePercent === 0);
-        break;
-      case 'MOST_TRADED':
-        filtered.sort((a, b) => b.volume - a.volume);
-        break;
-      case 'MOST_VALUE':
-        filtered.sort((a, b) => b.value - a.value);
-        break;
-    }
-
-    // Apply search filter
-    if (searchQuery.trim()) {
-      const query = searchQuery.toLowerCase();
-      filtered = filtered.filter(
-        (s) =>
-          s.symbol.toLowerCase().includes(query) ||
-          s.name.toLowerCase().includes(query) ||
-          s.sector.toLowerCase().includes(query)
-      );
-    }
-
-    return filtered;
-  }, [stocks, selectedCategory, searchQuery]);
-
-  const filteredStocks = getFilteredStocks();
-
-  // Pull to refresh handler
-  const onRefresh = useCallback(async () => {
+  const onRefresh = async () => {
     setRefreshing(true);
-    // Simulate network delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    // Trigger price updates
-    dispatch(updatePrices());
-    
+    await new Promise(resolve => setTimeout(resolve, 1500));
     setRefreshing(false);
-  }, [dispatch]);
-
-  // Check if stock is in watchlist
-  const isInWatchlist = useCallback(
-    (symbol: string): boolean => {
-      return watchlistItems.some((item: any) => 
-        item.stocks.some((stockId: string) => {
-          const stock = stocks.find((s: Stock) => s.id === stockId);
-          return stock?.symbol === symbol;
-        })
-      );
-    },
-    [watchlistItems, stocks]
-  );
-
-  // Handle stock card press (navigate to detail screen - to be implemented)
-  const handleStockPress = (stock: Stock) => {
-    router.push(`/stock/${stock.symbol}`);
   };
 
-  // Handle watchlist toggle
-  const handleWatchlistToggle = (stock: Stock) => {
-    console.log('Watchlist toggle:', stock.symbol);
-    // TODO: Dispatch add/remove from watchlist action
+  const generateMiniChartPath = () => {
+    const points = [];
+    for (let i = 0; i < 20; i++) {
+      const x = (i * 80) / 20;
+      const y = 40 + Math.sin(i * 0.5) * 15 + 5;
+      points.push(`${x},${y}`);
+    }
+    return points.join(' ');
   };
-
-  // Render header with stats
-  const renderHeader = () => (
-    <View style={styles.header}>
-      <View style={styles.headerTop}>
-        <Text style={styles.headerTitle}>Market Analysis</Text>
-        <TouchableOpacity style={styles.notificationButton}>
-          <Ionicons name="notifications-outline" size={24} color="#111827" />
-          <View style={styles.notificationBadge} />
-        </TouchableOpacity>
-      </View>
-
-      {/* Market Overview Chart */}
-      <MarketOverview
-        topGainers={marketStats.gainers}
-        topLosers={marketStats.losers}
-        unchanged={marketStats.unchanged}
-        marketTrend={marketStats.marketTrend as 'up' | 'down' | 'neutral'}
-      />
-
-      {/* Search Bar */}
-      <SearchBar
-        value={searchQuery}
-        onChangeText={setSearchQuery}
-        placeholder="Search stocks..."
-      />
-
-      {/* Category Filter */}
-      <CategoryFilter
-        selected={selectedCategory}
-        onSelect={setSelectedCategory}
-      />
-    </View>
-  );
-
-  // Loading state
-  if (isLoading) {
-    return <LoadingSpinner message="Loading market data..." />;
-  }
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      <FlatList
-        data={filteredStocks}
-        keyExtractor={(item) => item.id}
-        ListHeaderComponent={renderHeader}
-        renderItem={({ item }) => (
-          <StockCard
-            stock={item}
-            onPress={() => handleStockPress(item)}
-            showStar={true}
-            isInWatchlist={isInWatchlist(item.symbol)}
-            onToggleWatchlist={() => handleWatchlistToggle(item)}
-          />
-        )}
-        ListEmptyComponent={
-          <EmptyState
-            icon="search-outline"
-            title="No stocks found"
-            message={
-              searchQuery
-                ? `No results for "${searchQuery}"`
-                : 'Try selecting a different category'
-            }
-          />
-        }
-        contentContainerStyle={[
-          styles.listContent,
-          filteredStocks.length === 0 && styles.emptyList,
-        ]}
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={onRefresh}
-            tintColor="#10b981"
-            colors={['#10b981']}
-          />
-        }
+      {/* FIXED HEADER - Two Separate Sections */}
+      
+      {/* Top Section with Gray Background */}
+      <View style={styles.headerTopSection}>
+        <View style={styles.headerTop}>
+          {/* Cash Limit */}
+          <View style={styles.cashLimitContainer}>
+            <View style={styles.cashLimitIcon}>
+              <Ionicons name="arrow-up-circle" size={18} color="#10b981" />
+            </View>
+            <Text style={styles.cashLimitLabel}>Cash Limit</Text>
+          </View>
+
+          {/* Divider */}
+          <View style={styles.divider} />
+
+          {/* CSCX Ticker */}
+          <View style={styles.tickerItem}>
+            <Text style={styles.tickerSymbol}>CSCX</Text>
+            <Text style={[styles.tickerValue, { color: '#ef4444' }]}>
+              {marketData.cscx.value.toFixed(2)}
+            </Text>
+          </View>
+
+          {/* Divider */}
+          <View style={styles.divider} />
+
+          {/* DSEX Ticker */}
+          <View style={styles.tickerItem}>
+            <Text style={styles.tickerSymbol}>DSEX</Text>
+            <Text style={[styles.tickerValue, { color: '#ef4444' }]}>
+              {marketData.dsex.value.toFixed(2)}
+            </Text>
+          </View>
+
+          {/* Divider */}
+          <View style={styles.divider} />
+
+          {/* Notification Icon */}
+          <TouchableOpacity style={styles.iconButton}>
+            <Ionicons name="notifications-outline" size={22} color="#111827" />
+            <View style={styles.notificationBadge}>
+              <Text style={styles.badgeText}>9+</Text>
+            </View>
+          </TouchableOpacity>
+
+          {/* Search Icon */}
+          <TouchableOpacity style={styles.iconButton}>
+            <Ionicons name="search-outline" size={22} color="#111827" />
+          </TouchableOpacity>
+        </View>
+      </View>
+
+      {/* Bottom Section with Gray Background - Logo & Exchange Toggle */}
+      <View style={styles.headerBottomSection}>
+        <View style={styles.headerMiddle}>
+          <View style={styles.logoContainer}>
+            <Text style={styles.logoText}>Xpert</Text>
+          </View>
+
+          <View style={styles.exchangeToggle}>
+            <TouchableOpacity
+              style={[styles.exchangeButton, selectedExchange === 'DSE' && styles.exchangeButtonActive]}
+              onPress={() => setSelectedExchange('DSE')}
+            >
+              <Text style={[styles.exchangeButtonText, selectedExchange === 'DSE' && styles.exchangeButtonTextActive]}>
+                DSE
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.exchangeButton, selectedExchange === 'CSE' && styles.exchangeButtonActive]}
+              onPress={() => setSelectedExchange('CSE')}
+            >
+              <Text style={[styles.exchangeButtonText, selectedExchange === 'CSE' && styles.exchangeButtonTextActive]}>
+                CSE
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </View>
+
+      {/* SCROLLABLE CONTENT */}
+      <ScrollView
+        style={styles.scrollContent}
         showsVerticalScrollIndicator={false}
-      />
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#10b981" colors={['#10b981']} />}
+      >
+        {/* Index Cards */}
+        <View style={styles.indicesRow}>
+          {Object.entries(marketData.indices).map(([key, data]) => (
+            <View key={key} style={styles.indexCard}>
+              <Text style={styles.indexSymbol}>{key.toUpperCase()}</Text>
+              <Text style={styles.indexValue}>{data.value.toFixed(2)}</Text>
+              <Svg height="50" width="100%" style={styles.miniChart}>
+                <Polyline points={generateMiniChartPath()} fill="none" stroke="#ef4444" strokeWidth="2" />
+              </Svg>
+              <Text style={[styles.indexChange, { color: '#ef4444' }]}>{data.change.toFixed(2)}</Text>
+              <Text style={[styles.indexChangePercent, { color: '#ef4444' }]}>({data.changePercent.toFixed(2)}%)</Text>
+            </View>
+          ))}
+        </View>
+
+        {/* Market Stats */}
+        <View style={styles.statsRow}>
+          <View style={[styles.statBox, { backgroundColor: '#d1fae5' }]}>
+            <Text style={styles.statValue}>{marketData.turnover.value.toFixed(2)} cr</Text>
+            <Text style={styles.statLabel}>Turnover</Text>
+            <Text style={styles.statPercent}>{marketData.turnover.percent.toFixed(2)}%</Text>
+            <Text style={styles.statType}>BUY PRESSURE</Text>
+          </View>
+          <View style={[styles.statBox, { backgroundColor: '#fecaca' }]}>
+            <Text style={styles.statValue}>{marketData.volume.value.toFixed(2)} cr</Text>
+            <Text style={styles.statLabel}>Volume</Text>
+          </View>
+          <View style={[styles.statBox, { backgroundColor: '#fecaca' }]}>
+            <Text style={styles.statValue}>{marketData.trade.value}</Text>
+            <Text style={styles.statLabel}>Trade</Text>
+            <Text style={styles.statPercent}>{marketData.trade.percent.toFixed(2)}%</Text>
+            <Text style={styles.statType}>SELL PRESSURE</Text>
+          </View>
+        </View>
+
+        {/* Advance Decline Chart */}
+        <View style={styles.advanceDeclineContainer}>
+          <Text style={styles.sectionTitle}>Advance Decline</Text>
+          <Svg height="250" width={width - 32}>
+            {marketData.advanceDecline.distribution.map((item, index) => {
+              const barWidth = 30;
+              const spacing = (width - 32) / 10;
+              const x = index * spacing + (spacing - barWidth) / 2;
+              const total = item.neg + item.nc + item.pos;
+              const scale = total > 0 ? Math.min((total / 150) * 180, 180) : 0;
+              const negHeight = (item.neg / (total || 1)) * scale;
+              const ncHeight = (item.nc / (total || 1)) * scale;
+              const posHeight = (item.pos / (total || 1)) * scale;
+
+              return (
+                <React.Fragment key={index}>
+                  <Rect x={x} y={150 - negHeight} width={barWidth} height={negHeight} fill="#ef4444" />
+                  <Rect x={x} y={150 - negHeight - ncHeight} width={barWidth} height={ncHeight} fill="#6b7280" />
+                  <Rect x={x} y={150 - negHeight - ncHeight - posHeight} width={barWidth} height={posHeight} fill="#10b981" />
+                  {item.neg > 0 && <SvgText x={x + barWidth / 2} y={150 - negHeight / 2} fontSize="10" fill="#fff" textAnchor="middle">{item.neg}</SvgText>}
+                  {item.nc > 0 && <SvgText x={x + barWidth / 2} y={150 - negHeight - ncHeight / 2} fontSize="10" fill="#fff" textAnchor="middle">{item.nc}</SvgText>}
+                  {item.pos > 0 && <SvgText x={x + barWidth / 2} y={150 - negHeight - ncHeight - posHeight / 2} fontSize="10" fill="#fff" textAnchor="middle">{item.pos}</SvgText>}
+                  <SvgText x={x + barWidth / 2} y={170} fontSize="9" fill="#6b7280" textAnchor="middle">{item.range}</SvgText>
+                </React.Fragment>
+              );
+            })}
+            <Line x1="0" y1="150" x2={width - 32} y2="150" stroke="#e5e7eb" strokeWidth="1" />
+          </Svg>
+          <View style={styles.legend}>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#ef4444' }]} />
+              <Text style={styles.legendText}>NEG: {marketData.advanceDecline.neg}</Text>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#6b7280' }]} />
+              <Text style={styles.legendText}>NC: {marketData.advanceDecline.nc}</Text>
+            </View>
+            <View style={styles.legendItem}>
+              <View style={[styles.legendDot, { backgroundColor: '#10b981' }]} />
+              <Text style={styles.legendText}>POS: {marketData.advanceDecline.pos}</Text>
+            </View>
+          </View>
+        </View>
+
+        {/* Earning This Week */}
+        <TouchableOpacity style={styles.earningSection}>
+          <Text style={styles.earningTitle}>Earning This Week</Text>
+          <Ionicons name="chevron-forward" size={24} color="#6b7280" />
+        </TouchableOpacity>
+
+        <View style={{ height: 100 }} />
+      </ScrollView>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#f9fafb',
-  },
-  header: {
-    backgroundColor: '#ffffff',
-    paddingTop: Platform.OS === 'ios' ? 60 : 48,
-    paddingBottom: 16,
-    ...Platform.select({
-      ios: {
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
-      },
-      android: {
-        elevation: 4,
-      },
-    }),
-  },
-  headerTop: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 16,
-    marginBottom: 20,
-  },
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#111827',
-  },
-  notificationButton: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    backgroundColor: '#f3f4f6',
-    justifyContent: 'center',
-    alignItems: 'center',
-    position: 'relative',
-  },
-  notificationBadge: {
-    position: 'absolute',
-    top: 8,
-    right: 8,
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: '#ef4444',
-  },
-  statsContainer: {
-    flexDirection: 'row',
-    paddingHorizontal: 16,
-    marginBottom: 20,
-    gap: 12,
-  },
-  statBox: {
-    flex: 1,
-    backgroundColor: '#f9fafb',
-    borderRadius: 12,
-    padding: 12,
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#e5e7eb',
-  },
-  statLabel: {
-    fontSize: 11,
-    color: '#6b7280',
-    marginTop: 4,
-    fontWeight: '500',
-  },
-  statValue: {
-    fontSize: 18,
-    fontWeight: '700',
-    color: '#111827',
-    marginTop: 2,
-  },
-  listContent: {
-    paddingBottom: 24,
-  },
-  emptyList: {
-    flexGrow: 1,
-  },
+  container: { flex: 1, backgroundColor: '#f3f4f6' },
+  headerTopSection: { backgroundColor: '#ffffff', paddingHorizontal: 16, paddingVertical: 12, ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.05, shadowRadius: 2 }, android: { elevation: 1 } }) },
+  headerBottomSection: { backgroundColor: '#f3f4f6', paddingHorizontal: 16, paddingVertical: 12, marginTop: 2, ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 2 }, shadowOpacity: 0.1, shadowRadius: 4 }, android: { elevation: 2 } }) },
+  headerTop: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  cashLimitContainer: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#f3f4f6', paddingHorizontal: 12, paddingVertical: 8, borderRadius: 20, gap: 6 },
+  cashLimitIcon: { width: 24, height: 24, borderRadius: 12, backgroundColor: '#f3f4f6', justifyContent: 'center', alignItems: 'center' },
+  cashLimitLabel: { fontSize: 13, fontWeight: '600', color: '#111827' },
+  divider: { width: 1, height: 20, backgroundColor: '#d1d5db' },
+  tickerItem: { alignItems: 'center' },
+  tickerSymbol: { fontSize: 11, color: '#6b7280', fontWeight: '600' },
+  tickerValue: { fontSize: 14, fontWeight: '700' },
+  iconButton: { position: 'relative' },
+  notificationBadge: { position: 'absolute', top: -4, right: -4, backgroundColor: '#ef4444', borderRadius: 10, minWidth: 18, height: 18, justifyContent: 'center', alignItems: 'center', paddingHorizontal: 4 },
+  badgeText: { color: '#ffffff', fontSize: 9, fontWeight: '700' },
+  headerMiddle: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  logoContainer: { paddingVertical: 8 },
+  logoText: { fontSize: 24, fontWeight: '900', color: '#10b981', letterSpacing: 1 },
+  exchangeToggle: { flexDirection: 'row', backgroundColor: '#ffffff', borderRadius: 20, padding: 4 },
+  exchangeButton: { paddingHorizontal: 16, paddingVertical: 6, borderRadius: 16 },
+  exchangeButtonActive: { backgroundColor: '#ef4444' },
+  exchangeButtonText: { fontSize: 13, fontWeight: '700', color: '#6b7280' },
+  exchangeButtonTextActive: { color: '#ffffff' },
+  scrollContent: { flex: 1 },
+  indicesRow: { flexDirection: 'row', gap: 8, paddingHorizontal: 16, paddingTop: 16 },
+  indexCard: { flex: 1, backgroundColor: '#ffffff', borderRadius: 12, padding: 12, ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 }, android: { elevation: 2 } }) },
+  indexSymbol: { fontSize: 14, fontWeight: '700', color: '#111827', marginBottom: 4 },
+  indexValue: { fontSize: 16, fontWeight: '700', color: '#111827', marginBottom: 8 },
+  miniChart: { marginBottom: 8 },
+  indexChange: { fontSize: 13, fontWeight: '600' },
+  indexChangePercent: { fontSize: 11, fontWeight: '600' },
+  statsRow: { flexDirection: 'row', gap: 8, paddingHorizontal: 16, marginTop: 16 },
+  statBox: { flex: 1, borderRadius: 12, padding: 16 },
+  statValue: { fontSize: 16, fontWeight: '700', color: '#111827', marginBottom: 4 },
+  statLabel: { fontSize: 11, color: '#6b7280', marginBottom: 8 },
+  statPercent: { fontSize: 14, fontWeight: '700', color: '#111827', marginBottom: 2 },
+  statType: { fontSize: 9, fontWeight: '600', color: '#6b7280', letterSpacing: 0.5 },
+  advanceDeclineContainer: { backgroundColor: '#ffffff', borderRadius: 12, padding: 16, marginHorizontal: 16, marginTop: 16, ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 }, android: { elevation: 2 } }) },
+  sectionTitle: { fontSize: 18, fontWeight: '700', color: '#111827', marginBottom: 16 },
+  legend: { flexDirection: 'row', justifyContent: 'center', gap: 24, marginTop: 16 },
+  legendItem: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  legendDot: { width: 16, height: 16, borderRadius: 4 },
+  legendText: { fontSize: 13, fontWeight: '600', color: '#111827' },
+  earningSection: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#ffffff', borderRadius: 12, padding: 20, marginHorizontal: 16, marginTop: 16, ...Platform.select({ ios: { shadowColor: '#000', shadowOffset: { width: 0, height: 1 }, shadowOpacity: 0.1, shadowRadius: 2 }, android: { elevation: 2 } }) },
+  earningTitle: { fontSize: 18, fontWeight: '700', color: '#111827' },
 });

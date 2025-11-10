@@ -16,18 +16,20 @@ import { Ionicons } from '@expo/vector-icons';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import {
-    Platform,
-    SafeAreaView,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    View,
+  Platform,
+  SafeAreaView,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type TimeRange = '1D' | '1W' | '1M' | '3M' | '1Y' | 'ALL';
 
 export default function StockDetailScreen() {
+  const insets = useSafeAreaInsets();
   const router = useRouter();
   const { symbol } = useLocalSearchParams<{ symbol: string }>();
   const dispatch = useAppDispatch();
@@ -111,9 +113,9 @@ export default function StockDetailScreen() {
   const avgVolume = formatLargeNumber(stock.volume * 1.2); // Mock avg volume
 
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       {/* Header */}
-      <View style={styles.header}>
+      <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
         <TouchableOpacity
           style={styles.backButton}
           onPress={() => router.back()}
@@ -294,7 +296,7 @@ export default function StockDetailScreen() {
           <Text style={styles.actionButtonText}>Buy</Text>
         </TouchableOpacity>
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -308,7 +310,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingTop: Platform.OS === 'ios' ? 0 : 16,
     paddingBottom: 16,
     backgroundColor: '#ffffff',
     ...Platform.select({

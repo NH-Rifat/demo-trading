@@ -23,6 +23,7 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 // Helper function to get sector colors
 function getSectorColor(sector: string): string {
@@ -42,6 +43,7 @@ function getSectorColor(sector: string): string {
 }
 
 export default function PortfolioScreen() {
+  const insets = useSafeAreaInsets();
   const portfolio = useAppSelector((state: any) => state.portfolio.portfolio);
   const stocks = useAppSelector((state: any) => state.market.stocks);
   const [refreshing, setRefreshing] = React.useState(false);
@@ -251,7 +253,7 @@ export default function PortfolioScreen() {
   if (portfolio.positions.length === 0) {
     return (
       <View style={styles.container}>
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
           <Text style={styles.headerTitle}>Portfolio</Text>
         </View>
         <View style={styles.emptyContainer}>
@@ -274,7 +276,7 @@ export default function PortfolioScreen() {
         }
       >
         {/* Header */}
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
           <Text style={styles.headerTitle}>Portfolio</Text>
         </View>
 

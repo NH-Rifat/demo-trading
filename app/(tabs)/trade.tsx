@@ -23,12 +23,14 @@ import {
     TouchableOpacity,
     View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 type TradeType = 'BUY' | 'SELL';
 type OrderType = 'MARKET' | 'LIMIT';
 
 export default function TradeScreen() {
   const dispatch = useAppDispatch();
+  const insets = useSafeAreaInsets();
   const stocks = useAppSelector((state: any) => state.market.stocks);
   const portfolio = useAppSelector((state: any) => state.portfolio.portfolio);
   const user = useAppSelector((state: any) => state.auth.user);
@@ -182,7 +184,7 @@ export default function TradeScreen() {
     >
       <ScrollView showsVerticalScrollIndicator={false}>
         {/* Header */}
-        <View style={styles.header}>
+        <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
           <Text style={styles.headerTitle}>Trade</Text>
         </View>
 

@@ -7,32 +7,34 @@ import EmptyState from '@/components/common/EmptyState';
 import StockCard from '@/components/common/StockCard';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import {
-    createWatchlist,
-    deleteWatchlist,
-    removeStockFromWatchlist,
-    setActiveWatchlist,
-    updateWatchlist
+  createWatchlist,
+  deleteWatchlist,
+  removeStockFromWatchlist,
+  setActiveWatchlist,
+  updateWatchlist
 } from '@/src/store/slices/watchlistSlice';
 import type { Stock, Watchlist } from '@/src/types';
 import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import {
-    Alert,
-    FlatList,
-    Modal,
-    Platform,
-    ScrollView,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    View,
+  Alert,
+  FlatList,
+  Modal,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
 } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 export default function WatchlistScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const insets = useSafeAreaInsets();
 
   const watchlists = useAppSelector((state: any) => state.watchlist.watchlists);
   const activeWatchlistId = useAppSelector((state: any) => state.watchlist.activeWatchlistId);
@@ -141,7 +143,7 @@ export default function WatchlistScreen() {
 
   // Render header
   const renderHeader = () => (
-    <View style={styles.header}>
+    <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
       <View style={styles.headerTop}>
         <Text style={styles.headerTitle}>Watchlists</Text>
         <TouchableOpacity
@@ -346,7 +348,6 @@ const styles = StyleSheet.create({
   },
   header: {
     backgroundColor: '#ffffff',
-    paddingTop: Platform.OS === 'ios' ? 60 : 48,
     paddingBottom: 16,
     ...Platform.select({
       ios: {

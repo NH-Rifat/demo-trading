@@ -26,6 +26,45 @@ export default function MarketScreen() {
   const [selectedExchange, setSelectedExchange] = useState<'DSE' | 'CSE'>('DSE');
   const [selectedTab, setSelectedTab] = useState<'gainer' | 'loser' | 'trade' | 'value' | 'volume'>('gainer');
 
+  // Featured Lists Data
+  const featuredListsData = {
+    gainer: [
+      { symbol: 'POWERGRID', price: 31.9, change: 3.7, changePercent: 13.1, hasChart: true },
+      { symbol: 'UTTARAFIN', price: 11.1, change: 0.7, changePercent: 6.7, hasChart: false },
+      { symbol: 'ORIONINFU', price: 393.4, change: 18.5, changePercent: 4.9, hasChart: true },
+      { symbol: 'PRIMETEX', price: 12.7, change: 0.5, changePercent: 4.1, hasChart: true },
+      { symbol: '1JANATAMF', price: 2.7, change: 0.1, changePercent: 3.9, hasChart: true },
+    ],
+    loser: [
+      { symbol: 'BEACHHATCH', price: 28.5, change: -4.2, changePercent: -12.8, hasChart: true },
+      { symbol: 'CENTRALINS', price: 45.3, change: -3.8, changePercent: -7.7, hasChart: true },
+      { symbol: 'PARAMOUNT', price: 8.6, change: -0.6, changePercent: -6.5, hasChart: false },
+      { symbol: 'LEGACYFOOT', price: 15.2, change: -0.8, changePercent: -5.0, hasChart: true },
+      { symbol: 'PHOENIX', price: 102.7, change: -4.5, changePercent: -4.2, hasChart: true },
+    ],
+    trade: [
+      { symbol: 'BATBC', price: 567.8, change: 12.3, changePercent: 2.2, hasChart: true },
+      { symbol: 'SQURPHARMA', price: 234.5, change: -2.1, changePercent: -0.9, hasChart: true },
+      { symbol: 'BEXIMCO', price: 89.4, change: 1.8, changePercent: 2.1, hasChart: false },
+      { symbol: 'CITYBANK', price: 23.6, change: -0.4, changePercent: -1.7, hasChart: true },
+      { symbol: 'GPH', price: 45.8, change: 0.9, changePercent: 2.0, hasChart: true },
+    ],
+    value: [
+      { symbol: 'GRAMEENPHONE', price: 289.5, change: 5.2, changePercent: 1.8, hasChart: true },
+      { symbol: 'ROBI', price: 45.7, change: -1.2, changePercent: -2.6, hasChart: true },
+      { symbol: 'BRACBANK', price: 42.3, change: 0.8, changePercent: 1.9, hasChart: false },
+      { symbol: 'BRAC', price: 56.9, change: 2.1, changePercent: 3.8, hasChart: true },
+      { symbol: 'ISLAMIBANK', price: 38.4, change: -0.6, changePercent: -1.5, hasChart: true },
+    ],
+    volume: [
+      { symbol: 'BEXIMCO', price: 89.4, change: 1.8, changePercent: 2.1, hasChart: true },
+      { symbol: 'PENINSULA', price: 12.3, change: 0.3, changePercent: 2.5, hasChart: false },
+      { symbol: 'ACTIVEFINE', price: 7.8, change: -0.2, changePercent: -2.5, hasChart: true },
+      { symbol: 'FORTUNE', price: 5.4, change: 0.1, changePercent: 1.9, hasChart: true },
+      { symbol: 'GENERATION', price: 34.6, change: -0.8, changePercent: -2.3, hasChart: true },
+    ],
+  };
+
   // Mock data with real-time updates
   const [marketData, setMarketData] = useState({
     cashLimit: 2.05,
@@ -428,13 +467,7 @@ export default function MarketScreen() {
 
           {/* Stock List */}
           <View style={styles.stockList}>
-            {[
-              { symbol: 'POWERGRID', price: 31.9, change: 3.7, changePercent: 13.1, hasChart: true },
-              { symbol: 'UTTARAFIN', price: 11.1, change: 0.7, changePercent: 6.7, hasChart: false },
-              { symbol: 'ORIONINFU', price: 393.4, change: 18.5, changePercent: 4.9, hasChart: true },
-              { symbol: 'PRIMETEX', price: 12.7, change: 0.5, changePercent: 4.1, hasChart: true },
-              { symbol: '1JANATAMF', price: 2.7, change: 0.1, changePercent: 3.9, hasChart: true },
-            ].map((stock, index) => (
+            {featuredListsData[selectedTab].map((stock, index) => (
               <TouchableOpacity key={index} style={styles.stockRow}>
                 <View style={styles.stockLeft}>
                   <Text style={styles.stockSymbol}>{stock.symbol}</Text>
@@ -447,7 +480,7 @@ export default function MarketScreen() {
                       <Polyline 
                         points={generateMiniChartPath()} 
                         fill="none" 
-                        stroke="#10b981" 
+                        stroke={stock.change >= 0 ? '#10b981' : '#ef4444'} 
                         strokeWidth="2" 
                       />
                     </Svg>
@@ -455,8 +488,12 @@ export default function MarketScreen() {
                 )}
 
                 <View style={styles.stockRight}>
-                  <Text style={[styles.stockChange, { color: '#10b981' }]}>{stock.change}</Text>
-                  <Text style={[styles.stockChangePercent, { color: '#10b981' }]}>({stock.changePercent}%)</Text>
+                  <Text style={[styles.stockChange, { color: stock.change >= 0 ? '#10b981' : '#ef4444' }]}>
+                    {stock.change >= 0 ? '+' : ''}{stock.change}
+                  </Text>
+                  <Text style={[styles.stockChangePercent, { color: stock.change >= 0 ? '#10b981' : '#ef4444' }]}>
+                    ({stock.changePercent}%)
+                  </Text>
                 </View>
               </TouchableOpacity>
             ))}

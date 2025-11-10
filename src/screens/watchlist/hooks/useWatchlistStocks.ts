@@ -1,5 +1,5 @@
-import type { Stock, Watchlist } from '@/src/types';
 import { useAppSelector } from '@/src/store/hooks';
+import type { Stock, Watchlist } from '@/src/types';
 import { useMemo } from 'react';
 
 export const useWatchlistStocks = (activeWatchlist: Watchlist | undefined) => {

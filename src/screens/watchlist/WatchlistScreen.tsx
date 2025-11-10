@@ -1,14 +1,14 @@
 import EmptyState from '@/components/common/EmptyState';
 import StockCard from '@/components/common/StockCard';
-import type { Stock, Watchlist } from '@/src/types';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import {
-  createWatchlist,
-  deleteWatchlist,
-  removeStockFromWatchlist,
-  setActiveWatchlist,
-  updateWatchlist,
+    createWatchlist,
+    deleteWatchlist,
+    removeStockFromWatchlist,
+    setActiveWatchlist,
+    updateWatchlist,
 } from '@/src/store/slices/watchlistSlice';
+import type { Stock, Watchlist } from '@/src/types';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, FlatList, View } from 'react-native';

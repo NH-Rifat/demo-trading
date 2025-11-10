@@ -1,7 +1,7 @@
-import type { Stock } from '@/src/types';
-import { formatCurrency } from '@/src/utils/helpers';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import { addOrder } from '@/src/store/slices/ordersSlice';
+import type { Stock } from '@/src/types';
+import { formatCurrency } from '@/src/utils/helpers';
 import React, { useState } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';

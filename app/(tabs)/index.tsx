@@ -16,7 +16,7 @@ import {
   View,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import Svg, { Line, Polyline, Rect, Text as SvgText } from 'react-native-svg';
+import Svg, { Defs, Line, LinearGradient, Polyline, Rect, Stop, Text as SvgText } from 'react-native-svg';
 
 const { width } = Dimensions.get('window');
 
@@ -43,25 +43,25 @@ export default function MarketScreen() {
       { symbol: 'PHOENIX', price: 102.7, change: -4.5, changePercent: -4.2, hasChart: true },
     ],
     trade: [
-      { symbol: 'BATBC', price: 567.8, change: 12.3, changePercent: 2.2, hasChart: true },
-      { symbol: 'SQURPHARMA', price: 234.5, change: -2.1, changePercent: -0.9, hasChart: true },
-      { symbol: 'BEXIMCO', price: 89.4, change: 1.8, changePercent: 2.1, hasChart: false },
-      { symbol: 'CITYBANK', price: 23.6, change: -0.4, changePercent: -1.7, hasChart: true },
-      { symbol: 'GPH', price: 45.8, change: 0.9, changePercent: 2.0, hasChart: true },
+      { symbol: 'BATBC', price: 567.8, value: 45670, hasChart: true },
+      { symbol: 'SQURPHARMA', price: 234.5, value: 38920, hasChart: true },
+      { symbol: 'BEXIMCO', price: 89.4, value: 32150, hasChart: false },
+      { symbol: 'CITYBANK', price: 23.6, value: 28730, hasChart: true },
+      { symbol: 'GPH', price: 45.8, value: 25480, hasChart: true },
     ],
     value: [
-      { symbol: 'GRAMEENPHONE', price: 289.5, change: 5.2, changePercent: 1.8, hasChart: true },
-      { symbol: 'ROBI', price: 45.7, change: -1.2, changePercent: -2.6, hasChart: true },
-      { symbol: 'BRACBANK', price: 42.3, change: 0.8, changePercent: 1.9, hasChart: false },
-      { symbol: 'BRAC', price: 56.9, change: 2.1, changePercent: 3.8, hasChart: true },
-      { symbol: 'ISLAMIBANK', price: 38.4, change: -0.6, changePercent: -1.5, hasChart: true },
+      { symbol: 'GRAMEENPHONE', price: 289.5, value: 156.8, hasChart: true },
+      { symbol: 'ROBI', price: 45.7, value: 98.3, hasChart: true },
+      { symbol: 'BRACBANK', price: 42.3, value: 76.5, hasChart: false },
+      { symbol: 'BRAC', price: 56.9, value: 65.2, hasChart: true },
+      { symbol: 'ISLAMIBANK', price: 38.4, value: 54.9, hasChart: true },
     ],
     volume: [
-      { symbol: 'BEXIMCO', price: 89.4, change: 1.8, changePercent: 2.1, hasChart: true },
-      { symbol: 'PENINSULA', price: 12.3, change: 0.3, changePercent: 2.5, hasChart: false },
-      { symbol: 'ACTIVEFINE', price: 7.8, change: -0.2, changePercent: -2.5, hasChart: true },
-      { symbol: 'FORTUNE', price: 5.4, change: 0.1, changePercent: 1.9, hasChart: true },
-      { symbol: 'GENERATION', price: 34.6, change: -0.8, changePercent: -2.3, hasChart: true },
+      { symbol: 'BEXIMCO', price: 89.4, value: 8.52, hasChart: true },
+      { symbol: 'PENINSULA', price: 12.3, value: 6.78, hasChart: false },
+      { symbol: 'ACTIVEFINE', price: 7.8, value: 5.34, hasChart: true },
+      { symbol: 'FORTUNE', price: 5.4, value: 4.91, hasChart: true },
+      { symbol: 'GENERATION', price: 34.6, value: 4.23, hasChart: true },
     ],
   };
 
@@ -242,12 +242,23 @@ export default function MarketScreen() {
     setRefreshing(false);
   };
 
-  const generateMiniChartPath = () => {
+  const generateMiniChartPath = (isPositive: boolean = true, seed: number = 0) => {
     const points = [];
-    for (let i = 0; i < 20; i++) {
-      const x = (i * 80) / 20;
-      const y = 40 + Math.sin(i * 0.5) * 15 + 5;
-      points.push(`${x},${y}`);
+    const numPoints = 25;
+    const chartWidth = 120;
+    const chartHeight = 40;
+    
+    for (let i = 0; i < numPoints; i++) {
+      const x = (i * chartWidth) / (numPoints - 1);
+      // Create static, realistic stock movement with varying amplitude
+      const baseY = chartHeight / 2;
+      const wave1 = Math.sin((i + seed) * 0.4) * 8;
+      const wave2 = Math.cos((i + seed) * 0.6) * 5;
+      const trend = isPositive ? -(i * 0.3) : (i * 0.3); // Upward or downward trend
+      const noise = Math.sin((i + seed) * 1.2) * 2; // Static pattern instead of random
+      
+      const y = baseY + wave1 + wave2 + trend + noise;
+      points.push(`${x},${Math.max(5, Math.min(chartHeight - 5, y))}`);
     }
     return points.join(' ');
   };
@@ -467,36 +478,72 @@ export default function MarketScreen() {
 
           {/* Stock List */}
           <View style={styles.stockList}>
-            {featuredListsData[selectedTab].map((stock, index) => (
-              <TouchableOpacity key={index} style={styles.stockRow}>
-                <View style={styles.stockLeft}>
-                  <Text style={styles.stockSymbol}>{stock.symbol}</Text>
-                  <Text style={styles.stockPrice}>{stock.price}</Text>
-                </View>
-
-                {stock.hasChart && (
-                  <View style={styles.stockChart}>
-                    <Svg height="40" width="120">
-                      <Polyline 
-                        points={generateMiniChartPath()} 
-                        fill="none" 
-                        stroke={stock.change >= 0 ? '#10b981' : '#ef4444'} 
-                        strokeWidth="2" 
-                      />
-                    </Svg>
+            {featuredListsData[selectedTab].map((stock, index) => {
+              const hasChangeData = 'change' in stock;
+              const isPositive = hasChangeData ? stock.change >= 0 : true;
+              
+              return (
+                <TouchableOpacity key={index} style={styles.stockRow}>
+                  <View style={styles.stockLeft}>
+                    <Text style={styles.stockSymbol}>{stock.symbol}</Text>
+                    <Text style={styles.stockPrice}>{stock.price}</Text>
                   </View>
-                )}
 
-                <View style={styles.stockRight}>
-                  <Text style={[styles.stockChange, { color: stock.change >= 0 ? '#10b981' : '#ef4444' }]}>
-                    {stock.change >= 0 ? '+' : ''}{stock.change}
-                  </Text>
-                  <Text style={[styles.stockChangePercent, { color: stock.change >= 0 ? '#10b981' : '#ef4444' }]}>
-                    ({stock.changePercent}%)
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            ))}
+                  {stock.hasChart && (
+                    <View style={styles.stockChart}>
+                      <Svg height="40" width="120" style={styles.chartSvg}>
+                        {/* Background gradient area */}
+                        <Defs>
+                          <LinearGradient id={`gradient-${selectedTab}-${index}`} x1="0%" y1="0%" x2="0%" y2="100%">
+                            <Stop offset="0%" stopColor={isPositive ? '#10b981' : '#ef4444'} stopOpacity="0.2" />
+                            <Stop offset="100%" stopColor={isPositive ? '#10b981' : '#ef4444'} stopOpacity="0" />
+                          </LinearGradient>
+                        </Defs>
+                        
+                        {/* Filled area under the line */}
+                        <Polyline 
+                          points={`0,40 ${generateMiniChartPath(isPositive, index)} 120,40`}
+                          fill={`url(#gradient-${selectedTab}-${index})`}
+                          stroke="none"
+                        />
+                        
+                        {/* Main line */}
+                        <Polyline 
+                          points={generateMiniChartPath(isPositive, index)} 
+                          fill="none" 
+                          stroke={isPositive ? '#10b981' : '#ef4444'} 
+                          strokeWidth="2.5"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </Svg>
+                    </View>
+                  )}
+
+                  <View style={styles.stockRight}>
+                    {hasChangeData ? (
+                      <>
+                        <Text style={[styles.stockChange, { color: isPositive ? '#10b981' : '#ef4444' }]}>
+                          {stock.change >= 0 ? '+' : ''}{stock.change}
+                        </Text>
+                        <Text style={[styles.stockChangePercent, { color: isPositive ? '#10b981' : '#ef4444' }]}>
+                          ({stock.changePercent}%)
+                        </Text>
+                      </>
+                    ) : (
+                      <>
+                        <Text style={[styles.stockChange, { color: '#111827' }]}>
+                          {stock.value}
+                        </Text>
+                        <Text style={[styles.stockChangePercent, { color: '#6b7280' }]}>
+                          {selectedTab === 'trade' ? 'trades' : selectedTab === 'value' ? 'cr' : 'cr'}
+                        </Text>
+                      </>
+                    )}
+                  </View>
+                </TouchableOpacity>
+              );
+            })}
           </View>
         </View>
 
@@ -565,7 +612,8 @@ const styles = StyleSheet.create({
   stockLeft: { flex: 1 },
   stockSymbol: { fontSize: 14, fontWeight: '700', color: '#111827', marginBottom: 2 },
   stockPrice: { fontSize: 12, color: '#6b7280' },
-  stockChart: { flex: 1, alignItems: 'center' },
+  stockChart: { flex: 1, alignItems: 'center', justifyContent: 'center', paddingHorizontal: 8 },
+  chartSvg: { overflow: 'visible' },
   stockRight: { alignItems: 'flex-end' },
   stockChange: { fontSize: 14, fontWeight: '700', marginBottom: 2 },
   stockChangePercent: { fontSize: 11, fontWeight: '600' },

@@ -95,13 +95,23 @@ export default function StockDetailScreen() {
   };
 
   const handleSell = () => {
-    // TODO: Navigate to trade screen with SELL pre-selected
-    console.log('Navigate to SELL', stock?.symbol);
+    router.push({
+      pathname: '/(tabs)/trade',
+      params: {
+        stockSymbol: stock?.symbol,
+        tradeType: 'SELL',
+      },
+    });
   };
 
   const handleBuy = () => {
-    // TODO: Navigate to trade screen with BUY pre-selected
-    console.log('Navigate to BUY', stock?.symbol);
+    router.push({
+      pathname: '/(tabs)/trade',
+      params: {
+        stockSymbol: stock?.symbol,
+        tradeType: 'BUY',
+      },
+    });
   };
 
   if (isLoading) {

@@ -5,6 +5,11 @@ import { formatCurrency, getProfitColor } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { FlatList, Modal, Text, TouchableOpacity, View } from 'react-native';
+import Animated, {
+    FadeIn,
+    FadeInDown,
+    SlideInDown
+} from 'react-native-reanimated';
 import { createStockPickerStyles } from '../styles/tradeStyles';
 
 interface StockPickerModalProps {
@@ -33,51 +38,72 @@ export const StockPickerModal: React.FC<StockPickerModalProps> = ({
       s.name.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
-  const renderStockItem = ({ item }: { item: Stock }) => {
+  const renderStockItem = ({ item, index }: { item: Stock; index: number }) => {
     const priceColor = getProfitColor(item.change);
 
     return (
-      <TouchableOpacity style={styles.stockItem} onPress={() => onSelectStock(item)}>
-        <View style={styles.stockItemLeft}>
-          <Text style={styles.stockItemSymbol}>{item.symbol}</Text>
-          <Text style={styles.stockItemName}>{item.name}</Text>
-        </View>
-        <View style={styles.stockItemRight}>
-          <Text style={styles.stockItemPrice}>{formatCurrency(item.price)}</Text>
-          <Text style={[styles.stockItemChange, { color: priceColor }]}>
-            {item.change >= 0 ? '+' : ''}
-            {item.changePercent.toFixed(2)}%
-          </Text>
-        </View>
-      </TouchableOpacity>
+      <Animated.View entering={FadeInDown.duration(300).delay(index * 30).springify()}>
+        <TouchableOpacity style={styles.stockItem} onPress={() => onSelectStock(item)}>
+          <View style={styles.stockItemLeft}>
+            <Text style={styles.stockItemSymbol}>{item.symbol}</Text>
+            <Text style={styles.stockItemName}>{item.name}</Text>
+          </View>
+          <View style={styles.stockItemRight}>
+            <Text style={styles.stockItemPrice}>{formatCurrency(item.price)}</Text>
+            <Text style={[styles.stockItemChange, { color: priceColor }]}>
+              {item.change >= 0 ? '+' : ''}
+              {item.changePercent.toFixed(2)}%
+            </Text>
+          </View>
+        </TouchableOpacity>
+      </Animated.View>
     );
   };
 
   return (
-    <Modal visible={visible} animationType="slide" onRequestClose={onClose}>
-      <View style={styles.modalContainer}>
-        <View style={styles.modalHeader}>
-          <Text style={styles.modalTitle}>Select Stock</Text>
-          <TouchableOpacity onPress={onClose}>
-            <Ionicons name="close" size={28} color={colors.textSecondary} />
-          </TouchableOpacity>
-        </View>
+    <Modal 
+      visible={visible} 
+      animationType="fade" 
+      transparent={true}
+      onRequestClose={onClose}
+    >
+      <Animated.View 
+        style={styles.modalContainer}
+        entering={FadeIn.duration(200)}
+      >
+        <Animated.View 
+          style={styles.modalContent}
+          entering={SlideInDown.duration(400).springify()}
+        >
+          <Animated.View 
+            style={styles.modalHeader}
+            entering={FadeInDown.duration(300).delay(100)}
+          >
+            <Text style={styles.modalTitle}>Select Stock</Text>
+            <TouchableOpacity onPress={onClose}>
+              <Ionicons name="close" size={28} color={colors.textSecondary} />
+            </TouchableOpacity>
+          </Animated.View>
 
-        <View style={styles.modalSearchContainer}>
-          <SearchBar
-            value={searchQuery}
-            onChangeText={onChangeSearch}
-            placeholder="Search stocks..."
+          <Animated.View 
+            style={styles.modalSearchContainer}
+            entering={FadeInDown.duration(300).delay(200)}
+          >
+            <SearchBar
+              value={searchQuery}
+              onChangeText={onChangeSearch}
+              placeholder="Search stocks..."
+            />
+          </Animated.View>
+
+          <FlatList
+            data={filteredStocks}
+            keyExtractor={(item) => item.id}
+            renderItem={renderStockItem}
+            contentContainerStyle={styles.stockList}
           />
-        </View>
-
-        <FlatList
-          data={filteredStocks}
-          keyExtractor={(item) => item.id}
-          renderItem={renderStockItem}
-          contentContainerStyle={styles.stockList}
-        />
-      </View>
+        </Animated.View>
+      </Animated.View>
     </Modal>
   );
 };

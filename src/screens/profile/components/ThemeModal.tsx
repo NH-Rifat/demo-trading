@@ -2,6 +2,7 @@ import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
+import Animated, { FadeIn, FadeInDown, SlideInDown } from 'react-native-reanimated';
 import { createThemeModalStyles } from '../styles/profileStyles';
 
 interface ThemeModalProps {
@@ -47,12 +48,15 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
   return (
     <Modal
       visible={visible}
-      animationType="slide"
+      animationType="fade"
       transparent={true}
       onRequestClose={onClose}
     >
-      <View style={themeModalStyles.modalOverlay}>
-        <View style={[themeModalStyles.themeModalContent, { backgroundColor: colors.surface }]}>
+      <Animated.View style={themeModalStyles.modalOverlay} entering={FadeIn.duration(200)}>
+        <Animated.View 
+          style={[themeModalStyles.themeModalContent, { backgroundColor: colors.surface }]}
+          entering={SlideInDown.duration(400).springify()}
+        >
           <View style={themeModalStyles.themeModalHeader}>
             <Text style={[themeModalStyles.themeModalTitle, { color: colors.text }]}>
               Select Theme
@@ -62,8 +66,9 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
             </TouchableOpacity>
           </View>
 
-          {themeOptions.map((option) => (
-            <TouchableOpacity
+          {themeOptions.map((option, index) => (
+            <Animated.View key={option.mode} entering={FadeInDown.duration(300).delay(index * 100)}>
+              <TouchableOpacity
               key={option.mode}
               style={[
                 themeModalStyles.themeOption,
@@ -90,9 +95,10 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                 <Ionicons name="checkmark-circle" size={24} color={colors.success} />
               )}
             </TouchableOpacity>
+            </Animated.View>
           ))}
-        </View>
-      </View>
+        </Animated.View>
+      </Animated.View>
     </Modal>
   );
 };

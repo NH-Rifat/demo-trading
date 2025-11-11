@@ -2,6 +2,7 @@ import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import Animated, { FadeIn, SlideInDown } from 'react-native-reanimated';
 import { createModalStyles } from '../styles/watchlistStyles';
 
 interface CreateWatchlistModalProps {
@@ -23,9 +24,9 @@ export const CreateWatchlistModal: React.FC<CreateWatchlistModalProps> = ({
   const styles = createModalStyles(colors);
   
   return (
-    <Modal visible={visible} animationType="slide" transparent={true} onRequestClose={onClose}>
-      <View style={styles.modalOverlay}>
-        <View style={styles.modalContent}>
+    <Modal visible={visible} animationType="fade" transparent={true} onRequestClose={onClose}>
+      <Animated.View style={styles.modalOverlay} entering={FadeIn.duration(200)}>
+        <Animated.View style={styles.modalContent} entering={SlideInDown.duration(400).springify()}>
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>Create Watchlist</Text>
             <TouchableOpacity onPress={onClose}>
@@ -63,8 +64,8 @@ export const CreateWatchlistModal: React.FC<CreateWatchlistModalProps> = ({
               <Text style={styles.modalButtonTextCreate}>Create</Text>
             </TouchableOpacity>
           </View>
-        </View>
-      </View>
+        </Animated.View>
+      </Animated.View>
     </Modal>
   );
 };

@@ -3,7 +3,8 @@ import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import { addOrder } from '@/src/store/slices/ordersSlice';
 import type { Stock } from '@/src/types';
 import { formatCurrency } from '@/src/utils/helpers';
-import React, { useState } from 'react';
+import { useLocalSearchParams } from 'expo-router';
+import React, { useEffect, useState } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeInUp, SlideInRight } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -30,6 +31,7 @@ export default function TradeScreen() {
   const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
   const stocks = useAppSelector((state: any) => state.market.stocks);
+  const params = useLocalSearchParams<{ stockSymbol?: string; tradeType?: string }>();
 
   const [tradeType, setTradeType] = useState<TradeType>('BUY');
   const [selectedStock, setSelectedStock] = useState<Stock | null>(null);
@@ -38,6 +40,22 @@ export default function TradeScreen() {
   const [limitPrice, setLimitPrice] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
   const [isStockPickerVisible, setIsStockPickerVisible] = useState(false);
+
+  // Handle pre-selected stock and trade type from navigation params
+  useEffect(() => {
+    if (params.stockSymbol) {
+      const stock = stocks.find((s: Stock) => s.symbol === params.stockSymbol);
+      if (stock) {
+        setSelectedStock(stock);
+        if (orderType === 'LIMIT') {
+          setLimitPrice(stock.price.toString());
+        }
+      }
+    }
+    if (params.tradeType && (params.tradeType === 'BUY' || params.tradeType === 'SELL')) {
+      setTradeType(params.tradeType as TradeType);
+    }
+  }, [params.stockSymbol, params.tradeType, stocks, orderType]);
 
   // Custom hooks
   const { orderPrice, orderTotal, availableBalance, holdingQuantity } = useTradeCalculations(

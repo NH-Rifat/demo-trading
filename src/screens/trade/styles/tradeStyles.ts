@@ -303,7 +303,15 @@ export const createPlaceOrderStyles = (colors: any) => StyleSheet.create({
 export const createStockPickerStyles = (colors: any) => StyleSheet.create({
   modalContainer: {
     flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+  modalContent: {
+    flex: 1,
     backgroundColor: colors.surface,
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    overflow: 'hidden',
   },
   modalHeader: {
     flexDirection: 'row',

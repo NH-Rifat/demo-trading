@@ -8,6 +8,7 @@ import { Alert, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-n
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Header } from './components/Header';
 import { LimitPriceInput } from './components/LimitPriceInput';
+import { MarketDepth } from './components/MarketDepth';
 import { OrderSummary } from './components/OrderSummary';
 import { OrderTypeTabs } from './components/OrderTypeTabs';
 import { PlaceOrderButton } from './components/PlaceOrderButton';
@@ -136,6 +137,7 @@ export default function TradeScreen() {
           holdingQuantity={holdingQuantity}
           onPress={() => setIsStockPickerVisible(true)}
         />
+        {selectedStock && <MarketDepth stock={selectedStock} />}
         <OrderTypeTabs orderType={orderType} onChangeOrderType={handleChangeOrderType} />
         <QuantityControl quantity={quantity} onChangeQuantity={setQuantity} />
         {orderType === 'LIMIT' && (

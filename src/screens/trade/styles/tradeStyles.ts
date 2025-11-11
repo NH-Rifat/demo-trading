@@ -202,20 +202,35 @@ export const createPriceInputStyles = (colors: any) => StyleSheet.create({
     borderRadius: 12,
     borderWidth: 2,
     borderColor: colors.border,
-    paddingHorizontal: 16,
+  },
+    priceButton: {
+    width: 40,
+    height: 40,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    marginHorizontal: 8,
+    backgroundColor: colors.surfaceSecondary,
+  },
+  priceInputWrapper: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   currencySymbol: {
     fontSize: 20,
     fontWeight: '600',
     color: colors.textSecondary,
     marginRight: 8,
+    marginLeft: 8,
   },
   priceInput: {
-    flex: 1,
-    fontSize: 20,
-    fontWeight: '600',
+    fontSize: 24,
+    fontWeight: '700',
     color: colors.text,
-    paddingVertical: 16,
+    textAlign: 'center',
+    minWidth: 100,
   },
 });
 
@@ -369,5 +384,96 @@ export const createStockPickerStyles = (colors: any) => StyleSheet.create({
     fontSize: 12,
     fontWeight: '600',
     marginTop: 2,
+  },
+});
+
+export const createUserSelectorStyles = (colors: any) => StyleSheet.create({
+  section: {
+    paddingHorizontal: 16,
+    marginBottom: 16,
+  },
+  userSelector: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: colors.card,
+    borderRadius: 12,
+    paddingVertical: 14,
+    paddingHorizontal: 16,
+    borderWidth: 2,
+    borderColor: colors.border,
+  },
+  userInfo: {
+    flex: 1,
+  },
+  userCode: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: colors.text,
+  },
+  modalOverlay: {
+    flex: 1,
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    justifyContent: 'flex-end',
+  },
+  modalContent: {
+    maxHeight: '60%',
+    borderTopLeftRadius: 20,
+    borderTopRightRadius: 20,
+    overflow: 'hidden',
+  },
+  modalHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: colors.border,
+  },
+  modalTitle: {
+    fontSize: 18,
+    fontWeight: '700',
+  },
+  userItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 16,
+    marginHorizontal: 16,
+    marginVertical: 6,
+    borderRadius: 12,
+    borderWidth: 2,
+  },
+  userItemCode: {
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  userItemName: {
+    fontSize: 14,
+    marginTop: 4,
+  },
+});
+
+export const createBalanceInfoStyles = (colors: any) => StyleSheet.create({
+  container: {
+    flexDirection: 'row',
+    paddingHorizontal: 16,
+    marginBottom: 16,
+    gap: 16,
+  },
+  item: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+  },
+  label: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.success,
+  },
+  value: {
+    fontSize: 14,
+    fontWeight: '600',
+    color: colors.success,
   },
 });

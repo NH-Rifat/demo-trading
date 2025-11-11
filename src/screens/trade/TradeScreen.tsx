@@ -8,6 +8,8 @@ import React, { useEffect, useState } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeInUp, SlideInRight } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { BalanceInfo } from './components/BalanceInfo';
+import { DripQuantityControl } from './components/DripQuantityControl';
 import { Header } from './components/Header';
 import { LimitPriceInput } from './components/LimitPriceInput';
 import { MarketDepth } from './components/MarketDepth';
@@ -18,12 +20,19 @@ import { QuantityControl } from './components/QuantityControl';
 import { StockPickerModal } from './components/StockPickerModal';
 import { StockSelector } from './components/StockSelector';
 import { TradeTypeTabs } from './components/TradeTypeTabs';
+import { UserSelector } from './components/UserSelector';
 import { useOrderValidation } from './hooks/useOrderValidation';
 import { useTradeCalculations } from './hooks/useTradeCalculations';
 import { createTradeStyles } from './styles/tradeStyles';
 
 type TradeType = 'BUY' | 'SELL';
 type OrderType = 'MARKET' | 'LIMIT';
+
+interface User {
+  id: string;
+  code: string;
+  name: string;
+}
 
 export default function TradeScreen() {
   const { colors } = useTheme();
@@ -37,9 +46,15 @@ export default function TradeScreen() {
   const [selectedStock, setSelectedStock] = useState<Stock | null>(null);
   const [orderType, setOrderType] = useState<OrderType>('MARKET');
   const [quantity, setQuantity] = useState<string>('1');
+  const [dripQuantity, setDripQuantity] = useState<string>('1');
   const [limitPrice, setLimitPrice] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
   const [isStockPickerVisible, setIsStockPickerVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User>({
+    id: '1',
+    code: '81140',
+    name: 'YEASIN HOSSAIN',
+  });
 
   // Handle pre-selected stock and trade type from navigation params
   useEffect(() => {
@@ -154,6 +169,12 @@ export default function TradeScreen() {
         <Animated.View entering={SlideInRight.duration(500).delay(100).springify()}>
           <TradeTypeTabs tradeType={tradeType} onChangeTradeType={setTradeType} />
         </Animated.View>
+        <Animated.View entering={FadeIn.duration(500).delay(150)}>
+          <UserSelector selectedUser={selectedUser} onSelectUser={setSelectedUser} />
+        </Animated.View>
+        <Animated.View entering={FadeIn.duration(500).delay(180)}>
+          <BalanceInfo limit={2883.00} balance={2883.00} />
+        </Animated.View>
         <Animated.View entering={FadeIn.duration(500).delay(200)}>
           <StockSelector
             selectedStock={selectedStock}
@@ -169,6 +190,11 @@ export default function TradeScreen() {
         <Animated.View entering={FadeInUp.duration(500).delay(400).springify()}>
           <QuantityControl quantity={quantity} onChangeQuantity={setQuantity} />
         </Animated.View>
+        {orderType === 'MARKET' && (
+          <Animated.View entering={FadeInUp.duration(400).springify()}>
+            <DripQuantityControl dripQuantity={dripQuantity} onChangeDripQuantity={setDripQuantity} />
+          </Animated.View>
+        )}
         {orderType === 'LIMIT' && (
           <Animated.View entering={FadeInUp.duration(400).springify()}>
             <LimitPriceInput limitPrice={limitPrice} onChangeLimitPrice={setLimitPrice} />

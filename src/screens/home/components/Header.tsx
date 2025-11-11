@@ -6,8 +6,9 @@
 
 import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
 import { createHeaderStyles } from '../styles/homeStyles';
 
 interface HeaderProps {
@@ -27,6 +28,30 @@ export const Header: React.FC<HeaderProps> = ({
 }) => {
   const { colors } = useTheme();
   const headerStyles = createHeaderStyles(colors);
+  const [showBalance, setShowBalance] = useState(false);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
+
+  const handleCashLimitPress = () => {
+    setShowBalance(true);
+    
+    // Clear any existing timeout
+    if (timeoutRef.current) {
+      clearTimeout(timeoutRef.current);
+    }
+    
+    // Set timeout to hide balance after 1 second
+    timeoutRef.current = setTimeout(() => {
+      setShowBalance(false);
+    }, 1000);
+  };
 
   return (
     <>
@@ -34,12 +59,34 @@ export const Header: React.FC<HeaderProps> = ({
       <View style={headerStyles.headerTopSection}>
         <View style={headerStyles.headerTop}>
           {/* Cash Limit */}
-          <View style={headerStyles.cashLimitContainer}>
+          <TouchableOpacity 
+            style={headerStyles.cashLimitContainer} 
+            onPress={handleCashLimitPress}
+            activeOpacity={0.7}
+          >
             <View style={headerStyles.cashLimitIcon}>
               <Ionicons name="arrow-up-circle" size={18} color={colors.primary} />
             </View>
-            <Text style={headerStyles.cashLimitLabel}>Cash Limit</Text>
-          </View>
+            {showBalance ? (
+              <Animated.Text 
+                key="balance"
+                entering={FadeIn.duration(300)} 
+                exiting={FadeOut.duration(300)}
+                style={headerStyles.cashLimitLabel}
+              >
+                ৳{cashLimit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </Animated.Text>
+            ) : (
+              <Animated.Text 
+                key="label"
+                entering={FadeIn.duration(300)} 
+                exiting={FadeOut.duration(300)}
+                style={headerStyles.cashLimitLabel}
+              >
+                Cash Limit
+              </Animated.Text>
+            )}
+          </TouchableOpacity>
 
           {/* Divider */}
           <View style={headerStyles.divider} />

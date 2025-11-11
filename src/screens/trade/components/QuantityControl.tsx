@@ -2,7 +2,7 @@ import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { createQuantityStyles, createStockSelectorStyles } from '../styles/tradeStyles';
+import { createPriceInputStyles, createStockSelectorStyles } from '../styles/tradeStyles';
 
 interface QuantityControlProps {
   quantity: string;
@@ -14,8 +14,8 @@ export const QuantityControl: React.FC<QuantityControlProps> = ({
   onChangeQuantity,
 }) => {
   const { colors } = useTheme();
-  const selectorStyles = createStockSelectorStyles(colors);
-  const quantityStyles = createQuantityStyles(colors);
+    const selectorStyles = createStockSelectorStyles(colors);
+  const priceStyles = createPriceInputStyles(colors);
   
   const handleDecrement = () => {
     const qty = Math.max(1, parseInt(quantity) - 1);
@@ -31,28 +31,41 @@ export const QuantityControl: React.FC<QuantityControlProps> = ({
     const cleaned = text.replace(/[^0-9]/g, '');
     onChangeQuantity(cleaned || '0');
   };
+  // display qty
+  // drip qty
 
   return (
     <View style={selectorStyles.section}>
-      <Text style={selectorStyles.sectionLabel}>Quantity</Text>
-      <View style={quantityStyles.quantityControl}>
-        <TouchableOpacity style={quantityStyles.quantityButton} onPress={handleDecrement}>
-          <Ionicons name="remove" size={24} color={colors.textSecondary} />
-        </TouchableOpacity>
-
-        <TextInput
-          style={quantityStyles.quantityInput}
-          value={quantity}
-          onChangeText={handleTextChange}
-          keyboardType="number-pad"
-          textAlign="center"
-          placeholderTextColor={colors.textTertiary}
-        />
-
-        <TouchableOpacity style={quantityStyles.quantityButton} onPress={handleIncrement}>
-          <Ionicons name="add" size={24} color={colors.textSecondary} />
-        </TouchableOpacity>
-      </View>
-    </View>
+          <Text style={selectorStyles.sectionLabel}>Quantity</Text>
+          <View style={priceStyles.priceInputContainer}>
+            <TouchableOpacity
+              style={priceStyles.priceButton}
+              onPress={handleDecrement}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="remove" size={24} color={colors.danger} />
+            </TouchableOpacity>
+    
+            <View style={priceStyles.priceInputWrapper}>
+              <TextInput
+                style={priceStyles.priceInput}
+                value={quantity}
+                onChangeText={handleTextChange}
+                keyboardType="decimal-pad"
+                textAlign="center"
+                placeholder="0.00"
+                placeholderTextColor={colors.textTertiary}
+              />
+            </View>
+    
+            <TouchableOpacity
+              style={priceStyles.priceButton}
+              onPress={handleIncrement}
+              activeOpacity={0.7}
+            >
+              <Ionicons name="add" size={24} color={colors.success} />
+            </TouchableOpacity>
+          </View>
+        </View>
   );
 };

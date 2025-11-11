@@ -1,8 +1,14 @@
 import { useTheme } from '@/src/contexts/ThemeContext';
 import type { Stock } from '@/src/types';
 import { Ionicons } from '@expo/vector-icons';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import Animated, {
+    useAnimatedStyle,
+    useSharedValue,
+    withSpring,
+    withTiming,
+} from 'react-native-reanimated';
 
 interface MarketDepthProps {
   stock: Stock;
@@ -17,6 +23,51 @@ interface DepthLevel {
 export const MarketDepth: React.FC<MarketDepthProps> = ({ stock }) => {
   const { colors } = useTheme();
   const [isExpanded, setIsExpanded] = useState(true);
+
+  // Animated values
+  const contentHeight = useSharedValue(1);
+  const contentOpacity = useSharedValue(1);
+  const chevronRotation = useSharedValue(0);
+
+  // Update animations when expanded state changes
+  useEffect(() => {
+    if (isExpanded) {
+      contentHeight.value = withSpring(1, {
+        damping: 20,
+        stiffness: 90,
+      });
+      contentOpacity.value = withTiming(1, { duration: 300 });
+      chevronRotation.value = withSpring(180, {
+        damping: 15,
+        stiffness: 100,
+      });
+    } else {
+      contentHeight.value = withSpring(0, {
+        damping: 20,
+        stiffness: 90,
+      });
+      contentOpacity.value = withTiming(0, { duration: 200 });
+      chevronRotation.value = withSpring(0, {
+        damping: 15,
+        stiffness: 100,
+      });
+    }
+  }, [isExpanded, contentHeight, contentOpacity, chevronRotation]);
+
+  // Animated styles
+  const animatedContentStyle = useAnimatedStyle(() => {
+    return {
+      maxHeight: contentHeight.value * 500, // Max height when expanded
+      opacity: contentOpacity.value,
+      overflow: 'hidden',
+    };
+  });
+
+  const animatedChevronStyle = useAnimatedStyle(() => {
+    return {
+      transform: [{ rotate: `${chevronRotation.value}deg` }],
+    };
+  });
 
   // Generate realistic market depth data
   const generateDepthData = (): { bids: DepthLevel[]; asks: DepthLevel[] } => {
@@ -227,44 +278,38 @@ export const MarketDepth: React.FC<MarketDepthProps> = ({ stock }) => {
     },
   });
 
-  if (!isExpanded) {
-    return (
-      <View style={styles.container}>
-        <Pressable style={styles.header} onPress={() => setIsExpanded(true)}>
-          <View style={styles.headerLeft}>
-            <Ionicons name="layers-outline" size={18} color={colors.text} />
-            <Text style={styles.title}>Market Depth</Text>
-          </View>
-          <Ionicons name="chevron-down" size={20} color={colors.textSecondary} />
-        </Pressable>
-      </View>
-    );
-  }
+  const toggleExpanded = () => {
+    setIsExpanded(!isExpanded);
+  };
 
   return (
     <View style={styles.container}>
       {/* Header */}
-      <Pressable style={styles.header} onPress={() => setIsExpanded(false)}>
+      <Pressable style={styles.header} onPress={toggleExpanded}>
         <View style={styles.headerLeft}>
           <Ionicons name="layers-outline" size={18} color={colors.text} />
           <Text style={styles.title}>Market Depth</Text>
         </View>
-        <Ionicons name="chevron-up" size={20} color={colors.textSecondary} />
+        <Animated.View style={animatedChevronStyle}>
+          <Ionicons name="chevron-down" size={20} color={colors.textSecondary} />
+        </Animated.View>
       </Pressable>
 
-      {/* Buy/Sell Pressure Bar */}
-      <View style={styles.pressureBar}>
-        <View style={[styles.buyBar, { width: `${buyPressure}%` as any }]} />
-        <View style={[styles.sellBar, { width: `${sellPressure}%` as any }]} />
-      </View>
+      {/* Animated Content */}
+      <Animated.View style={animatedContentStyle}>
+        {/* Buy/Sell Pressure Bar */}
+        <View style={styles.pressureBar}>
+          <View style={[styles.buyBar, { width: `${buyPressure}%` as any }]} />
+          <View style={[styles.sellBar, { width: `${sellPressure}%` as any }]} />
+        </View>
 
-      <View style={styles.pressureLabels}>
-        <Text style={[styles.pressureLabel, styles.buyPressureText]}>{buyPressure}%</Text>
-        <Text style={[styles.pressureLabel, styles.sellPressureText]}>{sellPressure}%</Text>
-      </View>
+        <View style={styles.pressureLabels}>
+          <Text style={[styles.pressureLabel, styles.buyPressureText]}>{buyPressure}%</Text>
+          <Text style={[styles.pressureLabel, styles.sellPressureText]}>{sellPressure}%</Text>
+        </View>
 
-      {/* Table Content */}
-      <View style={styles.content}>
+        {/* Table Content */}
+        <View style={styles.content}>
         {/* Table Header */}
         <View style={styles.tableHeader}>
           <Text style={[styles.tableHeaderCell, styles.bidQtyHeader]}>BID Q</Text>
@@ -307,7 +352,8 @@ export const MarketDepth: React.FC<MarketDepthProps> = ({ stock }) => {
           <Text style={styles.moreButtonText}>More</Text>
           <Ionicons name="chevron-down" size={16} color={colors.info} />
         </Pressable> */}
-      </View>
+        </View>
+      </Animated.View>
     </View>
   );
 };

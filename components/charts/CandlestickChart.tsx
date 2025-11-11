@@ -105,7 +105,7 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
         <Text style={styles.title}>Price Chart</Text>
         {selectedData && (
           <View style={styles.tooltip}>
-            <Text style={styles.tooltipPrice}>${selectedData.close.toFixed(2)}</Text>
+            <Text style={styles.tooltipPrice}>৳{selectedData.close.toFixed(2)}</Text>
             <Text style={styles.tooltipDate}>
               {new Date(selectedData.timestamp).toLocaleDateString('en-US', {
                 month: 'short',
@@ -205,7 +205,7 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
                     textAnchor="middle"
                     x={22.5}
                   >
-                    ${selectedData.close.toFixed(2)}
+                    ৳{selectedData.close.toFixed(2)}
                   </SvgText>
                 </Svg>
               </>
@@ -229,25 +229,25 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
         <View style={styles.statItem}>
           <Text style={styles.statLabel}>Open</Text>
           <Text style={styles.statValue}>
-            ${selectedData ? selectedData.open.toFixed(2) : data[0]?.open.toFixed(2)}
+            ৳{selectedData ? selectedData.open.toFixed(2) : data[0]?.open.toFixed(2)}
           </Text>
         </View>
         <View style={styles.statItem}>
           <Text style={styles.statLabel}>High</Text>
           <Text style={[styles.statValue, { color: '#10b981' }]}>
-            ${selectedData ? selectedData.high.toFixed(2) : Math.max(...data.map(d => d.high)).toFixed(2)}
+            ৳{selectedData ? selectedData.high.toFixed(2) : Math.max(...data.map(d => d.high)).toFixed(2)}
           </Text>
         </View>
         <View style={styles.statItem}>
           <Text style={styles.statLabel}>Low</Text>
           <Text style={[styles.statValue, { color: '#ef4444' }]}>
-            ${selectedData ? selectedData.low.toFixed(2) : Math.min(...data.map(d => d.low)).toFixed(2)}
+            ৳{selectedData ? selectedData.low.toFixed(2) : Math.min(...data.map(d => d.low)).toFixed(2)}
           </Text>
         </View>
         <View style={styles.statItem}>
           <Text style={styles.statLabel}>Close</Text>
           <Text style={styles.statValue}>
-            ${selectedData ? selectedData.close.toFixed(2) : data[data.length - 1]?.close.toFixed(2)}
+            ৳{selectedData ? selectedData.close.toFixed(2) : data[data.length - 1]?.close.toFixed(2)}
           </Text>
         </View>
       </View>

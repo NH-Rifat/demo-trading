@@ -1,7 +1,8 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { formatCurrency, formatLargeNumber } from '@/src/utils/helpers';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { statsStyles } from '../styles/stockDetailStyles';
+import { createStatsStyles } from '../styles/stockDetailStyles';
 
 interface KeyStatisticsProps {
   open: number;
@@ -20,33 +21,36 @@ export const KeyStatistics: React.FC<KeyStatisticsProps> = ({
   volume,
   avgVolume,
 }) => {
+  const { colors } = useTheme();
+  const styles = createStatsStyles(colors);
+  
   return (
-    <View style={statsStyles.section}>
-      <Text style={statsStyles.sectionTitle}>Key Statistics</Text>
-      <View style={statsStyles.statsGrid}>
-        <View style={statsStyles.statItem}>
-          <Text style={statsStyles.statLabel}>Open</Text>
-          <Text style={statsStyles.statValue}>{formatCurrency(open)}</Text>
+    <View style={styles.section}>
+      <Text style={styles.sectionTitle}>Key Statistics</Text>
+      <View style={styles.statsGrid}>
+        <View style={styles.statItem}>
+          <Text style={styles.statLabel}>Open</Text>
+          <Text style={styles.statValue}>{formatCurrency(open)}</Text>
         </View>
-        <View style={statsStyles.statItem}>
-          <Text style={statsStyles.statLabel}>High</Text>
-          <Text style={statsStyles.statValue}>{formatCurrency(high)}</Text>
+        <View style={styles.statItem}>
+          <Text style={styles.statLabel}>High</Text>
+          <Text style={styles.statValue}>{formatCurrency(high)}</Text>
         </View>
-        <View style={statsStyles.statItem}>
-          <Text style={statsStyles.statLabel}>Low</Text>
-          <Text style={statsStyles.statValue}>{formatCurrency(low)}</Text>
+        <View style={styles.statItem}>
+          <Text style={styles.statLabel}>Low</Text>
+          <Text style={styles.statValue}>{formatCurrency(low)}</Text>
         </View>
-        <View style={statsStyles.statItem}>
-          <Text style={statsStyles.statLabel}>Close</Text>
-          <Text style={statsStyles.statValue}>{formatCurrency(close)}</Text>
+        <View style={styles.statItem}>
+          <Text style={styles.statLabel}>Close</Text>
+          <Text style={styles.statValue}>{formatCurrency(close)}</Text>
         </View>
-        <View style={statsStyles.statItem}>
-          <Text style={statsStyles.statLabel}>Volume</Text>
-          <Text style={statsStyles.statValue}>{formatLargeNumber(volume)}</Text>
+        <View style={styles.statItem}>
+          <Text style={styles.statLabel}>Volume</Text>
+          <Text style={styles.statValue}>{formatLargeNumber(volume)}</Text>
         </View>
-        <View style={statsStyles.statItem}>
-          <Text style={statsStyles.statLabel}>Avg Volume</Text>
-          <Text style={statsStyles.statValue}>{avgVolume}</Text>
+        <View style={styles.statItem}>
+          <Text style={styles.statLabel}>Avg Volume</Text>
+          <Text style={styles.statValue}>{avgVolume}</Text>
         </View>
       </View>
     </View>

@@ -1,7 +1,8 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { userCardStyles } from '../styles/profileStyles';
+import { createUserCardStyles } from '../styles/profileStyles';
 
 interface UserCardProps {
   user: {
@@ -12,6 +13,9 @@ interface UserCardProps {
 }
 
 export const UserCard: React.FC<UserCardProps> = ({ user }) => {
+  const { colors } = useTheme();
+  const userCardStyles = createUserCardStyles(colors);
+
   return (
     <View style={userCardStyles.userCard}>
       <View style={userCardStyles.avatarContainer}>
@@ -22,7 +26,7 @@ export const UserCard: React.FC<UserCardProps> = ({ user }) => {
       <Text style={userCardStyles.userName}>{user?.name || 'Guest User'}</Text>
       <Text style={userCardStyles.userEmail}>{user?.email || 'guest@example.com'}</Text>
       <View style={userCardStyles.accountNumberContainer}>
-        <Ionicons name="card-outline" size={14} color="#6b7280" />
+        <Ionicons name="card-outline" size={14} color={colors.textSecondary} />
         <Text style={userCardStyles.accountNumber}>
           Account: {user?.accountNumber || 'XXXX-XXXX-XXXX'}
         </Text>

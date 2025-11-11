@@ -1,6 +1,7 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { Text } from 'react-native';
-import { styles } from '../styles/loginStyles';
+import { createStyles } from '../styles/loginStyles';
 
 // ============================================
 // WELCOME HEADER COMPONENT
@@ -8,6 +9,9 @@ import { styles } from '../styles/loginStyles';
 // ============================================
 
 export default function WelcomeHeader() {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
+
   return (
     <>
       <Text style={styles.welcomeText}>Welcome Back</Text>

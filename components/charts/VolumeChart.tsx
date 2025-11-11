@@ -3,6 +3,7 @@
 // Features: Interactive volume bars with touch gestures
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React, { useState } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
@@ -22,6 +23,8 @@ interface Props {
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function VolumeChart({ data, height = 180 }: Props) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const maxVolume = Math.max(...data.map((d) => d.volume));
@@ -113,7 +116,7 @@ export default function VolumeChart({ data, height = 180 }: Props) {
               y1={chartHeight - padding - (avgVolume / maxVolume) * (chartHeight - 2 * padding)}
               x2={chartWidth - padding}
               y2={chartHeight - padding - (avgVolume / maxVolume) * (chartHeight - 2 * padding)}
-              stroke="#9ca3af"
+              stroke={colors.textTertiary}
               strokeWidth="1"
               strokeDasharray="5,5"
               opacity={0.5}
@@ -206,9 +209,9 @@ export default function VolumeChart({ data, height = 180 }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
@@ -222,11 +225,11 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   dateText: {
     fontSize: 11,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   stats: {
@@ -238,13 +241,13 @@ const styles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 10,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginBottom: 2,
   },
   statValue: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   chartContainer: {
     borderRadius: 8,
@@ -257,7 +260,7 @@ const styles = StyleSheet.create({
     marginTop: 12,
     paddingTop: 12,
     borderTopWidth: 1,
-    borderTopColor: '#f3f4f6',
+    borderTopColor: colors.borderLight,
   },
   legendItem: {
     flexDirection: 'row',
@@ -271,11 +274,11 @@ const styles = StyleSheet.create({
   },
   legendText: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   hintText: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: colors.textTertiary,
     textAlign: 'center',
     marginTop: 8,
     fontStyle: 'italic',

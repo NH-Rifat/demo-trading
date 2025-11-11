@@ -34,6 +34,7 @@ const lightColors = {
   infoLight: '#dbeafe',
   success: '#10b981',
   successLight: '#d1fae5',
+  successDark: '#059669',
   shadow: '#000',
   card: '#ffffff',
 };
@@ -57,6 +58,7 @@ const darkColors = {
   infoLight: '#1e3a8a',
   success: '#10b981',
   successLight: '#064e3b',
+  successDark: '#34d399',
   shadow: '#000',
   card: '#1f2937',
 };

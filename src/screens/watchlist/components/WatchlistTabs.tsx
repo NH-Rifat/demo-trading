@@ -1,7 +1,8 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import type { Watchlist } from '@/src/types';
 import React from 'react';
 import { ScrollView } from 'react-native';
-import { watchlistTabStyles } from '../styles/watchlistStyles';
+import { createWatchlistTabStyles } from '../styles/watchlistStyles';
 import { WatchlistTab } from './WatchlistTab';
 
 interface WatchlistTabsProps {
@@ -17,11 +18,14 @@ export const WatchlistTabs: React.FC<WatchlistTabsProps> = ({
   onSelectWatchlist,
   onEditWatchlist,
 }) => {
+  const { colors } = useTheme();
+  const styles = createWatchlistTabStyles(colors);
+  
   return (
     <ScrollView
       horizontal
       showsHorizontalScrollIndicator={false}
-      contentContainerStyle={watchlistTabStyles.watchlistTabs}
+      contentContainerStyle={styles.watchlistTabs}
     >
       {watchlists.map((watchlist) => (
         <WatchlistTab

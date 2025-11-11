@@ -1,8 +1,9 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { formatCurrency } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { balanceCardStyles } from '../styles/profileStyles';
+import { createBalanceCardStyles } from '../styles/profileStyles';
 
 interface BalanceCardProps {
   balance: number;
@@ -15,15 +16,18 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
   totalInvestment,
   currentValue,
 }) => {
+  const { colors } = useTheme();
+  const balanceCardStyles = createBalanceCardStyles(colors);
+
   return (
     <View style={balanceCardStyles.balanceCard}>
       <View style={balanceCardStyles.balanceHeader}>
         <View style={balanceCardStyles.balanceHeaderLeft}>
-          <Ionicons name="wallet-outline" size={20} color="#10b981" />
+          <Ionicons name="wallet-outline" size={20} color={colors.success} />
           <Text style={balanceCardStyles.balanceLabel}>Available Balance</Text>
         </View>
         <TouchableOpacity style={balanceCardStyles.addFundsButton}>
-          <Ionicons name="add-circle" size={18} color="#10b981" />
+          <Ionicons name="add-circle" size={18} color={colors.success} />
           <Text style={balanceCardStyles.addFundsText}>Add Funds</Text>
         </TouchableOpacity>
       </View>

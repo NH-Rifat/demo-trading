@@ -1,9 +1,9 @@
 import { Platform, StyleSheet } from 'react-native';
 
-export const watchlistStyles = StyleSheet.create({
+export const createWatchlistStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: colors.background,
   },
   stockCardWrapper: {
     marginBottom: 8,
@@ -13,13 +13,13 @@ export const watchlistStyles = StyleSheet.create({
   },
 });
 
-export const headerStyles = StyleSheet.create({
+export const createHeaderStyles = (colors: any) => StyleSheet.create({
   header: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     paddingBottom: 16,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -39,19 +39,19 @@ export const headerStyles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   createButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#10b981',
+    backgroundColor: colors.success,
     justifyContent: 'center',
     alignItems: 'center',
   },
 });
 
-export const watchlistTabStyles = StyleSheet.create({
+export const createWatchlistTabStyles = (colors: any) => StyleSheet.create({
   watchlistTabs: {
     paddingHorizontal: 16,
     gap: 12,
@@ -62,13 +62,13 @@ export const watchlistTabStyles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 12,
     borderRadius: 12,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
     minWidth: 120,
   },
   watchlistTabActive: {
-    backgroundColor: '#d1fae5',
+    backgroundColor: colors.successLight,
     borderWidth: 2,
-    borderColor: '#10b981',
+    borderColor: colors.success,
   },
   watchlistTabContent: {
     flex: 1,
@@ -76,44 +76,44 @@ export const watchlistTabStyles = StyleSheet.create({
   watchlistTabName: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   watchlistTabNameActive: {
-    color: '#059669',
+    color: colors.successDark,
   },
   watchlistTabCount: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: colors.textTertiary,
     marginTop: 2,
   },
   watchlistTabCountActive: {
-    color: '#10b981',
+    color: colors.success,
   },
   watchlistEditButton: {
     width: 32,
     height: 32,
     borderRadius: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 8,
   },
 });
 
-export const modalStyles = StyleSheet.create({
+export const createModalStyles = (colors: any) => StyleSheet.create({
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     justifyContent: 'flex-end',
   },
   modalContent: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     padding: 24,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: -4 },
         shadowOpacity: 0.1,
         shadowRadius: 8,
@@ -132,17 +132,18 @@ export const modalStyles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   input: {
     borderWidth: 2,
-    borderColor: '#e5e7eb',
+    borderColor: colors.border,
     borderRadius: 12,
     paddingHorizontal: 16,
     paddingVertical: 12,
     fontSize: 16,
-    color: '#111827',
+    color: colors.text,
     marginBottom: 24,
+    backgroundColor: colors.card,
   },
   modalActions: {
     flexDirection: 'row',
@@ -156,22 +157,22 @@ export const modalStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   modalButtonCancel: {
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
   },
   modalButtonCreate: {
-    backgroundColor: '#10b981',
+    backgroundColor: colors.success,
   },
   modalButtonDelete: {
-    backgroundColor: '#ef4444',
+    backgroundColor: colors.danger,
     flex: 0.8,
   },
   modalButtonDisabled: {
-    backgroundColor: '#d1d5db',
+    backgroundColor: colors.disabled,
   },
   modalButtonTextCancel: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   modalButtonTextCreate: {
     fontSize: 16,

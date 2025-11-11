@@ -1,7 +1,8 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { headerStyles } from '../styles/watchlistStyles';
+import { createHeaderStyles } from '../styles/watchlistStyles';
 
 interface HeaderProps {
   insets: { top: number; bottom: number; left: number; right: number };
@@ -9,10 +10,13 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ insets, onCreatePress }) => {
+  const { colors } = useTheme();
+  const styles = createHeaderStyles(colors);
+  
   return (
-    <View style={[headerStyles.headerTop, { paddingTop: insets.top + 16 }]}>
-      <Text style={headerStyles.headerTitle}>Watchlists</Text>
-      <TouchableOpacity style={headerStyles.createButton} onPress={onCreatePress}>
+    <View style={[styles.headerTop, { paddingTop: insets.top + 16 }]}>
+      <Text style={styles.headerTitle}>Watchlists</Text>
+      <TouchableOpacity style={styles.createButton} onPress={onCreatePress}>
         <Ionicons name="add" size={24} color="#ffffff" />
       </TouchableOpacity>
     </View>

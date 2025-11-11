@@ -1,8 +1,9 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import type { Watchlist } from '@/src/types';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { watchlistTabStyles } from '../styles/watchlistStyles';
+import { createWatchlistTabStyles } from '../styles/watchlistStyles';
 
 interface WatchlistTabProps {
   watchlist: Watchlist;
@@ -17,38 +18,40 @@ export const WatchlistTab: React.FC<WatchlistTabProps> = ({
   onPress,
   onEdit,
 }) => {
+  const { colors } = useTheme();
+  const styles = createWatchlistTabStyles(colors);
   const stockCount = watchlist.stocks.length;
 
   return (
     <TouchableOpacity
       style={[
-        watchlistTabStyles.watchlistTab,
-        isActive && watchlistTabStyles.watchlistTabActive,
+        styles.watchlistTab,
+        isActive && styles.watchlistTabActive,
       ]}
       onPress={onPress}
       onLongPress={onEdit}
     >
-      <View style={watchlistTabStyles.watchlistTabContent}>
+      <View style={styles.watchlistTabContent}>
         <Text
           style={[
-            watchlistTabStyles.watchlistTabName,
-            isActive && watchlistTabStyles.watchlistTabNameActive,
+            styles.watchlistTabName,
+            isActive && styles.watchlistTabNameActive,
           ]}
         >
           {watchlist.name}
         </Text>
         <Text
           style={[
-            watchlistTabStyles.watchlistTabCount,
-            isActive && watchlistTabStyles.watchlistTabCountActive,
+            styles.watchlistTabCount,
+            isActive && styles.watchlistTabCountActive,
           ]}
         >
           {stockCount} {stockCount === 1 ? 'stock' : 'stocks'}
         </Text>
       </View>
       {isActive && (
-        <TouchableOpacity style={watchlistTabStyles.watchlistEditButton} onPress={onEdit}>
-          <Ionicons name="ellipsis-horizontal" size={18} color="#10b981" />
+        <TouchableOpacity style={styles.watchlistEditButton} onPress={onEdit}>
+          <Ionicons name="ellipsis-horizontal" size={18} color={colors.success} />
         </TouchableOpacity>
       )}
     </TouchableOpacity>

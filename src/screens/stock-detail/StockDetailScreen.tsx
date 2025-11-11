@@ -1,5 +1,6 @@
 import EmptyState from '@/components/common/EmptyState';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import {
     addStockToWatchlist,
@@ -23,7 +24,7 @@ import { TimeRangeSelector } from './components/TimeRangeSelector';
 import { useIsInWatchlist } from './hooks/useIsInWatchlist';
 import { useStockBySymbol } from './hooks/useStockBySymbol';
 import { useStockMetrics } from './hooks/useStockMetrics';
-import { stockDetailStyles } from './styles/stockDetailStyles';
+import { createStockDetailStyles } from './styles/stockDetailStyles';
 
 type TimeRange = '1D' | '1W' | '1M' | '3M' | '1Y' | 'ALL';
 
@@ -32,12 +33,15 @@ export default function StockDetailScreen() {
   const router = useRouter();
   const { symbol } = useLocalSearchParams<{ symbol: string }>();
   const dispatch = useAppDispatch();
+  const { colors } = useTheme();
 
   const stocks = useAppSelector((state: any) => state.market.stocks);
   const watchlistItems = useAppSelector((state: any) => state.watchlist.watchlists);
 
   const [selectedRange, setSelectedRange] = useState<TimeRange>('1D');
   const [isLoading, setIsLoading] = useState(true);
+  
+  const styles = createStockDetailStyles(colors);
 
   // Custom hooks
   const stock = useStockBySymbol(symbol);
@@ -106,7 +110,7 @@ export default function StockDetailScreen() {
 
   if (!stock) {
     return (
-      <SafeAreaView style={stockDetailStyles.container}>
+      <SafeAreaView style={styles.container}>
         <EmptyState
           icon="analytics-outline"
           title="Stock not found"
@@ -117,7 +121,7 @@ export default function StockDetailScreen() {
   }
 
   return (
-    <View style={stockDetailStyles.container}>
+    <View style={styles.container}>
       <Header
         symbol={stock.symbol}
         name={stock.name}
@@ -127,7 +131,7 @@ export default function StockDetailScreen() {
         onToggleWatchlist={handleWatchlistToggle}
       />
 
-      <ScrollView style={stockDetailStyles.scrollView} showsVerticalScrollIndicator={false}>
+      <ScrollView style={styles.scrollView} showsVerticalScrollIndicator={false}>
         <PriceSection
           price={stock.price}
           change={stock.change}

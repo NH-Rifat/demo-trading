@@ -3,6 +3,7 @@
 // Features: Email/password login, validation, demo credentials
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -17,10 +18,12 @@ import SignUpLink from './components/SignUpLink';
 import WelcomeHeader from './components/WelcomeHeader';
 import { useLoginAuth } from './hooks/useLoginAuth';
 import { useLoginForm } from './hooks/useLoginForm';
-import { styles } from './styles/loginStyles';
+import { createStyles } from './styles/loginStyles';
 
 export default function LoginScreen() {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const { handleLogin } = useLoginAuth();
 
   const {

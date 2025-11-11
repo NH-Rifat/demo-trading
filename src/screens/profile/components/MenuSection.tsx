@@ -1,7 +1,7 @@
 import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { menuStyles } from '../styles/profileStyles';
+import { createMenuStyles } from '../styles/profileStyles';
 import { MenuItem } from './MenuItem';
 
 interface MenuSectionProps {
@@ -17,10 +17,11 @@ interface MenuSectionProps {
 
 export const MenuSection: React.FC<MenuSectionProps> = ({ title, items }) => {
   const { colors } = useTheme();
+  const menuStyles = createMenuStyles(colors);
 
   return (
     <View style={menuStyles.section}>
-      <Text style={[menuStyles.sectionTitle, { color: colors.textTertiary }]}>{title}</Text>
+      <Text style={menuStyles.sectionTitle}>{title}</Text>
       {items.map((item, index) => (
         <MenuItem key={index} {...item} />
       ))}

@@ -1,26 +1,26 @@
 import { Platform, StyleSheet } from 'react-native';
 
-export const stockDetailStyles = StyleSheet.create({
+export const createStockDetailStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: colors.background,
   },
   scrollView: {
     flex: 1,
   },
 });
 
-export const headerStyles = StyleSheet.create({
+export const createHeaderStyles = (colors: any) => StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
     paddingBottom: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -34,7 +34,7 @@ export const headerStyles = StyleSheet.create({
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -46,36 +46,36 @@ export const headerStyles = StyleSheet.create({
   headerSymbol: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   headerName: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   starButton: {
     width: 40,
     height: 40,
     borderRadius: 20,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   starButtonActive: {
-    backgroundColor: '#fef3c7',
+    backgroundColor: colors.warningLight,
   },
 });
 
-export const priceSectionStyles = StyleSheet.create({
+export const createPriceSectionStyles = (colors: any) => StyleSheet.create({
   priceSection: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     padding: 24,
     alignItems: 'center',
   },
   currentPrice: {
     fontSize: 48,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   changeContainer: {
     flexDirection: 'row',
@@ -89,14 +89,14 @@ export const priceSectionStyles = StyleSheet.create({
   },
   lastUpdate: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: colors.textTertiary,
     marginTop: 8,
   },
 });
 
-export const timeRangeStyles = StyleSheet.create({
+export const createTimeRangeStyles = (colors: any) => StyleSheet.create({
   timeRangeSection: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     paddingVertical: 12,
     marginTop: 8,
   },
@@ -108,39 +108,39 @@ export const timeRangeStyles = StyleSheet.create({
     paddingHorizontal: 20,
     paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
   },
   timeRangeButtonActive: {
-    backgroundColor: '#10b981',
+    backgroundColor: colors.success,
   },
   timeRangeText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   timeRangeTextActive: {
     color: '#ffffff',
   },
 });
 
-export const chartStyles = StyleSheet.create({
+export const createChartStyles = (colors: any) => StyleSheet.create({
   chartSection: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     marginTop: 8,
     padding: 24,
   },
 });
 
-export const statsStyles = StyleSheet.create({
+export const createStatsStyles = (colors: any) => StyleSheet.create({
   section: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     marginTop: 8,
     padding: 24,
   },
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 16,
   },
   statsGrid: {
@@ -154,19 +154,19 @@ export const statsStyles = StyleSheet.create({
   },
   statLabel: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginBottom: 4,
   },
   statValue: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.text,
   },
 });
 
-export const companyInfoStyles = StyleSheet.create({
+export const createCompanyInfoStyles = (colors: any) => StyleSheet.create({
   infoCard: {
-    backgroundColor: '#f9fafb',
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 12,
     padding: 16,
   },
@@ -178,25 +178,25 @@ export const companyInfoStyles = StyleSheet.create({
   },
   infoLabel: {
     fontSize: 14,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   infoValue: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.text,
   },
   divider: {
     height: 1,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: colors.border,
   },
   aboutText: {
     fontSize: 14,
     lineHeight: 22,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
 });
 
-export const actionButtonStyles = StyleSheet.create({
+export const createActionButtonStyles = (colors: any) => StyleSheet.create({
   bottomActions: {
     position: 'absolute',
     bottom: 0,
@@ -205,10 +205,10 @@ export const actionButtonStyles = StyleSheet.create({
     flexDirection: 'row',
     padding: 16,
     gap: 12,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: -2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -228,10 +228,10 @@ export const actionButtonStyles = StyleSheet.create({
     gap: 8,
   },
   sellButton: {
-    backgroundColor: '#ef4444',
+    backgroundColor: colors.danger,
   },
   buyButton: {
-    backgroundColor: '#10b981',
+    backgroundColor: colors.success,
   },
   actionButtonText: {
     fontSize: 16,

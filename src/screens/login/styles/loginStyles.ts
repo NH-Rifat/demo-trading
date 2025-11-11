@@ -5,11 +5,11 @@ import { Platform, StyleSheet } from 'react-native';
 // Organized style groups for login screen components
 // ============================================
 
-export const styles = StyleSheet.create({
+export const createStyles = (colors: any) => StyleSheet.create({
   // Container Styles
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: colors.background,
   },
   scrollContent: {
     flexGrow: 1,
@@ -27,13 +27,13 @@ export const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
-    backgroundColor: '#10b981',
+    backgroundColor: colors.success,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 20,
     ...Platform.select({
       ios: {
-        shadowColor: '#10b981',
+        shadowColor: colors.success,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 12,
@@ -46,12 +46,12 @@ export const styles = StyleSheet.create({
   appName: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 8,
   },
   tagline: {
     fontSize: 14,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
 
   // Form Container Styles
@@ -61,12 +61,12 @@ export const styles = StyleSheet.create({
   welcomeText: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 8,
   },
   subtitleText: {
     fontSize: 16,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginBottom: 24,
   },
 
@@ -75,12 +75,12 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#dbeafe',
+    backgroundColor: colors.info + '20',
     borderRadius: 12,
     padding: 16,
     marginBottom: 24,
     borderWidth: 1,
-    borderColor: '#93c5fd',
+    borderColor: colors.info + '40',
   },
   demoBannerLeft: {
     flexDirection: 'row',
@@ -89,7 +89,7 @@ export const styles = StyleSheet.create({
   },
   demoBannerText: {
     fontSize: 14,
-    color: '#1e40af',
+    color: colors.info,
     fontWeight: '600',
   },
 
@@ -100,26 +100,26 @@ export const styles = StyleSheet.create({
   inputLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#374151',
+    color: colors.text,
     marginBottom: 8,
   },
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     borderRadius: 12,
     paddingHorizontal: 16,
     height: 56,
     borderWidth: 2,
-    borderColor: '#e5e7eb',
+    borderColor: colors.border,
   },
   inputError: {
-    borderColor: '#ef4444',
+    borderColor: colors.danger,
   },
   input: {
     flex: 1,
     fontSize: 16,
-    color: '#111827',
+    color: colors.text,
     marginLeft: 12,
   },
   eyeIcon: {
@@ -127,7 +127,7 @@ export const styles = StyleSheet.create({
   },
   errorText: {
     fontSize: 12,
-    color: '#ef4444',
+    color: colors.danger,
     marginTop: 6,
     marginLeft: 4,
   },
@@ -139,7 +139,7 @@ export const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     fontSize: 14,
-    color: '#10b981',
+    color: colors.success,
     fontWeight: '600',
   },
 
@@ -148,13 +148,13 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#10b981',
+    backgroundColor: colors.success,
     borderRadius: 12,
     height: 56,
     gap: 8,
     ...Platform.select({
       ios: {
-        shadowColor: '#10b981',
+        shadowColor: colors.success,
         shadowOffset: { width: 0, height: 4 },
         shadowOpacity: 0.3,
         shadowRadius: 8,
@@ -185,16 +185,16 @@ export const styles = StyleSheet.create({
   dividerLine: {
     flex: 1,
     height: 1,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: colors.border,
   },
   dividerText: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: colors.textTertiary,
     marginHorizontal: 12,
     fontWeight: '600',
   },
   credentialsBox: {
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 12,
     padding: 16,
     gap: 12,
@@ -206,7 +206,7 @@ export const styles = StyleSheet.create({
   },
   credentialText: {
     fontSize: 14,
-    color: '#374151',
+    color: colors.text,
     fontFamily: Platform.OS === 'ios' ? 'Courier' : 'monospace',
   },
 
@@ -218,18 +218,18 @@ export const styles = StyleSheet.create({
   },
   signUpText: {
     fontSize: 14,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   signUpLink: {
     fontSize: 14,
-    color: '#10b981',
+    color: colors.success,
     fontWeight: '700',
   },
 
   // Footer Styles
   footer: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: colors.textTertiary,
     textAlign: 'center',
     marginTop: 32,
   },

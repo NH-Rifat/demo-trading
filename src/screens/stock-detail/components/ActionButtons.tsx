@@ -1,7 +1,8 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { actionButtonStyles } from '../styles/stockDetailStyles';
+import { createActionButtonStyles } from '../styles/stockDetailStyles';
 
 interface ActionButtonsProps {
   onSell: () => void;
@@ -9,22 +10,25 @@ interface ActionButtonsProps {
 }
 
 export const ActionButtons: React.FC<ActionButtonsProps> = ({ onSell, onBuy }) => {
+  const { colors } = useTheme();
+  const styles = createActionButtonStyles(colors);
+  
   return (
-    <View style={actionButtonStyles.bottomActions}>
+    <View style={styles.bottomActions}>
       <TouchableOpacity
-        style={[actionButtonStyles.actionButton, actionButtonStyles.sellButton]}
+        style={[styles.actionButton, styles.sellButton]}
         onPress={onSell}
       >
         <Ionicons name="trending-down" size={20} color="#ffffff" />
-        <Text style={actionButtonStyles.actionButtonText}>Sell</Text>
+        <Text style={styles.actionButtonText}>Sell</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
-        style={[actionButtonStyles.actionButton, actionButtonStyles.buyButton]}
+        style={[styles.actionButton, styles.buyButton]}
         onPress={onBuy}
       >
         <Ionicons name="trending-up" size={20} color="#ffffff" />
-        <Text style={actionButtonStyles.actionButtonText}>Buy</Text>
+        <Text style={styles.actionButtonText}>Buy</Text>
       </TouchableOpacity>
     </View>
   );

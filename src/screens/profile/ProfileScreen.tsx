@@ -13,12 +13,14 @@ import { QuickStats } from './components/QuickStats';
 import { ThemeModal } from './components/ThemeModal';
 import { UserCard } from './components/UserCard';
 import { useOrderStats } from './hooks/useOrderStats';
-import { menuStyles, profileStyles } from './styles/profileStyles';
+import { createMenuStyles, createProfileStyles } from './styles/profileStyles';
 
 export default function ProfileScreen() {
   const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
-  const { themeMode, setThemeMode } = useTheme();
+  const { themeMode, setThemeMode, colors } = useTheme();
+  const profileStyles = createProfileStyles(colors);
+  const menuStyles = createMenuStyles(colors);
   const [showThemeModal, setShowThemeModal] = useState(false);
 
   // Redux selectors

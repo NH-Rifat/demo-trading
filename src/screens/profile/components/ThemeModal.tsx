@@ -2,7 +2,7 @@ import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Modal, Text, TouchableOpacity, View } from 'react-native';
-import { themeModalStyles } from '../styles/profileStyles';
+import { createThemeModalStyles } from '../styles/profileStyles';
 
 interface ThemeModalProps {
   visible: boolean;
@@ -18,6 +18,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
   onSelectTheme,
 }) => {
   const { colors } = useTheme();
+  const themeModalStyles = createThemeModalStyles(colors);
 
   const themeOptions = [
     {
@@ -68,7 +69,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                 themeModalStyles.themeOption,
                 {
                   backgroundColor: colors.surfaceSecondary,
-                  borderColor: themeMode === option.mode ? colors.primary : 'transparent',
+                  borderColor: themeMode === option.mode ? colors.success : 'transparent',
                 },
               ]}
               onPress={() => {
@@ -86,7 +87,7 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
                 </Text>
               </View>
               {themeMode === option.mode && (
-                <Ionicons name="checkmark-circle" size={24} color={colors.primary} />
+                <Ionicons name="checkmark-circle" size={24} color={colors.success} />
               )}
             </TouchableOpacity>
           ))}

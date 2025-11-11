@@ -1,5 +1,6 @@
 import EmptyState from '@/components/common/EmptyState';
 import StockCard from '@/components/common/StockCard';
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import {
     createWatchlist,
@@ -18,12 +19,13 @@ import { EditWatchlistModal } from './components/EditWatchlistModal';
 import { Header } from './components/Header';
 import { WatchlistTabs } from './components/WatchlistTabs';
 import { useWatchlistStocks } from './hooks/useWatchlistStocks';
-import { headerStyles, watchlistStyles } from './styles/watchlistStyles';
+import { createHeaderStyles, createWatchlistStyles } from './styles/watchlistStyles';
 
 export default function WatchlistScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
 
   const watchlists = useAppSelector((state: any) => state.watchlist.watchlists);
   const activeWatchlistId = useAppSelector((state: any) => state.watchlist.activeWatchlistId);
@@ -38,6 +40,10 @@ export default function WatchlistScreen() {
 
   // Get stocks in active watchlist
   const watchlistStocks = useWatchlistStocks(activeWatchlist);
+
+  // Create styles
+  const styles = createWatchlistStyles(colors);
+  const hStyles = createHeaderStyles(colors);
 
   // Handlers
   const handleCreateWatchlist = () => {
@@ -100,7 +106,7 @@ export default function WatchlistScreen() {
 
   // Render header
   const renderHeader = () => (
-    <View style={[headerStyles.header, { paddingTop: insets.top + 16 }]}>
+    <View style={[hStyles.header, { paddingTop: insets.top + 16 }]}>
       <Header insets={insets} onCreatePress={() => setIsCreateModalVisible(true)} />
       <WatchlistTabs
         watchlists={watchlists}
@@ -114,7 +120,7 @@ export default function WatchlistScreen() {
   // Empty state - no watchlists
   if (watchlists.length === 0) {
     return (
-      <View style={watchlistStyles.container}>
+      <View style={styles.container}>
         {renderHeader()}
         <EmptyState
           icon="star-outline"
@@ -128,7 +134,7 @@ export default function WatchlistScreen() {
   // No active watchlist
   if (!activeWatchlist) {
     return (
-      <View style={watchlistStyles.container}>
+      <View style={styles.container}>
         {renderHeader()}
         <EmptyState
           icon="list-outline"
@@ -140,13 +146,13 @@ export default function WatchlistScreen() {
   }
 
   return (
-    <View style={watchlistStyles.container}>
+    <View style={styles.container}>
       <FlatList
         data={watchlistStocks}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={renderHeader}
         renderItem={({ item }) => (
-          <View style={watchlistStyles.stockCardWrapper}>
+          <View style={styles.stockCardWrapper}>
             <StockCard
               stock={item}
               onPress={() => handleStockPress(item)}
@@ -163,7 +169,7 @@ export default function WatchlistScreen() {
             message={`Add stocks to "${activeWatchlist.name}" to track them`}
           />
         }
-        contentContainerStyle={watchlistStocks.length === 0 ? watchlistStyles.emptyList : undefined}
+        contentContainerStyle={watchlistStocks.length === 0 ? styles.emptyList : undefined}
         showsVerticalScrollIndicator={false}
       />
 

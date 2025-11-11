@@ -1,8 +1,9 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { formatCurrency, formatPercent } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { priceSectionStyles } from '../styles/stockDetailStyles';
+import { createPriceSectionStyles } from '../styles/stockDetailStyles';
 
 interface PriceSectionProps {
   price: number;
@@ -19,22 +20,24 @@ export const PriceSection: React.FC<PriceSectionProps> = ({
   priceColor,
   lastUpdate,
 }) => {
+  const { colors } = useTheme();
+  const styles = createPriceSectionStyles(colors);
   const isPositive = change >= 0;
 
   return (
-    <View style={priceSectionStyles.priceSection}>
-      <Text style={priceSectionStyles.currentPrice}>{formatCurrency(price)}</Text>
-      <View style={priceSectionStyles.changeContainer}>
+    <View style={styles.priceSection}>
+      <Text style={styles.currentPrice}>{formatCurrency(price)}</Text>
+      <View style={styles.changeContainer}>
         <Ionicons
           name={isPositive ? 'trending-up' : 'trending-down'}
           size={20}
           color={priceColor}
         />
-        <Text style={[priceSectionStyles.changeText, { color: priceColor }]}>
+        <Text style={[styles.changeText, { color: priceColor }]}>
           {formatCurrency(Math.abs(change))} ({formatPercent(changePercent)})
         </Text>
       </View>
-      <Text style={priceSectionStyles.lastUpdate}>
+      <Text style={styles.lastUpdate}>
         Last updated: {new Date(lastUpdate).toLocaleTimeString()}
       </Text>
     </View>

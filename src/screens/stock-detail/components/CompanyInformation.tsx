@@ -1,6 +1,7 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { companyInfoStyles, statsStyles } from '../styles/stockDetailStyles';
+import { createCompanyInfoStyles, createStatsStyles } from '../styles/stockDetailStyles';
 
 interface CompanyInformationProps {
   sector: string;
@@ -15,28 +16,32 @@ export const CompanyInformation: React.FC<CompanyInformationProps> = ({
   peRatio,
   dayRange,
 }) => {
+  const { colors } = useTheme();
+  const statsStyles = createStatsStyles(colors);
+  const infoStyles = createCompanyInfoStyles(colors);
+  
   return (
     <View style={statsStyles.section}>
       <Text style={statsStyles.sectionTitle}>Company Information</Text>
-      <View style={companyInfoStyles.infoCard}>
-        <View style={companyInfoStyles.infoRow}>
-          <Text style={companyInfoStyles.infoLabel}>Sector</Text>
-          <Text style={companyInfoStyles.infoValue}>{sector}</Text>
+      <View style={infoStyles.infoCard}>
+        <View style={infoStyles.infoRow}>
+          <Text style={infoStyles.infoLabel}>Sector</Text>
+          <Text style={infoStyles.infoValue}>{sector}</Text>
         </View>
-        <View style={companyInfoStyles.divider} />
-        <View style={companyInfoStyles.infoRow}>
-          <Text style={companyInfoStyles.infoLabel}>Market Cap</Text>
-          <Text style={companyInfoStyles.infoValue}>{marketCap}</Text>
+        <View style={infoStyles.divider} />
+        <View style={infoStyles.infoRow}>
+          <Text style={infoStyles.infoLabel}>Market Cap</Text>
+          <Text style={infoStyles.infoValue}>{marketCap}</Text>
         </View>
-        <View style={companyInfoStyles.divider} />
-        <View style={companyInfoStyles.infoRow}>
-          <Text style={companyInfoStyles.infoLabel}>P/E Ratio</Text>
-          <Text style={companyInfoStyles.infoValue}>{peRatio}</Text>
+        <View style={infoStyles.divider} />
+        <View style={infoStyles.infoRow}>
+          <Text style={infoStyles.infoLabel}>P/E Ratio</Text>
+          <Text style={infoStyles.infoValue}>{peRatio}</Text>
         </View>
-        <View style={companyInfoStyles.divider} />
-        <View style={companyInfoStyles.infoRow}>
-          <Text style={companyInfoStyles.infoLabel}>Day Range</Text>
-          <Text style={companyInfoStyles.infoValue}>{dayRange}</Text>
+        <View style={infoStyles.divider} />
+        <View style={infoStyles.infoRow}>
+          <Text style={infoStyles.infoLabel}>Day Range</Text>
+          <Text style={infoStyles.infoValue}>{dayRange}</Text>
         </View>
       </View>
     </View>

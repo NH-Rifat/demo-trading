@@ -1,7 +1,8 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { modalStyles } from '../styles/watchlistStyles';
+import { createModalStyles } from '../styles/watchlistStyles';
 
 interface EditWatchlistModalProps {
   visible: boolean;
@@ -20,51 +21,55 @@ export const EditWatchlistModal: React.FC<EditWatchlistModalProps> = ({
   onDelete,
   onClose,
 }) => {
+  const { colors } = useTheme();
+  const styles = createModalStyles(colors);
+  
   return (
     <Modal visible={visible} animationType="slide" transparent={true} onRequestClose={onClose}>
-      <View style={modalStyles.modalOverlay}>
-        <View style={modalStyles.modalContent}>
-          <View style={modalStyles.modalHeader}>
-            <Text style={modalStyles.modalTitle}>Edit Watchlist</Text>
+      <View style={styles.modalOverlay}>
+        <View style={styles.modalContent}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalTitle}>Edit Watchlist</Text>
             <TouchableOpacity onPress={onClose}>
-              <Ionicons name="close" size={24} color="#6b7280" />
+              <Ionicons name="close" size={24} color={colors.textSecondary} />
             </TouchableOpacity>
           </View>
 
           <TextInput
-            style={modalStyles.input}
+            style={styles.input}
             placeholder="Watchlist name"
+            placeholderTextColor={colors.textTertiary}
             value={watchlistName}
             onChangeText={onChangeName}
             autoFocus
             maxLength={50}
           />
 
-          <View style={modalStyles.modalActions}>
+          <View style={styles.modalActions}>
             <TouchableOpacity
-              style={[modalStyles.modalButton, modalStyles.modalButtonCancel]}
+              style={[styles.modalButton, styles.modalButtonCancel]}
               onPress={onClose}
             >
-              <Text style={modalStyles.modalButtonTextCancel}>Cancel</Text>
+              <Text style={styles.modalButtonTextCancel}>Cancel</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
-              style={[modalStyles.modalButton, modalStyles.modalButtonDelete]}
+              style={[styles.modalButton, styles.modalButtonDelete]}
               onPress={onDelete}
             >
-              <Text style={modalStyles.modalButtonTextDelete}>Delete</Text>
+              <Text style={styles.modalButtonTextDelete}>Delete</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={[
-                modalStyles.modalButton,
-                modalStyles.modalButtonCreate,
-                !watchlistName.trim() && modalStyles.modalButtonDisabled,
+                styles.modalButton,
+                styles.modalButtonCreate,
+                !watchlistName.trim() && styles.modalButtonDisabled,
               ]}
               onPress={onSave}
               disabled={!watchlistName.trim()}
             >
-              <Text style={modalStyles.modalButtonTextCreate}>Save</Text>
+              <Text style={styles.modalButtonTextCreate}>Save</Text>
             </TouchableOpacity>
           </View>
         </View>

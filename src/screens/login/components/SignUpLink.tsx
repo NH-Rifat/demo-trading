@@ -1,6 +1,7 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { styles } from '../styles/loginStyles';
+import { createStyles } from '../styles/loginStyles';
 
 // ============================================
 // SIGN UP LINK COMPONENT
@@ -8,6 +9,9 @@ import { styles } from '../styles/loginStyles';
 // ============================================
 
 export default function SignUpLink() {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
+
   return (
     <View style={styles.signUpContainer}>
       <Text style={styles.signUpText}>Don&apos;t have an account? </Text>

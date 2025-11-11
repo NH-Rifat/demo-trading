@@ -1,7 +1,8 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { styles } from '../styles/loginStyles';
+import { createStyles } from '../styles/loginStyles';
 
 // ============================================
 // INPUT FIELD COMPONENT
@@ -37,15 +38,18 @@ export default function InputField({
   autoCapitalize = 'none',
   autoComplete = 'off',
 }: Props) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
+
   return (
     <View style={styles.inputContainer}>
       <Text style={styles.inputLabel}>{label}</Text>
       <View style={[styles.inputWrapper, error && styles.inputError]}>
-        <Ionicons name={icon} size={20} color="#6b7280" />
+        <Ionicons name={icon} size={20} color={colors.textSecondary} />
         <TextInput
           style={styles.input}
           placeholder={placeholder}
-          placeholderTextColor="#9ca3af"
+          placeholderTextColor={colors.textTertiary}
           value={value}
           onChangeText={onChangeText}
           secureTextEntry={secureTextEntry && !showPassword}
@@ -58,7 +62,7 @@ export default function InputField({
             <Ionicons
               name={showPassword ? 'eye-outline' : 'eye-off-outline'}
               size={20}
-              color="#6b7280"
+              color={colors.textSecondary}
             />
           </TouchableOpacity>
         )}

@@ -1,6 +1,7 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { timeRangeStyles } from '../styles/stockDetailStyles';
+import { createTimeRangeStyles } from '../styles/stockDetailStyles';
 
 type TimeRange = '1D' | '1W' | '1M' | '3M' | '1Y' | 'ALL';
 
@@ -15,26 +16,29 @@ export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
   selectedRange,
   onSelectRange,
 }) => {
+  const { colors } = useTheme();
+  const styles = createTimeRangeStyles(colors);
+  
   return (
-    <View style={timeRangeStyles.timeRangeSection}>
+    <View style={styles.timeRangeSection}>
       <ScrollView
         horizontal
         showsHorizontalScrollIndicator={false}
-        contentContainerStyle={timeRangeStyles.timeRangeScroll}
+        contentContainerStyle={styles.timeRangeScroll}
       >
         {TIME_RANGES.map((range) => (
           <TouchableOpacity
             key={range}
             style={[
-              timeRangeStyles.timeRangeButton,
-              selectedRange === range && timeRangeStyles.timeRangeButtonActive,
+              styles.timeRangeButton,
+              selectedRange === range && styles.timeRangeButtonActive,
             ]}
             onPress={() => onSelectRange(range)}
           >
             <Text
               style={[
-                timeRangeStyles.timeRangeText,
-                selectedRange === range && timeRangeStyles.timeRangeTextActive,
+                styles.timeRangeText,
+                selectedRange === range && styles.timeRangeTextActive,
               ]}
             >
               {range}

@@ -3,6 +3,7 @@
 // Features: Simple line chart with OHLC stats and touch interaction
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React, { useState } from 'react';
 import { Dimensions, StyleSheet, Text, View } from 'react-native';
 import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
@@ -25,6 +26,8 @@ interface Props {
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function CandlestickChart({ data, height = 280 }: Props) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   // Calculate chart dimensions
@@ -128,7 +131,7 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
               y1={chartHeight / 2}
               x2={chartWidth - padding}
               y2={chartHeight / 2}
-              stroke="#f3f4f6"
+              stroke={colors.borderLight}
               strokeWidth="1"
               strokeDasharray="5,5"
             />
@@ -152,7 +155,7 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
                   y1={padding}
                   x2={selectedPoint.x}
                   y2={chartHeight - padding}
-                  stroke="#6b7280"
+                  stroke={colors.textSecondary}
                   strokeWidth="1"
                   strokeDasharray="3,3"
                   opacity={0.5}
@@ -164,7 +167,7 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
                   y1={selectedPoint.y}
                   x2={chartWidth - padding}
                   y2={selectedPoint.y}
-                  stroke="#6b7280"
+                  stroke={colors.textSecondary}
                   strokeWidth="1"
                   strokeDasharray="3,3"
                   opacity={0.5}
@@ -255,9 +258,11 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
       )}
     </GestureHandlerRootView>
   );
-}const styles = StyleSheet.create({
+}
+
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
@@ -271,7 +276,7 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
   title: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   tooltip: {
     alignItems: 'flex-end',
@@ -279,11 +284,11 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
   tooltipPrice: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   tooltipDate: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   chartContainer: {
     borderRadius: 8,
@@ -295,25 +300,25 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
     marginTop: 16,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#f3f4f6',
+    borderTopColor: colors.borderLight,
   },
   statItem: {
     alignItems: 'center',
   },
   statLabel: {
     fontSize: 11,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginBottom: 4,
     textTransform: 'uppercase',
   },
   statValue: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   hintText: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: colors.textTertiary,
     textAlign: 'center',
     marginTop: 8,
     fontStyle: 'italic',
@@ -325,7 +330,7 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
     marginTop: 12,
     paddingTop: 12,
     borderTopWidth: 1,
-    borderTopColor: '#f3f4f6',
+    borderTopColor: colors.borderLight,
   },
   legendItem: {
     flexDirection: 'row',
@@ -339,6 +344,6 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
   },
   legendText: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
 });

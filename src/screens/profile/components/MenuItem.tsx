@@ -2,7 +2,7 @@ import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { menuStyles } from '../styles/profileStyles';
+import { createMenuStyles } from '../styles/profileStyles';
 
 interface MenuItemProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -20,15 +20,16 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   onPress,
 }) => {
   const { colors } = useTheme();
+  const menuStyles = createMenuStyles(colors);
 
   return (
     <TouchableOpacity 
-      style={[menuStyles.menuItem, { backgroundColor: colors.surface, borderBottomColor: colors.borderLight }]} 
+      style={menuStyles.menuItem}
       onPress={onPress}
     >
       <View style={menuStyles.menuItemLeft}>
         <Ionicons name={icon} size={22} color={colors.textSecondary} />
-        <Text style={[menuStyles.menuItemText, { color: colors.text }]}>{label}</Text>
+        <Text style={menuStyles.menuItemText}>{label}</Text>
       </View>
       <View style={menuStyles.menuItemRight}>
         {badge !== undefined && badge > 0 && (
@@ -37,7 +38,7 @@ export const MenuItem: React.FC<MenuItemProps> = ({
           </View>
         )}
         {value && (
-          <Text style={[menuStyles.menuItemValue, { color: colors.textSecondary }]}>{value}</Text>
+          <Text style={menuStyles.menuItemValue}>{value}</Text>
         )}
         <Ionicons name="chevron-forward" size={20} color={colors.textTertiary} />
       </View>

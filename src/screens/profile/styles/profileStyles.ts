@@ -1,24 +1,24 @@
 import { Platform, StyleSheet } from 'react-native';
 
-export const profileStyles = StyleSheet.create({
+export const createProfileStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: colors.background,
   },
   scrollContent: {
     paddingBottom: 40,
   },
 });
 
-export const headerStyles = StyleSheet.create({
+export const createHeaderStyles = (colors: any) => StyleSheet.create({
   header: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     paddingTop: Platform.OS === 'ios' ? 60 : 48,
     paddingHorizontal: 16,
     paddingBottom: 20,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -31,20 +31,20 @@ export const headerStyles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
 });
 
-export const userCardStyles = StyleSheet.create({
+export const createUserCardStyles = (colors: any) => StyleSheet.create({
   userCard: {
     margin: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 16,
     padding: 24,
     alignItems: 'center',
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 8,
@@ -61,19 +61,19 @@ export const userCardStyles = StyleSheet.create({
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#10b981',
+    backgroundColor: colors.success,
     justifyContent: 'center',
     alignItems: 'center',
   },
   userName: {
     fontSize: 22,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 4,
   },
   userEmail: {
     fontSize: 14,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginBottom: 12,
   },
   accountNumberContainer: {
@@ -82,26 +82,26 @@ export const userCardStyles = StyleSheet.create({
     gap: 6,
     paddingHorizontal: 12,
     paddingVertical: 6,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 12,
   },
   accountNumber: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
     fontWeight: '600',
   },
 });
 
-export const balanceCardStyles = StyleSheet.create({
+export const createBalanceCardStyles = (colors: any) => StyleSheet.create({
   balanceCard: {
     marginHorizontal: 16,
     marginBottom: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 16,
     padding: 20,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 8,
@@ -124,7 +124,7 @@ export const balanceCardStyles = StyleSheet.create({
   },
   balanceLabel: {
     fontSize: 14,
-    color: '#6b7280',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
   addFundsButton: {
@@ -133,47 +133,47 @@ export const balanceCardStyles = StyleSheet.create({
     gap: 4,
     paddingHorizontal: 12,
     paddingVertical: 6,
-    backgroundColor: '#d1fae5',
+    backgroundColor: colors.successLight,
     borderRadius: 12,
   },
   addFundsText: {
     fontSize: 12,
-    color: '#10b981',
+    color: colors.success,
     fontWeight: '600',
   },
   balanceAmount: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 16,
   },
   balanceStats: {
     flexDirection: 'row',
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#f3f4f6',
+    borderTopColor: colors.borderLight,
   },
   balanceStat: {
     flex: 1,
   },
   balanceStatLabel: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: colors.textTertiary,
     marginBottom: 6,
   },
   balanceStatValue: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   balanceStatDivider: {
     width: 1,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: colors.border,
     marginHorizontal: 16,
   },
 });
 
-export const statsStyles = StyleSheet.create({
+export const createStatsStyles = (colors: any) => StyleSheet.create({
   statsContainer: {
     flexDirection: 'row',
     paddingHorizontal: 16,
@@ -182,13 +182,13 @@ export const statsStyles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 16,
     alignItems: 'center',
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -204,24 +204,24 @@ export const statsStyles = StyleSheet.create({
   statValue: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 4,
   },
   statLabel: {
     fontSize: 11,
-    color: '#6b7280',
+    color: colors.textSecondary,
     textAlign: 'center',
   },
 });
 
-export const menuStyles = StyleSheet.create({
+export const createMenuStyles = (colors: any) => StyleSheet.create({
   section: {
     marginBottom: 24,
   },
   sectionTitle: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#9ca3af',
+    color: colors.textTertiary,
     marginLeft: 16,
     marginBottom: 12,
     textTransform: 'uppercase',
@@ -231,11 +231,11 @@ export const menuStyles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     paddingVertical: 16,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
+    borderBottomColor: colors.borderLight,
   },
   menuItemLeft: {
     flexDirection: 'row',
@@ -245,7 +245,7 @@ export const menuStyles = StyleSheet.create({
   },
   menuItemText: {
     fontSize: 16,
-    color: '#111827',
+    color: colors.text,
     fontWeight: '500',
   },
   menuItemRight: {
@@ -255,10 +255,10 @@ export const menuStyles = StyleSheet.create({
   },
   menuItemValue: {
     fontSize: 14,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   badge: {
-    backgroundColor: '#ef4444',
+    backgroundColor: colors.danger,
     borderRadius: 10,
     minWidth: 20,
     height: 20,
@@ -278,13 +278,13 @@ export const menuStyles = StyleSheet.create({
     gap: 8,
     marginHorizontal: 16,
     paddingVertical: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#fecaca',
+    borderColor: colors.danger + '40',
     ...Platform.select({
       ios: {
-        shadowColor: '#ef4444',
+        shadowColor: colors.danger,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -297,11 +297,11 @@ export const menuStyles = StyleSheet.create({
   logoutText: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#ef4444',
+    color: colors.danger,
   },
 });
 
-export const themeModalStyles = StyleSheet.create({
+export const createThemeModalStyles = (colors: any) => StyleSheet.create({
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -313,7 +313,7 @@ export const themeModalStyles = StyleSheet.create({
     padding: 24,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: -4 },
         shadowOpacity: 0.1,
         shadowRadius: 8,

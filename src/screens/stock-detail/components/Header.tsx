@@ -1,7 +1,8 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { headerStyles } from '../styles/stockDetailStyles';
+import { createHeaderStyles } from '../styles/stockDetailStyles';
 
 interface HeaderProps {
   symbol: string;
@@ -20,25 +21,28 @@ export const Header: React.FC<HeaderProps> = ({
   onBack,
   onToggleWatchlist,
 }) => {
+  const { colors } = useTheme();
+  const styles = createHeaderStyles(colors);
+  
   return (
-    <View style={[headerStyles.header, { paddingTop: insets.top + 16 }]}>
-      <TouchableOpacity style={headerStyles.backButton} onPress={onBack}>
-        <Ionicons name="arrow-back" size={24} color="#111827" />
+    <View style={[styles.header, { paddingTop: insets.top + 16 }]}>
+      <TouchableOpacity style={styles.backButton} onPress={onBack}>
+        <Ionicons name="arrow-back" size={24} color={colors.text} />
       </TouchableOpacity>
 
-      <View style={headerStyles.headerCenter}>
-        <Text style={headerStyles.headerSymbol}>{symbol}</Text>
-        <Text style={headerStyles.headerName}>{name}</Text>
+      <View style={styles.headerCenter}>
+        <Text style={styles.headerSymbol}>{symbol}</Text>
+        <Text style={styles.headerName}>{name}</Text>
       </View>
 
       <TouchableOpacity
-        style={[headerStyles.starButton, isInWatchlist && headerStyles.starButtonActive]}
+        style={[styles.starButton, isInWatchlist && styles.starButtonActive]}
         onPress={onToggleWatchlist}
       >
         <Ionicons
           name={isInWatchlist ? 'star' : 'star-outline'}
           size={24}
-          color={isInWatchlist ? '#fbbf24' : '#6b7280'}
+          color={isInWatchlist ? colors.warning : colors.textSecondary}
         />
       </TouchableOpacity>
     </View>

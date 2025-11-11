@@ -2,6 +2,7 @@
 // STOCK CARD - Reusable Stock Display Card
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Stock } from '@/src/types';
 import { formatCurrency, formatPercent, getProfitColor } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
@@ -23,6 +24,8 @@ export default function StockCard({
   isInWatchlist = false,
   onToggleWatchlist,
 }: StockCardProps) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const priceColor = getProfitColor(stock.change);
   const isPositive = stock.change >= 0;
 
@@ -48,7 +51,7 @@ export default function StockCard({
                 <Ionicons
                   name={isInWatchlist ? 'star' : 'star-outline'}
                   size={18}
-                  color={isInWatchlist ? '#fbbf24' : '#9ca3af'}
+                  color={isInWatchlist ? colors.warning : colors.textTertiary}
                 />
               </TouchableOpacity>
             )}
@@ -61,7 +64,7 @@ export default function StockCard({
         {/* Right Section - Price & Change */}
         <View style={styles.rightSection}>
           <Text style={styles.price}>{formatCurrency(stock.price)}</Text>
-          <View style={[styles.changeContainer, { backgroundColor: `${priceColor}15` }]}>
+          <View style={[styles.changeContainer, { backgroundColor: `${priceColor}20` }]}>
             <Ionicons
               name={isPositive ? 'trending-up' : 'trending-down'}
               size={14}
@@ -97,16 +100,16 @@ export default function StockCard({
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   card: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 16,
     padding: 16,
     marginHorizontal: 16,
     marginVertical: 8,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 8,
@@ -134,7 +137,7 @@ const styles = StyleSheet.create({
   symbol: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginRight: 6,
   },
   starButton: {
@@ -142,7 +145,7 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 13,
-    color: '#6b7280',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
   rightSection: {
@@ -151,7 +154,7 @@ const styles = StyleSheet.create({
   price: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 4,
   },
   changeContainer: {
@@ -172,7 +175,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 12,
     borderTopWidth: 1,
-    borderTopColor: '#f3f4f6',
+    borderTopColor: colors.borderLight,
   },
   infoItem: {
     alignItems: 'center',
@@ -180,18 +183,18 @@ const styles = StyleSheet.create({
   },
   infoLabel: {
     fontSize: 11,
-    color: '#9ca3af',
+    color: colors.textTertiary,
     fontWeight: '500',
     marginBottom: 4,
   },
   infoValue: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#374151',
+    color: colors.textSecondary,
   },
   divider: {
     width: 1,
     height: 24,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: colors.border,
   },
 });

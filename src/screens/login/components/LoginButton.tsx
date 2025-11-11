@@ -1,7 +1,8 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import { styles } from '../styles/loginStyles';
+import { createStyles } from '../styles/loginStyles';
 
 // ============================================
 // LOGIN BUTTON COMPONENT
@@ -14,6 +15,9 @@ interface Props {
 }
 
 export default function LoginButton({ onPress, isLoading }: Props) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
+
   return (
     <TouchableOpacity
       style={[styles.loginButton, isLoading && styles.loginButtonDisabled]}

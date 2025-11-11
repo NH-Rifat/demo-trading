@@ -4,7 +4,7 @@ import type { Stock } from '@/src/types';
 import { formatCurrency, getProfitColor } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { FlatList, Modal, Text, TouchableOpacity, View } from 'react-native';
+import { FlatList, KeyboardAvoidingView, Modal, Platform, Text, TouchableOpacity, View } from 'react-native';
 import Animated, {
     FadeIn,
     FadeInDown,
@@ -67,43 +67,48 @@ export const StockPickerModal: React.FC<StockPickerModalProps> = ({
       transparent={true}
       onRequestClose={onClose}
     >
-      <Animated.View 
-        style={styles.modalContainer}
-        entering={FadeIn.duration(200)}
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
       >
         <Animated.View 
-          style={styles.modalContent}
-          entering={SlideInDown.duration(400).springify()}
+          style={styles.modalContainer}
+          entering={FadeIn.duration(200)}
         >
           <Animated.View 
-            style={styles.modalHeader}
-            entering={FadeInDown.duration(300).delay(100)}
+            style={styles.modalContent}
+            entering={SlideInDown.duration(400).springify()}
           >
-            <Text style={styles.modalTitle}>Select Stock</Text>
-            <TouchableOpacity onPress={onClose}>
-              <Ionicons name="close" size={28} color={colors.textSecondary} />
-            </TouchableOpacity>
-          </Animated.View>
+            <Animated.View 
+              style={styles.modalHeader}
+              entering={FadeInDown.duration(300).delay(100)}
+            >
+              <Text style={styles.modalTitle}>Select Stock</Text>
+              <TouchableOpacity onPress={onClose}>
+                <Ionicons name="close" size={28} color={colors.textSecondary} />
+              </TouchableOpacity>
+            </Animated.View>
 
-          <Animated.View 
-            style={styles.modalSearchContainer}
-            entering={FadeInDown.duration(300).delay(200)}
-          >
-            <SearchBar
-              value={searchQuery}
-              onChangeText={onChangeSearch}
-              placeholder="Search stocks..."
+            <Animated.View 
+              style={styles.modalSearchContainer}
+              entering={FadeInDown.duration(300).delay(200)}
+            >
+              <SearchBar
+                value={searchQuery}
+                onChangeText={onChangeSearch}
+                placeholder="Search stocks..."
+              />
+            </Animated.View>
+
+            <FlatList
+              data={filteredStocks}
+              keyExtractor={(item) => item.id}
+              renderItem={renderStockItem}
+              contentContainerStyle={styles.stockList}
             />
           </Animated.View>
-
-          <FlatList
-            data={filteredStocks}
-            keyExtractor={(item) => item.id}
-            renderItem={renderStockItem}
-            contentContainerStyle={styles.stockList}
-          />
         </Animated.View>
-      </Animated.View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };

@@ -4,6 +4,7 @@ import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect, useState } from 'react';
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import Animated, {
+    Easing,
     useAnimatedStyle,
     useSharedValue,
     withSpring,
@@ -32,24 +33,30 @@ export const MarketDepth: React.FC<MarketDepthProps> = ({ stock }) => {
   // Update animations when expanded state changes
   useEffect(() => {
     if (isExpanded) {
-      contentHeight.value = withSpring(1, {
-        damping: 20,
-        stiffness: 90,
+      contentHeight.value = withSpring(1, { 
+        damping: 25,
+        stiffness: 120,
       });
-      contentOpacity.value = withTiming(1, { duration: 300 });
-      chevronRotation.value = withSpring(180, {
-        damping: 15,
-        stiffness: 100,
+      contentOpacity.value = withTiming(1, { 
+        duration: 350,
+        easing: Easing.out(Easing.ease),
+      });
+      chevronRotation.value = withTiming(180, {
+        duration: 350,
+        easing: Easing.out(Easing.cubic),
       });
     } else {
-      contentHeight.value = withSpring(0, {
-        damping: 20,
-        stiffness: 90,
+      contentHeight.value = withTiming(0, {
+        duration: 300,
+        easing: Easing.in(Easing.ease),
       });
-      contentOpacity.value = withTiming(0, { duration: 200 });
-      chevronRotation.value = withSpring(0, {
-        damping: 15,
-        stiffness: 100,
+      contentOpacity.value = withTiming(0, { 
+        duration: 250,
+        easing: Easing.in(Easing.ease),
+      });
+      chevronRotation.value = withTiming(0, {
+        duration: 300,
+        easing: Easing.out(Easing.cubic),
       });
     }
   }, [isExpanded, contentHeight, contentOpacity, chevronRotation]);

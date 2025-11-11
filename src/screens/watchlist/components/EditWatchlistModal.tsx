@@ -1,7 +1,7 @@
 import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { Modal, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { KeyboardAvoidingView, Modal, Platform, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import Animated, { FadeIn, SlideInDown } from 'react-native-reanimated';
 import { createModalStyles } from '../styles/watchlistStyles';
 
@@ -27,8 +27,12 @@ export const EditWatchlistModal: React.FC<EditWatchlistModalProps> = ({
   
   return (
     <Modal visible={visible} animationType="fade" transparent={true} onRequestClose={onClose}>
-      <Animated.View style={styles.modalOverlay} entering={FadeIn.duration(200)}>
-        <Animated.View style={styles.modalContent} entering={SlideInDown.duration(400).springify()}>
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+        style={{ flex: 1 }}
+      >
+        <Animated.View style={styles.modalOverlay} entering={FadeIn.duration(200)}>
+          <Animated.View style={styles.modalContent} entering={SlideInDown.duration(400).springify()}>
           <View style={styles.modalHeader}>
             <Text style={styles.modalTitle}>Edit Watchlist</Text>
             <TouchableOpacity onPress={onClose}>
@@ -73,8 +77,9 @@ export const EditWatchlistModal: React.FC<EditWatchlistModalProps> = ({
               <Text style={styles.modalButtonTextCreate}>Save</Text>
             </TouchableOpacity>
           </View>
+          </Animated.View>
         </Animated.View>
-      </Animated.View>
+      </KeyboardAvoidingView>
     </Modal>
   );
 };

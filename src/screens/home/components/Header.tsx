@@ -1,12 +1,14 @@
 // ============================================
 // HEADER COMPONENT - Market Dashboard
 // Fixed header with tickers, logo, and exchange toggle
+// Theme-aware with dynamic colors
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { headerStyles } from '../styles/homeStyles';
+import { createHeaderStyles } from '../styles/homeStyles';
 
 interface HeaderProps {
   cashLimit: number;
@@ -23,15 +25,18 @@ export const Header: React.FC<HeaderProps> = ({
   selectedExchange,
   onExchangeChange,
 }) => {
+  const { colors } = useTheme();
+  const headerStyles = createHeaderStyles(colors);
+
   return (
     <>
-      {/* Top Section with Gray Background */}
+      {/* Top Section - Tickers */}
       <View style={headerStyles.headerTopSection}>
         <View style={headerStyles.headerTop}>
           {/* Cash Limit */}
           <View style={headerStyles.cashLimitContainer}>
             <View style={headerStyles.cashLimitIcon}>
-              <Ionicons name="arrow-up-circle" size={18} color="#10b981" />
+              <Ionicons name="arrow-up-circle" size={18} color={colors.primary} />
             </View>
             <Text style={headerStyles.cashLimitLabel}>Cash Limit</Text>
           </View>
@@ -42,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* CSCX Ticker */}
           <View style={headerStyles.tickerItem}>
             <Text style={headerStyles.tickerSymbol}>CSCX</Text>
-            <Text style={[headerStyles.tickerValue, { color: '#ef4444' }]}>
+            <Text style={[headerStyles.tickerValue, { color: colors.danger }]}>
               {cscxValue.toFixed(2)}
             </Text>
           </View>
@@ -53,7 +58,7 @@ export const Header: React.FC<HeaderProps> = ({
           {/* DSEX Ticker */}
           <View style={headerStyles.tickerItem}>
             <Text style={headerStyles.tickerSymbol}>DSEX</Text>
-            <Text style={[headerStyles.tickerValue, { color: '#ef4444' }]}>
+            <Text style={[headerStyles.tickerValue, { color: colors.danger }]}>
               {dsexValue.toFixed(2)}
             </Text>
           </View>
@@ -63,7 +68,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Notification Icon */}
           <TouchableOpacity style={headerStyles.iconButton}>
-            <Ionicons name="notifications-outline" size={22} color="#111827" />
+            <Ionicons name="notifications-outline" size={22} color={colors.text} />
             <View style={headerStyles.notificationBadge}>
               <Text style={headerStyles.badgeText}>9+</Text>
             </View>
@@ -71,7 +76,7 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* Search Icon */}
           <TouchableOpacity style={headerStyles.iconButton}>
-            <Ionicons name="search-outline" size={22} color="#111827" />
+            <Ionicons name="search-outline" size={22} color={colors.text} />
           </TouchableOpacity>
         </View>
       </View>

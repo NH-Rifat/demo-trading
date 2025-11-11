@@ -1,14 +1,15 @@
 // ============================================
 // STYLES - Home Screen
 // All StyleSheet definitions for the market dashboard
+// Theme-aware styles using color parameters
 // ============================================
 
 import { Platform, StyleSheet } from 'react-native';
 
-export const homeStyles = StyleSheet.create({
+export const createHomeStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.background,
   },
   scrollContent: {
     flex: 1,
@@ -16,14 +17,14 @@ export const homeStyles = StyleSheet.create({
 });
 
 // Header Styles
-export const headerStyles = StyleSheet.create({
+export const createHeaderStyles = (colors: any) => StyleSheet.create({
   headerTopSection: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     paddingHorizontal: 16,
     paddingVertical: 12,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.05,
         shadowRadius: 2,
@@ -34,13 +35,13 @@ export const headerStyles = StyleSheet.create({
     }),
   },
   headerBottomSection: {
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.background,
     paddingHorizontal: 16,
     paddingVertical: 12,
     marginTop: 2,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -58,7 +59,7 @@ export const headerStyles = StyleSheet.create({
   cashLimitContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
     paddingHorizontal: 12,
     paddingVertical: 8,
     borderRadius: 20,
@@ -68,26 +69,26 @@ export const headerStyles = StyleSheet.create({
     width: 24,
     height: 24,
     borderRadius: 12,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
     justifyContent: 'center',
     alignItems: 'center',
   },
   cashLimitLabel: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.text,
   },
   divider: {
     width: 1,
     height: 20,
-    backgroundColor: '#d1d5db',
+    backgroundColor: colors.border,
   },
   tickerItem: {
     alignItems: 'center',
   },
   tickerSymbol: {
     fontSize: 11,
-    color: '#6b7280',
+    color: colors.textSecondary,
     fontWeight: '600',
   },
   tickerValue: {
@@ -101,7 +102,7 @@ export const headerStyles = StyleSheet.create({
     position: 'absolute',
     top: -4,
     right: -4,
-    backgroundColor: '#ef4444',
+    backgroundColor: colors.danger,
     borderRadius: 10,
     minWidth: 18,
     height: 18,
@@ -125,12 +126,12 @@ export const headerStyles = StyleSheet.create({
   logoText: {
     fontSize: 24,
     fontWeight: '900',
-    color: '#10b981',
+    color: colors.primary,
     letterSpacing: 1,
   },
   exchangeToggle: {
     flexDirection: 'row',
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     borderRadius: 20,
     padding: 4,
   },
@@ -140,12 +141,12 @@ export const headerStyles = StyleSheet.create({
     borderRadius: 16,
   },
   exchangeButtonActive: {
-    backgroundColor: '#ef4444',
+    backgroundColor: colors.danger,
   },
   exchangeButtonText: {
     fontSize: 13,
     fontWeight: '700',
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   exchangeButtonTextActive: {
     color: '#ffffff',
@@ -153,7 +154,7 @@ export const headerStyles = StyleSheet.create({
 });
 
 // Index Cards Styles
-export const indexCardStyles = StyleSheet.create({
+export const createIndexCardStyles = (colors: any) => StyleSheet.create({
   indicesRow: {
     flexDirection: 'row',
     gap: 8,
@@ -162,12 +163,12 @@ export const indexCardStyles = StyleSheet.create({
   },
   indexCard: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 12,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 2,
@@ -180,13 +181,13 @@ export const indexCardStyles = StyleSheet.create({
   indexSymbol: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 4,
   },
   indexValue: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 8,
   },
   miniChart: {
@@ -203,7 +204,7 @@ export const indexCardStyles = StyleSheet.create({
 });
 
 // Market Stats Styles
-export const marketStatsStyles = StyleSheet.create({
+export const createMarketStatsStyles = (colors: any) => StyleSheet.create({
   statsRow: {
     flexDirection: 'row',
     gap: 8,
@@ -218,39 +219,39 @@ export const marketStatsStyles = StyleSheet.create({
   statValue: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 4,
   },
   statLabel: {
     fontSize: 11,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginBottom: 8,
   },
   statPercent: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 2,
   },
   statType: {
     fontSize: 9,
     fontWeight: '600',
-    color: '#6b7280',
+    color: colors.textSecondary,
     letterSpacing: 0.5,
   },
 });
 
 // Advance Decline Styles
-export const advanceDeclineStyles = StyleSheet.create({
+export const createAdvanceDeclineStyles = (colors: any) => StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 16,
     marginHorizontal: 16,
     marginTop: 16,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 2,
@@ -263,7 +264,7 @@ export const advanceDeclineStyles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 16,
   },
   legend: {
@@ -285,21 +286,21 @@ export const advanceDeclineStyles = StyleSheet.create({
   legendText: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.text,
   },
 });
 
 // Featured Lists Styles
-export const featuredListsStyles = StyleSheet.create({
+export const createFeaturedListsStyles = (colors: any) => StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 16,
     marginHorizontal: 16,
     marginTop: 16,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 2,
@@ -318,7 +319,7 @@ export const featuredListsStyles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   tabsContainer: {
     marginBottom: 16,
@@ -327,20 +328,20 @@ export const featuredListsStyles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingVertical: 8,
     marginRight: 8,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 20,
   },
   tabActive: {
-    backgroundColor: '#bfdbfe',
+    backgroundColor: colors.infoLight,
   },
   tabText: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#6b7280',
+    color: colors.textSecondary,
     fontStyle: 'italic',
   },
   tabTextActive: {
-    color: '#1d4ed8',
+    color: colors.info,
   },
   stockList: {
     gap: 0,
@@ -350,7 +351,7 @@ export const featuredListsStyles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 12,
     borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
+    borderBottomColor: colors.borderLight,
   },
   stockLeft: {
     width: 100,
@@ -358,12 +359,12 @@ export const featuredListsStyles = StyleSheet.create({
   stockSymbol: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 2,
   },
   stockPrice: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   stockChart: {
     flex: 1,
@@ -389,16 +390,16 @@ export const featuredListsStyles = StyleSheet.create({
 });
 
 // Top Sectors Styles
-export const topSectorsStyles = StyleSheet.create({
+export const createTopSectorsStyles = (colors: any) => StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 16,
     marginHorizontal: 16,
     marginTop: 16,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 2,
@@ -417,7 +418,7 @@ export const topSectorsStyles = StyleSheet.create({
   title: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   sectorsList: {
     gap: 12,
@@ -431,13 +432,13 @@ export const topSectorsStyles = StyleSheet.create({
     width: 90,
     fontSize: 13,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.text,
     textAlign: 'right',
   },
   sectorBarContainer: {
     flex: 1,
     height: 20,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 10,
     overflow: 'hidden',
   },
@@ -449,7 +450,7 @@ export const topSectorsStyles = StyleSheet.create({
     width: 70,
     fontSize: 13,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.text,
     textAlign: 'left',
   },
   showMoreButton: {
@@ -463,6 +464,6 @@ export const topSectorsStyles = StyleSheet.create({
   showMoreText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#10b981',
+    color: colors.primary,
   },
 });

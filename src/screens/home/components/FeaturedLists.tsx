@@ -1,14 +1,16 @@
 // ============================================
 // FEATURED LISTS COMPONENT
 // Top gainer, loser, trade, value, and volume lists with tabs
+// Theme-aware with dynamic colors
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import Svg, { Defs, LinearGradient, Polyline, Stop } from 'react-native-svg';
 import { FeaturedStock } from '../data/mockData';
-import { featuredListsStyles } from '../styles/homeStyles';
+import { createFeaturedListsStyles } from '../styles/homeStyles';
 import { generateMiniChartPath } from '../utils/chartUtils';
 
 type TabType = 'gainer' | 'loser' | 'trade' | 'value' | 'volume';
@@ -20,6 +22,9 @@ interface FeaturedListsProps {
 }
 
 export const FeaturedLists: React.FC<FeaturedListsProps> = ({ selectedTab, onTabChange, data }) => {
+  const { colors } = useTheme();
+  const featuredListsStyles = createFeaturedListsStyles(colors);
+
   const tabs: { key: TabType; label: string }[] = [
     { key: 'gainer', label: 'Top Gainer' },
     { key: 'loser', label: 'Top Loser' },
@@ -33,7 +38,7 @@ export const FeaturedLists: React.FC<FeaturedListsProps> = ({ selectedTab, onTab
       <View style={featuredListsStyles.header}>
         <Text style={featuredListsStyles.title}>Top Featured Lists</Text>
         <TouchableOpacity>
-          <Ionicons name="chevron-forward" size={24} color="#6b7280" />
+          <Ionicons name="chevron-forward" size={24} color={colors.textSecondary} />
         </TouchableOpacity>
       </View>
 
@@ -63,6 +68,8 @@ export const FeaturedLists: React.FC<FeaturedListsProps> = ({ selectedTab, onTab
           const hasChangeData = 'change' in stock;
           const isPositive = hasChangeData ? stock.change! >= 0 : true;
 
+          const changeColor = isPositive ? colors.success : colors.danger;
+
           return (
             <TouchableOpacity key={index} style={featuredListsStyles.stockRow}>
               <View style={featuredListsStyles.stockLeft}>
@@ -76,8 +83,8 @@ export const FeaturedLists: React.FC<FeaturedListsProps> = ({ selectedTab, onTab
                     {/* Background gradient area */}
                     <Defs>
                       <LinearGradient id={`gradient-${selectedTab}-${index}`} x1="0%" y1="0%" x2="0%" y2="100%">
-                        <Stop offset="0%" stopColor={isPositive ? '#10b981' : '#ef4444'} stopOpacity="0.2" />
-                        <Stop offset="100%" stopColor={isPositive ? '#10b981' : '#ef4444'} stopOpacity="0" />
+                        <Stop offset="0%" stopColor={changeColor} stopOpacity="0.2" />
+                        <Stop offset="100%" stopColor={changeColor} stopOpacity="0" />
                       </LinearGradient>
                     </Defs>
 
@@ -92,7 +99,7 @@ export const FeaturedLists: React.FC<FeaturedListsProps> = ({ selectedTab, onTab
                     <Polyline
                       points={generateMiniChartPath(isPositive, index)}
                       fill="none"
-                      stroke={isPositive ? '#10b981' : '#ef4444'}
+                      stroke={changeColor}
                       strokeWidth="2.5"
                       strokeLinecap="round"
                       strokeLinejoin="round"
@@ -104,20 +111,20 @@ export const FeaturedLists: React.FC<FeaturedListsProps> = ({ selectedTab, onTab
               <View style={featuredListsStyles.stockRight}>
                 {hasChangeData ? (
                   <>
-                    <Text style={[featuredListsStyles.stockChange, { color: isPositive ? '#10b981' : '#ef4444' }]}>
+                    <Text style={[featuredListsStyles.stockChange, { color: changeColor }]}>
                       {stock.change! >= 0 ? '+' : ''}
                       {stock.change}
                     </Text>
                     <Text
-                      style={[featuredListsStyles.stockChangePercent, { color: isPositive ? '#10b981' : '#ef4444' }]}
+                      style={[featuredListsStyles.stockChangePercent, { color: changeColor }]}
                     >
                       ({stock.changePercent}%)
                     </Text>
                   </>
                 ) : (
                   <>
-                    <Text style={[featuredListsStyles.stockChange, { color: '#111827' }]}>{stock.value}</Text>
-                    <Text style={[featuredListsStyles.stockChangePercent, { color: '#6b7280' }]}>
+                    <Text style={[featuredListsStyles.stockChange, { color: colors.text }]}>{stock.value}</Text>
+                    <Text style={[featuredListsStyles.stockChangePercent, { color: colors.textSecondary }]}>
                       {selectedTab === 'trade' ? 'trades' : selectedTab === 'value' ? 'cr' : 'cr'}
                     </Text>
                   </>

@@ -1,8 +1,10 @@
 // ============================================
 // HOME SCREEN - Market Dashboard (UFFAST Style)
 // Main screen component with organized architecture
+// Theme-aware with dynamic color support
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React, { useState } from 'react';
 import { RefreshControl, ScrollView, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -14,12 +16,13 @@ import { MarketStats } from './components/MarketStats';
 import { TopSectors } from './components/TopSectors';
 import { featuredListsData } from './data/mockData';
 import { useMarketDataUpdates, useSectorDataUpdates } from './hooks/useMarketData';
-import { homeStyles } from './styles/homeStyles';
+import { createHomeStyles } from './styles/homeStyles';
 
 type TabType = 'gainer' | 'loser' | 'trade' | 'value' | 'volume';
 
 export default function HomeScreen() {
   const insets = useSafeAreaInsets();
+  const { colors } = useTheme();
   const [refreshing, setRefreshing] = useState(false);
   const [selectedExchange, setSelectedExchange] = useState<'DSE' | 'CSE'>('DSE');
   const [selectedTab, setSelectedTab] = useState<TabType>('gainer');
@@ -28,6 +31,9 @@ export default function HomeScreen() {
   // Real-time data hooks
   const marketData = useMarketDataUpdates();
   const topSectorsData = useSectorDataUpdates();
+
+  // Create theme-aware styles
+  const homeStyles = createHomeStyles(colors);
 
   const onRefresh = async () => {
     setRefreshing(true);
@@ -51,7 +57,7 @@ export default function HomeScreen() {
         style={homeStyles.scrollContent}
         showsVerticalScrollIndicator={false}
         refreshControl={
-          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#10b981" colors={['#10b981']} />
+          <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} colors={[colors.primary]} />
         }
       >
         {/* Index Cards */}

@@ -1,13 +1,15 @@
 // ============================================
 // ADVANCE DECLINE COMPONENT
 // Chart showing market advance/decline distribution
+// Theme-aware with dynamic colors
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { Dimensions, Text, View } from 'react-native';
 import Svg, { Line, Rect, Text as SvgText } from 'react-native-svg';
 import { AdvanceDeclineDistribution } from '../data/mockData';
-import { advanceDeclineStyles } from '../styles/homeStyles';
+import { createAdvanceDeclineStyles } from '../styles/homeStyles';
 
 const { width } = Dimensions.get('window');
 
@@ -21,6 +23,9 @@ interface AdvanceDeclineProps {
 }
 
 export const AdvanceDecline: React.FC<AdvanceDeclineProps> = ({ advanceDecline }) => {
+  const { colors } = useTheme();
+  const advanceDeclineStyles = createAdvanceDeclineStyles(colors);
+
   return (
     <View style={advanceDeclineStyles.container}>
       <Text style={advanceDeclineStyles.title}>Advance Decline</Text>
@@ -79,13 +84,13 @@ export const AdvanceDecline: React.FC<AdvanceDeclineProps> = ({ advanceDecline }
                   {item.pos}
                 </SvgText>
               )}
-              <SvgText x={x + barWidth / 2} y={170} fontSize="9" fill="#34363bff" textAnchor="middle">
+              <SvgText x={x + barWidth / 2} y={170} fontSize="9" fill={colors.textSecondary} textAnchor="middle">
                 {item.range}
               </SvgText>
             </React.Fragment>
           );
         })}
-        <Line x1="0" y1="150" x2={width - 32} y2="150" stroke="#e5e7eb" strokeWidth="1" />
+        <Line x1="0" y1="150" x2={width - 32} y2="150" stroke={colors.border} strokeWidth="1" />
       </Svg>
       <View style={advanceDeclineStyles.legend}>
         <View style={advanceDeclineStyles.legendItem}>

@@ -2,13 +2,15 @@
 // TOP SECTORS COMPONENT
 // Displays top invested sectors with horizontal progress bars
 // Shows 8 sectors by default, expandable to 20
+// Theme-aware with dynamic colors
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
 import { SectorData } from '../data/mockData';
-import { topSectorsStyles } from '../styles/homeStyles';
+import { createTopSectorsStyles } from '../styles/homeStyles';
 
 interface TopSectorsProps {
   sectors: SectorData[];
@@ -17,6 +19,9 @@ interface TopSectorsProps {
 }
 
 export const TopSectors: React.FC<TopSectorsProps> = ({ sectors, showAll, onToggleShowAll }) => {
+  const { colors } = useTheme();
+  const topSectorsStyles = createTopSectorsStyles(colors);
+
   const displayedSectors = sectors.slice(0, showAll ? sectors.length : 8);
   const maxDisplayedValue = Math.max(...displayedSectors.map((s) => s.value));
 
@@ -25,7 +30,7 @@ export const TopSectors: React.FC<TopSectorsProps> = ({ sectors, showAll, onTogg
       <View style={topSectorsStyles.header}>
         <Text style={topSectorsStyles.title}>Top Invested Sectors</Text>
         <TouchableOpacity>
-          <Ionicons name="chevron-forward" size={24} color="#111827" />
+          <Ionicons name="chevron-forward" size={24} color={colors.text} />
         </TouchableOpacity>
       </View>
 
@@ -55,7 +60,7 @@ export const TopSectors: React.FC<TopSectorsProps> = ({ sectors, showAll, onTogg
       {/* Show More / Show Less Button */}
       <TouchableOpacity style={topSectorsStyles.showMoreButton} onPress={onToggleShowAll}>
         <Text style={topSectorsStyles.showMoreText}>{showAll ? 'Show Less' : 'Show More'}</Text>
-        <Ionicons name={showAll ? 'chevron-up' : 'chevron-down'} size={18} color="#10b981" />
+        <Ionicons name={showAll ? 'chevron-up' : 'chevron-down'} size={18} color={colors.primary} />
       </TouchableOpacity>
     </View>
   );

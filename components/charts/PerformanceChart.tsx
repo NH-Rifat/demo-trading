@@ -118,7 +118,7 @@ export default function PerformanceChart({
         <View>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>
-            ${(selectedData?.value || lastValue).toLocaleString()}
+            ৳{(selectedData?.value || lastValue).toLocaleString()}
           </Text>
         </View>
         <View style={styles.changeContainer}>
@@ -132,7 +132,7 @@ export default function PerformanceChart({
             {selectedChangePercent}%
           </Text>
           <Text style={styles.changeAmount}>
-            {selectedIsPositive ? '+' : ''}${Math.abs(selectedChange).toLocaleString()}
+            {selectedIsPositive ? '+' : ''}৳{Math.abs(selectedChange).toLocaleString()}
           </Text>
         </View>
       </View>
@@ -224,7 +224,7 @@ export default function PerformanceChart({
                     textAnchor="middle"
                     x={27.5}
                   >
-                    ${selectedData.value.toLocaleString()}
+                    ৳{selectedData.value.toLocaleString()}
                   </SvgText>
                 </Svg>
               </>

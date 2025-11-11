@@ -3,6 +3,7 @@
 // Features: Simple line chart showing market trends
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useMemo } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -20,6 +21,9 @@ export default function MarketOverview({
   unchanged,
   marketTrend,
 }: Props) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
+
   // Calculate market trend percentage (mock)
   const trendPercent = useMemo(() => {
     const total = topGainers + topLosers + unchanged;
@@ -28,7 +32,7 @@ export default function MarketOverview({
   }, [topGainers, topLosers, unchanged]);
 
   const isPositive = parseFloat(trendPercent) >= 0;
-  const trendColor = isPositive ? '#10b981' : '#ef4444';
+  const trendColor = isPositive ? colors.success : colors.danger;
 
   return (
     <View style={styles.container}>
@@ -57,19 +61,19 @@ export default function MarketOverview({
       {/* Market Stats Grid */}
       <View style={styles.statsGrid}>
         <View style={styles.statItem}>
-          <View style={[styles.statDot, { backgroundColor: '#10b981' }]} />
+          <View style={[styles.statDot, { backgroundColor: colors.success }]} />
           <Text style={styles.statValue}>{topGainers}</Text>
           <Text style={styles.statLabel}>Gainers</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
-          <View style={[styles.statDot, { backgroundColor: '#ef4444' }]} />
+          <View style={[styles.statDot, { backgroundColor: colors.danger }]} />
           <Text style={styles.statValue}>{topLosers}</Text>
           <Text style={styles.statLabel}>Losers</Text>
         </View>
         <View style={styles.statDivider} />
         <View style={styles.statItem}>
-          <View style={[styles.statDot, { backgroundColor: '#6b7280' }]} />
+          <View style={[styles.statDot, { backgroundColor: colors.textSecondary }]} />
           <Text style={styles.statValue}>{unchanged}</Text>
           <Text style={styles.statLabel}>Unchanged</Text>
         </View>
@@ -83,7 +87,7 @@ export default function MarketOverview({
               styles.trendBar,
               {
                 width: `${((topGainers / (topGainers + topLosers + unchanged)) * 100).toFixed(0)}%` as any,
-                backgroundColor: '#10b981',
+                backgroundColor: colors.success,
               },
             ]}
           />
@@ -101,14 +105,14 @@ export default function MarketOverview({
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 16,
     marginHorizontal: 16,
     marginBottom: 16,
-    shadowColor: '#000',
+    shadowColor: colors.shadow,
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.05,
     shadowRadius: 8,
@@ -123,12 +127,12 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   indexContainer: {
     alignItems: 'flex-end',
@@ -141,7 +145,7 @@ const styles = StyleSheet.create({
   indexValue: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   indexChange: {
     fontSize: 16,
@@ -149,7 +153,7 @@ const styles = StyleSheet.create({
   },
   indexLabel: {
     fontSize: 10,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   chartContainer: {
@@ -174,24 +178,24 @@ const styles = StyleSheet.create({
   statValue: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 4,
   },
   statLabel: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   statDivider: {
     width: 1,
     height: 40,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: colors.border,
   },
   trendBarContainer: {
     marginTop: 8,
   },
   trendBarBackground: {
     height: 8,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 4,
     overflow: 'hidden',
   },
@@ -206,7 +210,7 @@ const styles = StyleSheet.create({
   },
   trendBarLabel: {
     fontSize: 11,
-    color: '#6b7280',
+    color: colors.textSecondary,
     fontWeight: '600',
   },
 });

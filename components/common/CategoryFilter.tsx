@@ -2,6 +2,7 @@
 // CATEGORY FILTER - Market Category Tabs
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { MarketCategory } from '@/src/types';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
@@ -28,6 +29,9 @@ const categories: CategoryItem[] = [
 ];
 
 export default function CategoryFilter({ selected, onSelect }: CategoryFilterProps) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
+
   return (
     <View style={styles.container}>
       <ScrollView
@@ -71,12 +75,12 @@ export default function CategoryFilter({ selected, onSelect }: CategoryFilterPro
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
     paddingVertical: 12,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     borderBottomWidth: 1,
-    borderBottomColor: '#f3f4f6',
+    borderBottomColor: colors.borderLight,
   },
   scrollContent: {
     paddingHorizontal: 16,
@@ -89,14 +93,14 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     borderRadius: 20,
     borderWidth: 1.5,
-    borderColor: '#e5e7eb',
-    backgroundColor: '#ffffff',
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
     gap: 6,
   },
   categoryLabel: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#374151',
+    color: colors.text,
   },
   categoryLabelSelected: {
     color: '#ffffff',

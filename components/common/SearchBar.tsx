@@ -2,6 +2,7 @@
 // SEARCH BAR - Stock Search Component
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import {
@@ -27,6 +28,8 @@ export default function SearchBar({
   onFocus,
   onBlur,
 }: SearchBarProps) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const [isFocused, setIsFocused] = useState(false);
 
   const handleClear = () => {
@@ -36,13 +39,13 @@ export default function SearchBar({
   return (
     <View style={styles.container}>
       <View style={[styles.searchContainer, isFocused && styles.searchContainerFocused]}>
-        <Ionicons name="search" size={20} color="#9ca3af" style={styles.searchIcon} />
+        <Ionicons name="search" size={20} color={colors.textTertiary} style={styles.searchIcon} />
         <TextInput
           style={styles.input}
           value={value}
           onChangeText={onChangeText}
           placeholder={placeholder}
-          placeholderTextColor="#9ca3af"
+          placeholderTextColor={colors.textTertiary}
           onFocus={() => {
             setIsFocused(true);
             onFocus?.();
@@ -57,7 +60,7 @@ export default function SearchBar({
         />
         {value.length > 0 && (
           <TouchableOpacity onPress={handleClear} style={styles.clearButton}>
-            <Ionicons name="close-circle" size={20} color="#9ca3af" />
+            <Ionicons name="close-circle" size={20} color={colors.textTertiary} />
           </TouchableOpacity>
         )}
       </View>
@@ -65,25 +68,25 @@ export default function SearchBar({
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
     paddingHorizontal: 16,
     paddingVertical: 12,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
   },
   searchContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#f9fafb',
+    backgroundColor: colors.background,
     borderRadius: 12,
     paddingHorizontal: 12,
     paddingVertical: Platform.OS === 'ios' ? 12 : 8,
     borderWidth: 1,
-    borderColor: '#e5e7eb',
+    borderColor: colors.border,
   },
   searchContainerFocused: {
-    borderColor: '#10b981',
-    backgroundColor: '#ffffff',
+    borderColor: colors.success,
+    backgroundColor: colors.surface,
   },
   searchIcon: {
     marginRight: 8,
@@ -91,7 +94,7 @@ const styles = StyleSheet.create({
   input: {
     flex: 1,
     fontSize: 16,
-    color: '#111827',
+    color: colors.text,
     fontWeight: '500',
   },
   clearButton: {

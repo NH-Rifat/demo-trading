@@ -7,6 +7,7 @@
 import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { Text, View } from 'react-native';
+import Animated, { FadeInRight } from 'react-native-reanimated';
 import Svg, { Polyline } from 'react-native-svg';
 import { createIndexCardStyles } from '../styles/homeStyles';
 import { generateMiniChartPath } from '../utils/chartUtils';
@@ -31,12 +32,16 @@ export const IndexCards: React.FC<IndexCardsProps> = ({ indices }) => {
 
   return (
     <View style={indexCardStyles.indicesRow}>
-      {Object.entries(indices).map(([key, data]) => {
+      {Object.entries(indices).map(([key, data], index) => {
         const isPositive = data.change >= 0;
         const changeColor = isPositive ? colors.success : colors.danger;
         
         return (
-          <View key={key} style={indexCardStyles.indexCard}>
+          <Animated.View 
+            key={key} 
+            style={indexCardStyles.indexCard}
+            entering={FadeInRight.duration(400).delay(index * 100).springify()}
+          >
             <Text style={indexCardStyles.indexSymbol}>{key.toUpperCase()}</Text>
             <Text style={indexCardStyles.indexValue}>{data.value.toFixed(2)}</Text>
             <Svg height="50" width="100%" style={indexCardStyles.miniChart}>
@@ -48,7 +53,7 @@ export const IndexCards: React.FC<IndexCardsProps> = ({ indices }) => {
             <Text style={[indexCardStyles.indexChangePercent, { color: changeColor }]}>
               ({isPositive ? '+' : ''}{data.changePercent.toFixed(2)}%)
             </Text>
-          </View>
+          </Animated.View>
         );
       })}
     </View>

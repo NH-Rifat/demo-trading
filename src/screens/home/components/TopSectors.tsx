@@ -9,6 +9,7 @@ import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
+import Animated, { FadeInLeft } from 'react-native-reanimated';
 import { SectorData } from '../data/mockData';
 import { createTopSectorsStyles } from '../styles/homeStyles';
 
@@ -35,7 +36,7 @@ export const TopSectors: React.FC<TopSectorsProps> = ({ sectors, showAll, onTogg
       </View>
 
       <View style={topSectorsStyles.sectorsList}>
-        {displayedSectors.map((sector) => {
+        {displayedSectors.map((sector, index) => {
           // Calculate bar width based on the highest value in the displayed list
           const barWidth = (sector.value / maxDisplayedValue) * 100;
           const displayValue =
@@ -46,13 +47,17 @@ export const TopSectors: React.FC<TopSectorsProps> = ({ sectors, showAll, onTogg
               : sector.value.toLocaleString();
 
           return (
-            <View key={sector.name} style={topSectorsStyles.sectorRow}>
+            <Animated.View 
+              key={sector.name} 
+              style={topSectorsStyles.sectorRow}
+              entering={FadeInLeft.duration(400).delay(index * 50).springify()}
+            >
               <Text style={topSectorsStyles.sectorName}>{sector.name}</Text>
               <View style={topSectorsStyles.sectorBarContainer}>
                 <View style={[topSectorsStyles.sectorBar, { width: `${barWidth}%`, backgroundColor: sector.color }]} />
               </View>
               <Text style={topSectorsStyles.sectorValue}>{displayValue}</Text>
-            </View>
+            </Animated.View>
           );
         })}
       </View>

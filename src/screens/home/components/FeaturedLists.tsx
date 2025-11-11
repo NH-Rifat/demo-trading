@@ -8,6 +8,7 @@ import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import Svg, { Defs, LinearGradient, Polyline, Stop } from 'react-native-svg';
 import { FeaturedStock } from '../data/mockData';
 import { createFeaturedListsStyles } from '../styles/homeStyles';
@@ -71,7 +72,11 @@ export const FeaturedLists: React.FC<FeaturedListsProps> = ({ selectedTab, onTab
           const changeColor = isPositive ? colors.success : colors.danger;
 
           return (
-            <TouchableOpacity key={index} style={featuredListsStyles.stockRow}>
+            <Animated.View 
+              key={index}
+              entering={FadeInDown.duration(300).delay(index * 50).springify()}
+            >
+              <TouchableOpacity style={featuredListsStyles.stockRow}>
               <View style={featuredListsStyles.stockLeft}>
                 <Text style={featuredListsStyles.stockSymbol}>{stock.symbol}</Text>
                 <Text style={featuredListsStyles.stockPrice}>{stock.price}</Text>
@@ -130,7 +135,8 @@ export const FeaturedLists: React.FC<FeaturedListsProps> = ({ selectedTab, onTab
                   </>
                 )}
               </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </Animated.View>
           );
         })}
       </View>

@@ -7,6 +7,7 @@
 import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { Text, View } from 'react-native';
+import Animated, { FadeInUp } from 'react-native-reanimated';
 import { createMarketStatsStyles } from '../styles/homeStyles';
 
 interface MarketStatsProps {
@@ -21,22 +22,31 @@ export const MarketStats: React.FC<MarketStatsProps> = ({ turnover, volume, trad
 
   return (
     <View style={marketStatsStyles.statsRow}>
-      <View style={[marketStatsStyles.statBox, { backgroundColor: colors.successLight }]}>
+      <Animated.View 
+        style={[marketStatsStyles.statBox, { backgroundColor: colors.successLight }]}
+        entering={FadeInUp.duration(400).delay(0).springify()}
+      >
         <Text style={marketStatsStyles.statValue}>{turnover.value.toFixed(2)} cr</Text>
         <Text style={marketStatsStyles.statLabel}>Turnover</Text>
         <Text style={marketStatsStyles.statPercent}>{turnover.percent.toFixed(2)}%</Text>
         <Text style={marketStatsStyles.statType}>BUY PRESSURE</Text>
-      </View>
-      <View style={[marketStatsStyles.statBox, { backgroundColor: colors.dangerLight }]}>
+      </Animated.View>
+      <Animated.View 
+        style={[marketStatsStyles.statBox, { backgroundColor: colors.dangerLight }]}
+        entering={FadeInUp.duration(400).delay(100).springify()}
+      >
         <Text style={marketStatsStyles.statValue}>{volume.value.toFixed(2)} cr</Text>
         <Text style={marketStatsStyles.statLabel}>Volume</Text>
-      </View>
-      <View style={[marketStatsStyles.statBox, { backgroundColor: colors.dangerLight }]}>
+      </Animated.View>
+      <Animated.View 
+        style={[marketStatsStyles.statBox, { backgroundColor: colors.dangerLight }]}
+        entering={FadeInUp.duration(400).delay(200).springify()}
+      >
         <Text style={marketStatsStyles.statValue}>{trade.value}</Text>
         <Text style={marketStatsStyles.statLabel}>Trade</Text>
         <Text style={marketStatsStyles.statPercent}>{trade.percent.toFixed(2)}%</Text>
         <Text style={marketStatsStyles.statType}>SELL PRESSURE</Text>
-      </View>
+      </Animated.View>
     </View>
   );
 };

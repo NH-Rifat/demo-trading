@@ -3,9 +3,10 @@
 // Displays list of all positions
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { FlatList, Text, View } from 'react-native';
-import { portfolioStyles } from '../styles/portfolioStyles';
+import { createPortfolioStyles } from '../styles/portfolioStyles';
 import { PositionCard } from './PositionCard';
 
 interface HoldingsListProps {
@@ -14,11 +15,14 @@ interface HoldingsListProps {
 }
 
 export const HoldingsList: React.FC<HoldingsListProps> = ({ positions, positionsCount }) => {
+  const { colors } = useTheme();
+  const styles = createPortfolioStyles(colors);
+  
   return (
-    <View style={portfolioStyles.section}>
-      <View style={portfolioStyles.sectionHeader}>
-        <Text style={portfolioStyles.sectionTitle}>Holdings</Text>
-        <Text style={portfolioStyles.sectionCount}>{positionsCount}</Text>
+    <View style={styles.section}>
+      <View style={styles.sectionHeader}>
+        <Text style={styles.sectionTitle}>Holdings</Text>
+        <Text style={styles.sectionCount}>{positionsCount}</Text>
       </View>
       <FlatList
         data={positions}

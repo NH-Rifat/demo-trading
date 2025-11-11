@@ -4,10 +4,11 @@
 // ============================================
 
 import PieChart from '@/components/charts/PieChart';
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { FlatList, Text, View } from 'react-native';
-import { portfolioStyles, sectorStyles } from '../styles/portfolioStyles';
+import { createPortfolioStyles, createSectorStyles } from '../styles/portfolioStyles';
 import { getSectorColor } from '../utils/sectorUtils';
 import { SectorCard } from './SectorCard';
 
@@ -20,6 +21,10 @@ interface SectorAllocationProps {
 }
 
 export const SectorAllocation: React.FC<SectorAllocationProps> = ({ sectorAllocation }) => {
+  const { colors } = useTheme();
+  const portfolioStyles = createPortfolioStyles(colors);
+  const sectorStyles = createSectorStyles(colors);
+  
   // Prepare sector data for pie chart
   const sectorPieData = sectorAllocation.map((item) => ({
     label: item.sector,
@@ -31,7 +36,7 @@ export const SectorAllocation: React.FC<SectorAllocationProps> = ({ sectorAlloca
     <View style={portfolioStyles.section}>
       <View style={portfolioStyles.sectionHeader}>
         <Text style={portfolioStyles.sectionTitle}>Sector Allocation</Text>
-        <Ionicons name="pie-chart-outline" size={20} color="#6b7280" />
+        <Ionicons name="pie-chart-outline" size={20} color={colors.textSecondary} />
       </View>
 
       {/* Sector Pie Chart */}

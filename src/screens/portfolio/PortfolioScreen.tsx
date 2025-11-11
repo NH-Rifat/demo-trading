@@ -5,6 +5,7 @@
 
 import PerformanceChart from '@/components/charts/PerformanceChart';
 import EmptyState from '@/components/common/EmptyState';
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { useAppSelector } from '@/src/store/hooks';
 import { generatePerformanceData } from '@/src/utils/chartDataGenerator';
 import React, { useMemo, useState } from 'react';
@@ -20,9 +21,11 @@ import {
     useSectorAllocation,
     useTodaysChange,
 } from './hooks/usePortfolioData';
-import { portfolioStyles } from './styles/portfolioStyles';
+import { createPortfolioStyles } from './styles/portfolioStyles';
 
 export default function PortfolioScreen() {
+  const { colors } = useTheme();
+  const styles = createPortfolioStyles(colors);
   const insets = useSafeAreaInsets();
   const portfolio = useAppSelector((state: any) => state.portfolio.portfolio);
   const stocks = useAppSelector((state: any) => state.market.stocks);
@@ -51,9 +54,9 @@ export default function PortfolioScreen() {
   // Empty state
   if (portfolio.positions.length === 0) {
     return (
-      <View style={portfolioStyles.container}>
+      <View style={styles.container}>
         <Header paddingTop={insets.top + 16} />
-        <View style={portfolioStyles.emptyContainer}>
+        <View style={styles.emptyContainer}>
           <EmptyState
             icon="briefcase-outline"
             title="No Holdings Yet"
@@ -65,7 +68,7 @@ export default function PortfolioScreen() {
   }
 
   return (
-    <View style={portfolioStyles.container}>
+    <View style={styles.container}>
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
@@ -81,7 +84,7 @@ export default function PortfolioScreen() {
           data={performanceData}
           height={220}
           title="Portfolio Performance"
-          color="#10b981"
+          color={colors.primary}
         />
 
         {/* Holdings Section */}

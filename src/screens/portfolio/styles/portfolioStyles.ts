@@ -1,14 +1,15 @@
 // ============================================
 // STYLES - Portfolio Screen
 // All StyleSheet definitions for portfolio components
+// Theme-aware styles using color parameters
 // ============================================
 
 import { Platform, StyleSheet } from 'react-native';
 
-export const portfolioStyles = StyleSheet.create({
+export const createPortfolioStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: colors.background,
   },
   emptyContainer: {
     flex: 1,
@@ -29,13 +30,13 @@ export const portfolioStyles = StyleSheet.create({
   sectionTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   sectionCount: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#6b7280',
-    backgroundColor: '#f3f4f6',
+    color: colors.textSecondary,
+    backgroundColor: colors.surfaceSecondary,
     paddingHorizontal: 10,
     paddingVertical: 4,
     borderRadius: 12,
@@ -43,15 +44,15 @@ export const portfolioStyles = StyleSheet.create({
 });
 
 // Header Styles
-export const headerStyles = StyleSheet.create({
+export const createHeaderStyles = (colors: any) => StyleSheet.create({
   header: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     paddingTop: Platform.OS === 'ios' ? 60 : 48,
     paddingHorizontal: 16,
     paddingBottom: 20,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -64,20 +65,20 @@ export const headerStyles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
 });
 
 // Portfolio Summary Styles
-export const summaryStyles = StyleSheet.create({
+export const createSummaryStyles = (colors: any) => StyleSheet.create({
   summaryCard: {
     margin: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 16,
     padding: 20,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 8,
@@ -95,13 +96,13 @@ export const summaryStyles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 14,
-    color: '#6b7280',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
   summaryValue: {
     fontSize: 32,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 20,
   },
   summaryRow: {
@@ -110,7 +111,7 @@ export const summaryStyles = StyleSheet.create({
     alignItems: 'center',
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#f3f4f6',
+    borderTopColor: colors.borderLight,
   },
   summaryItem: {
     flex: 1,
@@ -118,24 +119,24 @@ export const summaryStyles = StyleSheet.create({
   },
   summaryItemLabel: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: colors.textTertiary,
     marginBottom: 6,
   },
   summaryItemValue: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   summaryDivider: {
     width: 1,
     height: 30,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: colors.border,
   },
   todaysChangeContainer: {
     marginTop: 16,
     paddingTop: 16,
     borderTopWidth: 1,
-    borderTopColor: '#f3f4f6',
+    borderTopColor: colors.borderLight,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -147,7 +148,7 @@ export const summaryStyles = StyleSheet.create({
   },
   todaysChangeLabel: {
     fontSize: 14,
-    color: '#6b7280',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
   todaysChangeValue: {
@@ -157,17 +158,17 @@ export const summaryStyles = StyleSheet.create({
 });
 
 // Position Card Styles
-export const positionStyles = StyleSheet.create({
+export const createPositionStyles = (colors: any) => StyleSheet.create({
   positionsList: {
     gap: 12,
   },
   positionCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 16,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -186,11 +187,11 @@ export const positionStyles = StyleSheet.create({
   positionSymbol: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   positionName: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   positionHeaderRight: {
@@ -199,7 +200,7 @@ export const positionStyles = StyleSheet.create({
   positionValue: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   positionChangeRow: {
     flexDirection: 'row',
@@ -213,7 +214,7 @@ export const positionStyles = StyleSheet.create({
   },
   positionDivider: {
     height: 1,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.borderLight,
     marginBottom: 12,
   },
   positionDetails: {
@@ -226,16 +227,16 @@ export const positionStyles = StyleSheet.create({
   },
   positionDetailLabel: {
     fontSize: 11,
-    color: '#9ca3af',
+    color: colors.textTertiary,
     marginBottom: 4,
   },
   positionDetailValue: {
     fontSize: 13,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.text,
   },
   profitLossContainer: {
-    backgroundColor: '#f9fafb',
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 8,
     padding: 12,
   },
@@ -247,7 +248,7 @@ export const positionStyles = StyleSheet.create({
   profitLossLabel: {
     fontSize: 12,
     fontWeight: '600',
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   profitLossValues: {
     flexDirection: 'row',
@@ -265,17 +266,17 @@ export const positionStyles = StyleSheet.create({
 });
 
 // Sector Card Styles
-export const sectorStyles = StyleSheet.create({
+export const createSectorStyles = (colors: any) => StyleSheet.create({
   sectorList: {
     gap: 12,
   },
   sectorCard: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 16,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -304,16 +305,16 @@ export const sectorStyles = StyleSheet.create({
   sectorName: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.text,
   },
   sectorPercentage: {
     fontSize: 14,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   sectorBarContainer: {
     height: 6,
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 3,
     overflow: 'hidden',
     marginBottom: 8,
@@ -324,7 +325,7 @@ export const sectorStyles = StyleSheet.create({
   },
   sectorValue: {
     fontSize: 13,
-    color: '#6b7280',
+    color: colors.textSecondary,
     fontWeight: '500',
   },
 });

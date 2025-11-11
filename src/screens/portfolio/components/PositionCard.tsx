@@ -3,12 +3,13 @@
 // Displays individual stock position with details
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { formatCurrency, formatPercent, getProfitColor } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { positionStyles } from '../styles/portfolioStyles';
+import { createPositionStyles } from '../styles/portfolioStyles';
 
 interface PositionCardProps {
   position: {
@@ -26,66 +27,68 @@ interface PositionCardProps {
 }
 
 export const PositionCard: React.FC<PositionCardProps> = ({ position }) => {
+  const { colors } = useTheme();
+  const styles = createPositionStyles(colors);
   const profitColor = getProfitColor(position.profitLoss);
   const changeColor = getProfitColor(position.change);
 
   return (
     <TouchableOpacity
-      style={positionStyles.positionCard}
+      style={styles.positionCard}
       onPress={() => router.push(`/stock/${position.stockSymbol}`)}
     >
-      <View style={positionStyles.positionHeader}>
+      <View style={styles.positionHeader}>
         <View>
-          <Text style={positionStyles.positionSymbol}>{position.stockSymbol}</Text>
-          <Text style={positionStyles.positionName}>{position.stockName}</Text>
+          <Text style={styles.positionSymbol}>{position.stockSymbol}</Text>
+          <Text style={styles.positionName}>{position.stockName}</Text>
         </View>
-        <View style={positionStyles.positionHeaderRight}>
-          <Text style={positionStyles.positionValue}>
+        <View style={styles.positionHeaderRight}>
+          <Text style={styles.positionValue}>
             {formatCurrency(position.currentValue)}
           </Text>
-          <View style={positionStyles.positionChangeRow}>
+          <View style={styles.positionChangeRow}>
             <Ionicons
               name={position.change >= 0 ? 'trending-up' : 'trending-down'}
               size={14}
               color={changeColor}
             />
-            <Text style={[positionStyles.positionChange, { color: changeColor }]}>
+            <Text style={[styles.positionChange, { color: changeColor }]}>
               {formatPercent(position.changePercent)}
             </Text>
           </View>
         </View>
       </View>
 
-      <View style={positionStyles.positionDivider} />
+      <View style={styles.positionDivider} />
 
-      <View style={positionStyles.positionDetails}>
-        <View style={positionStyles.positionDetailItem}>
-          <Text style={positionStyles.positionDetailLabel}>Quantity</Text>
-          <Text style={positionStyles.positionDetailValue}>{position.quantity}</Text>
+      <View style={styles.positionDetails}>
+        <View style={styles.positionDetailItem}>
+          <Text style={styles.positionDetailLabel}>Quantity</Text>
+          <Text style={styles.positionDetailValue}>{position.quantity}</Text>
         </View>
-        <View style={positionStyles.positionDetailItem}>
-          <Text style={positionStyles.positionDetailLabel}>Avg Price</Text>
-          <Text style={positionStyles.positionDetailValue}>
+        <View style={styles.positionDetailItem}>
+          <Text style={styles.positionDetailLabel}>Avg Price</Text>
+          <Text style={styles.positionDetailValue}>
             {formatCurrency(position.avgBuyPrice)}
           </Text>
         </View>
-        <View style={positionStyles.positionDetailItem}>
-          <Text style={positionStyles.positionDetailLabel}>Current</Text>
-          <Text style={positionStyles.positionDetailValue}>
+        <View style={styles.positionDetailItem}>
+          <Text style={styles.positionDetailLabel}>Current</Text>
+          <Text style={styles.positionDetailValue}>
             {formatCurrency(position.currentPrice)}
           </Text>
         </View>
       </View>
 
-      <View style={positionStyles.profitLossContainer}>
-        <View style={positionStyles.profitLossRow}>
-          <Text style={positionStyles.profitLossLabel}>P&L</Text>
-          <View style={positionStyles.profitLossValues}>
-            <Text style={[positionStyles.profitLossAmount, { color: profitColor }]}>
+      <View style={styles.profitLossContainer}>
+        <View style={styles.profitLossRow}>
+          <Text style={styles.profitLossLabel}>P&L</Text>
+          <View style={styles.profitLossValues}>
+            <Text style={[styles.profitLossAmount, { color: profitColor }]}>
               {position.profitLoss >= 0 ? '+' : ''}
               {formatCurrency(position.profitLoss)}
             </Text>
-            <Text style={[positionStyles.profitLossPercent, { color: profitColor }]}>
+            <Text style={[styles.profitLossPercent, { color: profitColor }]}>
               ({position.profitLossPercent >= 0 ? '+' : ''}
               {formatPercent(position.profitLossPercent)})
             </Text>

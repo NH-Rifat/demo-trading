@@ -3,11 +3,12 @@
 // Displays total value, invested amount, P&L, and today's change
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { formatCurrency, formatPercent, getProfitColor } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { summaryStyles } from '../styles/portfolioStyles';
+import { createSummaryStyles } from '../styles/portfolioStyles';
 
 interface PortfolioSummaryProps {
   portfolioValue: {
@@ -23,29 +24,32 @@ export const PortfolioSummary: React.FC<PortfolioSummaryProps> = ({
   portfolioValue,
   todaysChange,
 }) => {
+  const { colors } = useTheme();
+  const styles = createSummaryStyles(colors);
+  
   return (
-    <View style={summaryStyles.summaryCard}>
-      <View style={summaryStyles.summaryHeader}>
-        <Text style={summaryStyles.summaryLabel}>Total Portfolio Value</Text>
-        <Ionicons name="trending-up" size={20} color="#10b981" />
+    <View style={styles.summaryCard}>
+      <View style={styles.summaryHeader}>
+        <Text style={styles.summaryLabel}>Total Portfolio Value</Text>
+        <Ionicons name="trending-up" size={20} color={colors.primary} />
       </View>
-      <Text style={summaryStyles.summaryValue}>
+      <Text style={styles.summaryValue}>
         {formatCurrency(portfolioValue.currentValue)}
       </Text>
 
-      <View style={summaryStyles.summaryRow}>
-        <View style={summaryStyles.summaryItem}>
-          <Text style={summaryStyles.summaryItemLabel}>Invested</Text>
-          <Text style={summaryStyles.summaryItemValue}>
+      <View style={styles.summaryRow}>
+        <View style={styles.summaryItem}>
+          <Text style={styles.summaryItemLabel}>Invested</Text>
+          <Text style={styles.summaryItemValue}>
             {formatCurrency(portfolioValue.totalInvested)}
           </Text>
         </View>
-        <View style={summaryStyles.summaryDivider} />
-        <View style={summaryStyles.summaryItem}>
-          <Text style={summaryStyles.summaryItemLabel}>Total P&L</Text>
+        <View style={styles.summaryDivider} />
+        <View style={styles.summaryItem}>
+          <Text style={styles.summaryItemLabel}>Total P&L</Text>
           <Text
             style={[
-              summaryStyles.summaryItemValue,
+              styles.summaryItemValue,
               { color: getProfitColor(portfolioValue.profitLoss) },
             ]}
           >
@@ -53,12 +57,12 @@ export const PortfolioSummary: React.FC<PortfolioSummaryProps> = ({
             {formatCurrency(portfolioValue.profitLoss)}
           </Text>
         </View>
-        <View style={summaryStyles.summaryDivider} />
-        <View style={summaryStyles.summaryItem}>
-          <Text style={summaryStyles.summaryItemLabel}>Returns</Text>
+        <View style={styles.summaryDivider} />
+        <View style={styles.summaryItem}>
+          <Text style={styles.summaryItemLabel}>Returns</Text>
           <Text
             style={[
-              summaryStyles.summaryItemValue,
+              styles.summaryItemValue,
               { color: getProfitColor(portfolioValue.profitLoss) },
             ]}
           >
@@ -68,16 +72,16 @@ export const PortfolioSummary: React.FC<PortfolioSummaryProps> = ({
         </View>
       </View>
 
-      <View style={summaryStyles.todaysChangeContainer}>
-        <View style={summaryStyles.todaysChangeRow}>
+      <View style={styles.todaysChangeContainer}>
+        <View style={styles.todaysChangeRow}>
           <Ionicons
             name={todaysChange >= 0 ? 'arrow-up' : 'arrow-down'}
             size={16}
             color={getProfitColor(todaysChange)}
           />
-          <Text style={summaryStyles.todaysChangeLabel}>Today&apos;s Change</Text>
+          <Text style={styles.todaysChangeLabel}>Today&apos;s Change</Text>
         </View>
-        <Text style={[summaryStyles.todaysChangeValue, { color: getProfitColor(todaysChange) }]}>
+        <Text style={[styles.todaysChangeValue, { color: getProfitColor(todaysChange) }]}>
           {todaysChange >= 0 ? '+' : ''}
           {formatCurrency(todaysChange)}
         </Text>

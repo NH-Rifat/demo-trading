@@ -69,32 +69,31 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
           {themeOptions.map((option, index) => (
             <Animated.View key={option.mode} entering={FadeInDown.duration(300).delay(index * 100)}>
               <TouchableOpacity
-              key={option.mode}
-              style={[
-                themeModalStyles.themeOption,
-                {
-                  backgroundColor: colors.surfaceSecondary,
-                  borderColor: themeMode === option.mode ? colors.success : 'transparent',
-                },
-              ]}
-              onPress={() => {
-                onSelectTheme(option.mode);
-                onClose();
-              }}
-            >
-              <Ionicons name={option.icon as any} size={24} color={option.iconColor} />
-              <View style={themeModalStyles.themeOptionText}>
-                <Text style={[themeModalStyles.themeOptionTitle, { color: colors.text }]}>
-                  {option.title}
-                </Text>
-                <Text style={[themeModalStyles.themeOptionDescription, { color: colors.textSecondary }]}>
-                  {option.description}
-                </Text>
-              </View>
-              {themeMode === option.mode && (
-                <Ionicons name="checkmark-circle" size={24} color={colors.success} />
-              )}
-            </TouchableOpacity>
+                style={[
+                  themeModalStyles.themeOption,
+                  {
+                    backgroundColor: colors.surfaceSecondary,
+                    borderColor: themeMode === option.mode ? colors.success : 'transparent',
+                  },
+                ]}
+                onPress={() => {
+                  onSelectTheme(option.mode);
+                  onClose();
+                }}
+              >
+                <Ionicons name={option.icon as any} size={24} color={option.iconColor} />
+                <View style={themeModalStyles.themeOptionText}>
+                  <Text style={[themeModalStyles.themeOptionTitle, { color: colors.text }]}>
+                    {option.title}
+                  </Text>
+                  <Text style={[themeModalStyles.themeOptionDescription, { color: colors.textSecondary }]}>
+                    {option.description}
+                  </Text>
+                </View>
+                {themeMode === option.mode && (
+                  <Ionicons name="checkmark-circle" size={24} color={colors.success} />
+                )}
+              </TouchableOpacity>
             </Animated.View>
           ))}
         </Animated.View>

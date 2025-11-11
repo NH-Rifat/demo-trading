@@ -77,7 +77,7 @@ export const EditWatchlistModal: React.FC<EditWatchlistModalProps> = ({
               <Text style={styles.modalButtonTextCreate}>Save</Text>
             </TouchableOpacity>
           </View>
-          </Animated.View>
+        </Animated.View>
         </Animated.View>
       </KeyboardAvoidingView>
     </Modal>

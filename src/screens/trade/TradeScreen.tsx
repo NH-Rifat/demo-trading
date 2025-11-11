@@ -1,3 +1,4 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import { addOrder } from '@/src/store/slices/ordersSlice';
 import type { Stock } from '@/src/types';
@@ -16,12 +17,14 @@ import { StockSelector } from './components/StockSelector';
 import { TradeTypeTabs } from './components/TradeTypeTabs';
 import { useOrderValidation } from './hooks/useOrderValidation';
 import { useTradeCalculations } from './hooks/useTradeCalculations';
-import { tradeStyles } from './styles/tradeStyles';
+import { createTradeStyles } from './styles/tradeStyles';
 
 type TradeType = 'BUY' | 'SELL';
 type OrderType = 'MARKET' | 'LIMIT';
 
 export default function TradeScreen() {
+  const { colors } = useTheme();
+  const styles = createTradeStyles(colors);
   const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
   const stocks = useAppSelector((state: any) => state.market.stocks);
@@ -121,7 +124,7 @@ export default function TradeScreen() {
 
   return (
     <KeyboardAvoidingView
-      style={tradeStyles.container}
+      style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
       <ScrollView showsVerticalScrollIndicator={false}>

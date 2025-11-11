@@ -1,9 +1,10 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import type { Stock } from '@/src/types';
 import { formatCurrency, getProfitColor } from '@/src/utils/helpers';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { stockSelectorStyles } from '../styles/tradeStyles';
+import { createStockSelectorStyles } from '../styles/tradeStyles';
 
 interface StockSelectorProps {
   selectedStock: Stock | null;
@@ -18,23 +19,26 @@ export const StockSelector: React.FC<StockSelectorProps> = ({
   holdingQuantity,
   onPress,
 }) => {
+  const { colors } = useTheme();
+  const styles = createStockSelectorStyles(colors);
+  
   return (
-    <View style={stockSelectorStyles.section}>
-      <Text style={stockSelectorStyles.sectionLabel}>Select Stock</Text>
-      <TouchableOpacity style={stockSelectorStyles.stockSelector} onPress={onPress}>
+    <View style={styles.section}>
+      <Text style={styles.sectionLabel}>Select Stock</Text>
+      <TouchableOpacity style={styles.stockSelector} onPress={onPress}>
         {selectedStock ? (
-          <View style={stockSelectorStyles.selectedStockContent}>
+          <View style={styles.selectedStockContent}>
             <View>
-              <Text style={stockSelectorStyles.selectedStockSymbol}>{selectedStock.symbol}</Text>
-              <Text style={stockSelectorStyles.selectedStockName}>{selectedStock.name}</Text>
+              <Text style={styles.selectedStockSymbol}>{selectedStock.symbol}</Text>
+              <Text style={styles.selectedStockName}>{selectedStock.name}</Text>
             </View>
-            <View style={stockSelectorStyles.selectedStockRight}>
-              <Text style={stockSelectorStyles.selectedStockPrice}>
+            <View style={styles.selectedStockRight}>
+              <Text style={styles.selectedStockPrice}>
                 {formatCurrency(selectedStock.price)}
               </Text>
               <Text
                 style={[
-                  stockSelectorStyles.selectedStockChange,
+                  styles.selectedStockChange,
                   { color: getProfitColor(selectedStock.change) },
                 ]}
               >
@@ -44,21 +48,21 @@ export const StockSelector: React.FC<StockSelectorProps> = ({
             </View>
           </View>
         ) : (
-          <View style={stockSelectorStyles.stockSelectorPlaceholder}>
-            <Ionicons name="search" size={20} color="#9ca3af" />
-            <Text style={stockSelectorStyles.stockSelectorPlaceholderText}>
+          <View style={styles.stockSelectorPlaceholder}>
+            <Ionicons name="search" size={20} color={colors.textTertiary} />
+            <Text style={styles.stockSelectorPlaceholderText}>
               Tap to select a stock
             </Text>
           </View>
         )}
-        <Ionicons name="chevron-down" size={20} color="#6b7280" />
+        <Ionicons name="chevron-down" size={20} color={colors.textSecondary} />
       </TouchableOpacity>
 
       {/* Holding info for SELL */}
       {tradeType === 'SELL' && selectedStock && (
-        <View style={stockSelectorStyles.holdingInfo}>
-          <Ionicons name="information-circle" size={16} color="#3b82f6" />
-          <Text style={stockSelectorStyles.holdingInfoText}>
+        <View style={styles.holdingInfo}>
+          <Ionicons name="information-circle" size={16} color={colors.info} />
+          <Text style={styles.holdingInfoText}>
             You hold {holdingQuantity} shares
           </Text>
         </View>

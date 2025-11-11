@@ -1,6 +1,7 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { Text, TouchableOpacity } from 'react-native';
-import { placeOrderStyles } from '../styles/tradeStyles';
+import { createPlaceOrderStyles } from '../styles/tradeStyles';
 
 interface PlaceOrderButtonProps {
   tradeType: 'BUY' | 'SELL';
@@ -13,19 +14,22 @@ export const PlaceOrderButton: React.FC<PlaceOrderButtonProps> = ({
   isDisabled,
   onPress,
 }) => {
+  const { colors } = useTheme();
+  const styles = createPlaceOrderStyles(colors);
+  
   return (
     <TouchableOpacity
       style={[
-        placeOrderStyles.placeOrderButton,
+        styles.placeOrderButton,
         tradeType === 'BUY'
-          ? placeOrderStyles.placeOrderButtonBuy
-          : placeOrderStyles.placeOrderButtonSell,
-        isDisabled && placeOrderStyles.placeOrderButtonDisabled,
+          ? styles.placeOrderButtonBuy
+          : styles.placeOrderButtonSell,
+        isDisabled && styles.placeOrderButtonDisabled,
       ]}
       onPress={onPress}
       disabled={isDisabled}
     >
-      <Text style={placeOrderStyles.placeOrderButtonText}>
+      <Text style={styles.placeOrderButtonText}>
         {tradeType === 'BUY' ? 'Place Buy Order' : 'Place Sell Order'}
       </Text>
     </TouchableOpacity>

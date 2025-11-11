@@ -1,8 +1,9 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import type { Stock } from '@/src/types';
 import { formatCurrency } from '@/src/utils/helpers';
 import React from 'react';
 import { Text, View } from 'react-native';
-import { orderSummaryStyles } from '../styles/tradeStyles';
+import { createOrderSummaryStyles } from '../styles/tradeStyles';
 
 interface OrderSummaryProps {
   tradeType: 'BUY' | 'SELL';
@@ -25,43 +26,46 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
   availableBalance,
   holdingQuantity,
 }) => {
+  const { colors } = useTheme();
+  const styles = createOrderSummaryStyles(colors);
+  
   return (
-    <View style={orderSummaryStyles.orderSummary}>
-      <Text style={orderSummaryStyles.orderSummaryTitle}>Order Summary</Text>
+    <View style={styles.orderSummary}>
+      <Text style={styles.orderSummaryTitle}>Order Summary</Text>
 
-      <View style={orderSummaryStyles.summaryRow}>
-        <Text style={orderSummaryStyles.summaryLabel}>Order Type</Text>
-        <Text style={orderSummaryStyles.summaryValue}>
+      <View style={styles.summaryRow}>
+        <Text style={styles.summaryLabel}>Order Type</Text>
+        <Text style={styles.summaryValue}>
           {tradeType} • {orderType}
         </Text>
       </View>
 
-      <View style={orderSummaryStyles.summaryRow}>
-        <Text style={orderSummaryStyles.summaryLabel}>Price per Share</Text>
-        <Text style={orderSummaryStyles.summaryValue}>
+      <View style={styles.summaryRow}>
+        <Text style={styles.summaryLabel}>Price per Share</Text>
+        <Text style={styles.summaryValue}>
           {selectedStock ? formatCurrency(orderPrice) : '—'}
         </Text>
       </View>
 
-      <View style={orderSummaryStyles.summaryRow}>
-        <Text style={orderSummaryStyles.summaryLabel}>Quantity</Text>
-        <Text style={orderSummaryStyles.summaryValue}>{quantity} shares</Text>
+      <View style={styles.summaryRow}>
+        <Text style={styles.summaryLabel}>Quantity</Text>
+        <Text style={styles.summaryValue}>{quantity} shares</Text>
       </View>
 
-      <View style={orderSummaryStyles.summaryDivider} />
+      <View style={styles.summaryDivider} />
 
-      <View style={orderSummaryStyles.summaryRow}>
-        <Text style={orderSummaryStyles.summaryLabelTotal}>Total</Text>
-        <Text style={orderSummaryStyles.summaryValueTotal}>
+      <View style={styles.summaryRow}>
+        <Text style={styles.summaryLabelTotal}>Total</Text>
+        <Text style={styles.summaryValueTotal}>
           {selectedStock ? formatCurrency(orderTotal) : '—'}
         </Text>
       </View>
 
-      <View style={orderSummaryStyles.summaryRow}>
-        <Text style={orderSummaryStyles.summaryLabel}>
+      <View style={styles.summaryRow}>
+        <Text style={styles.summaryLabel}>
           {tradeType === 'BUY' ? 'Available Balance' : 'Holdings'}
         </Text>
-        <Text style={orderSummaryStyles.summaryValue}>
+        <Text style={styles.summaryValue}>
           {tradeType === 'BUY' ? formatCurrency(availableBalance) : `${holdingQuantity} shares`}
         </Text>
       </View>

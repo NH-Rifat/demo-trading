@@ -1,21 +1,21 @@
 import { Platform, StyleSheet } from 'react-native';
 
-export const tradeStyles = StyleSheet.create({
+export const createTradeStyles = (colors: any) => StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f9fafb',
+    backgroundColor: colors.background,
   },
 });
 
-export const headerStyles = StyleSheet.create({
+export const createHeaderStyles = (colors: any) => StyleSheet.create({
   header: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
     paddingTop: Platform.OS === 'ios' ? 60 : 48,
     paddingHorizontal: 16,
     paddingBottom: 20,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 4,
@@ -28,11 +28,11 @@ export const headerStyles = StyleSheet.create({
   headerTitle: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
 });
 
-export const tradeTypeStyles = StyleSheet.create({
+export const createTradeTypeStyles = (colors: any) => StyleSheet.create({
   tradeTypeTabs: {
     flexDirection: 'row',
     padding: 16,
@@ -45,30 +45,30 @@ export const tradeTypeStyles = StyleSheet.create({
     justifyContent: 'center',
     paddingVertical: 16,
     borderRadius: 12,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderWidth: 2,
-    borderColor: '#e5e7eb',
+    borderColor: colors.border,
     gap: 8,
   },
   tradeTypeTabActiveBuy: {
-    backgroundColor: '#10b981',
-    borderColor: '#10b981',
+    backgroundColor: colors.success,
+    borderColor: colors.success,
   },
   tradeTypeTabActiveSell: {
-    backgroundColor: '#ef4444',
-    borderColor: '#ef4444',
+    backgroundColor: colors.danger,
+    borderColor: colors.danger,
   },
   tradeTypeTabText: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   tradeTypeTabTextActive: {
     color: '#ffffff',
   },
 });
 
-export const stockSelectorStyles = StyleSheet.create({
+export const createStockSelectorStyles = (colors: any) => StyleSheet.create({
   section: {
     paddingHorizontal: 16,
     marginBottom: 24,
@@ -76,18 +76,18 @@ export const stockSelectorStyles = StyleSheet.create({
   sectionLabel: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginBottom: 12,
   },
   stockSelector: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 16,
     borderWidth: 2,
-    borderColor: '#e5e7eb',
+    borderColor: colors.border,
   },
   selectedStockContent: {
     flex: 1,
@@ -99,11 +99,11 @@ export const stockSelectorStyles = StyleSheet.create({
   selectedStockSymbol: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   selectedStockName: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   selectedStockRight: {
@@ -112,7 +112,7 @@ export const stockSelectorStyles = StyleSheet.create({
   selectedStockPrice: {
     fontSize: 16,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.text,
   },
   selectedStockChange: {
     fontSize: 12,
@@ -127,7 +127,7 @@ export const stockSelectorStyles = StyleSheet.create({
   },
   stockSelectorPlaceholderText: {
     fontSize: 16,
-    color: '#9ca3af',
+    color: colors.textTertiary,
   },
   holdingInfo: {
     flexDirection: 'row',
@@ -137,15 +137,15 @@ export const stockSelectorStyles = StyleSheet.create({
   },
   holdingInfoText: {
     fontSize: 13,
-    color: '#3b82f6',
+    color: colors.info,
     fontWeight: '500',
   },
 });
 
-export const orderTypeStyles = StyleSheet.create({
+export const createOrderTypeStyles = (colors: any) => StyleSheet.create({
   orderTypeTabs: {
     flexDirection: 'row',
-    backgroundColor: '#f3f4f6',
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 12,
     padding: 4,
     gap: 4,
@@ -157,26 +157,26 @@ export const orderTypeStyles = StyleSheet.create({
     alignItems: 'center',
   },
   orderTypeTabActive: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
   },
   orderTypeTabText: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   orderTypeTabTextActive: {
-    color: '#111827',
+    color: colors.text,
   },
 });
 
-export const quantityStyles = StyleSheet.create({
+export const createQuantityStyles = (colors: any) => StyleSheet.create({
   quantityControl: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#e5e7eb',
+    borderColor: colors.border,
   },
   quantityButton: {
     width: 56,
@@ -189,46 +189,46 @@ export const quantityStyles = StyleSheet.create({
     flex: 1,
     fontSize: 24,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     textAlign: 'center',
   },
 });
 
-export const priceInputStyles = StyleSheet.create({
+export const createPriceInputStyles = (colors: any) => StyleSheet.create({
   priceInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     borderWidth: 2,
-    borderColor: '#e5e7eb',
+    borderColor: colors.border,
     paddingHorizontal: 16,
   },
   currencySymbol: {
     fontSize: 20,
     fontWeight: '600',
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginRight: 8,
   },
   priceInput: {
     flex: 1,
     fontSize: 20,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.text,
     paddingVertical: 16,
   },
 });
 
-export const orderSummaryStyles = StyleSheet.create({
+export const createOrderSummaryStyles = (colors: any) => StyleSheet.create({
   orderSummary: {
     marginHorizontal: 16,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 16,
     padding: 20,
     marginBottom: 24,
     ...Platform.select({
       ios: {
-        shadowColor: '#000',
+        shadowColor: colors.shadow,
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
         shadowRadius: 8,
@@ -241,7 +241,7 @@ export const orderSummaryStyles = StyleSheet.create({
   orderSummaryTitle: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
     marginBottom: 16,
   },
   summaryRow: {
@@ -252,31 +252,31 @@ export const orderSummaryStyles = StyleSheet.create({
   },
   summaryLabel: {
     fontSize: 14,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   summaryValue: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.text,
   },
   summaryDivider: {
     height: 1,
-    backgroundColor: '#e5e7eb',
+    backgroundColor: colors.border,
     marginVertical: 12,
   },
   summaryLabelTotal: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   summaryValueTotal: {
     fontSize: 18,
     fontWeight: '700',
-    color: '#10b981',
+    color: colors.primary,
   },
 });
 
-export const placeOrderStyles = StyleSheet.create({
+export const createPlaceOrderStyles = (colors: any) => StyleSheet.create({
   placeOrderButton: {
     marginHorizontal: 16,
     paddingVertical: 18,
@@ -285,13 +285,13 @@ export const placeOrderStyles = StyleSheet.create({
     justifyContent: 'center',
   },
   placeOrderButtonBuy: {
-    backgroundColor: '#10b981',
+    backgroundColor: colors.success,
   },
   placeOrderButtonSell: {
-    backgroundColor: '#ef4444',
+    backgroundColor: colors.danger,
   },
   placeOrderButtonDisabled: {
-    backgroundColor: '#d1d5db',
+    backgroundColor: colors.disabled,
   },
   placeOrderButtonText: {
     fontSize: 16,
@@ -300,10 +300,10 @@ export const placeOrderStyles = StyleSheet.create({
   },
 });
 
-export const stockPickerStyles = StyleSheet.create({
+export const createStockPickerStyles = (colors: any) => StyleSheet.create({
   modalContainer: {
     flex: 1,
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.surface,
   },
   modalHeader: {
     flexDirection: 'row',
@@ -313,12 +313,12 @@ export const stockPickerStyles = StyleSheet.create({
     paddingHorizontal: 16,
     paddingBottom: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#e5e7eb',
+    borderBottomColor: colors.border,
   },
   modalTitle: {
     fontSize: 20,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   modalSearchContainer: {
     padding: 16,
@@ -332,7 +332,7 @@ export const stockPickerStyles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 16,
     paddingHorizontal: 16,
-    backgroundColor: '#f9fafb',
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 12,
     marginBottom: 8,
   },
@@ -342,11 +342,11 @@ export const stockPickerStyles = StyleSheet.create({
   stockItemSymbol: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   stockItemName: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginTop: 2,
   },
   stockItemRight: {
@@ -355,7 +355,7 @@ export const stockPickerStyles = StyleSheet.create({
   stockItemPrice: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#111827',
+    color: colors.text,
   },
   stockItemChange: {
     fontSize: 12,

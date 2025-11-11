@@ -1,7 +1,8 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { tradeTypeStyles } from '../styles/tradeStyles';
+import { createTradeTypeStyles } from '../styles/tradeStyles';
 
 interface TradeTypeTabsProps {
   tradeType: 'BUY' | 'SELL';
@@ -9,24 +10,27 @@ interface TradeTypeTabsProps {
 }
 
 export const TradeTypeTabs: React.FC<TradeTypeTabsProps> = ({ tradeType, onChangeTradeType }) => {
+  const { colors } = useTheme();
+  const styles = createTradeTypeStyles(colors);
+  
   return (
-    <View style={tradeTypeStyles.tradeTypeTabs}>
+    <View style={styles.tradeTypeTabs}>
       <TouchableOpacity
         style={[
-          tradeTypeStyles.tradeTypeTab,
-          tradeType === 'BUY' && tradeTypeStyles.tradeTypeTabActiveBuy,
+          styles.tradeTypeTab,
+          tradeType === 'BUY' && styles.tradeTypeTabActiveBuy,
         ]}
         onPress={() => onChangeTradeType('BUY')}
       >
         <Ionicons
           name="trending-up"
           size={20}
-          color={tradeType === 'BUY' ? '#ffffff' : '#10b981'}
+          color={tradeType === 'BUY' ? '#ffffff' : colors.success}
         />
         <Text
           style={[
-            tradeTypeStyles.tradeTypeTabText,
-            tradeType === 'BUY' && tradeTypeStyles.tradeTypeTabTextActive,
+            styles.tradeTypeTabText,
+            tradeType === 'BUY' && styles.tradeTypeTabTextActive,
           ]}
         >
           Buy
@@ -35,20 +39,20 @@ export const TradeTypeTabs: React.FC<TradeTypeTabsProps> = ({ tradeType, onChang
 
       <TouchableOpacity
         style={[
-          tradeTypeStyles.tradeTypeTab,
-          tradeType === 'SELL' && tradeTypeStyles.tradeTypeTabActiveSell,
+          styles.tradeTypeTab,
+          tradeType === 'SELL' && styles.tradeTypeTabActiveSell,
         ]}
         onPress={() => onChangeTradeType('SELL')}
       >
         <Ionicons
           name="trending-down"
           size={20}
-          color={tradeType === 'SELL' ? '#ffffff' : '#ef4444'}
+          color={tradeType === 'SELL' ? '#ffffff' : colors.danger}
         />
         <Text
           style={[
-            tradeTypeStyles.tradeTypeTabText,
-            tradeType === 'SELL' && tradeTypeStyles.tradeTypeTabTextActive,
+            styles.tradeTypeTabText,
+            tradeType === 'SELL' && styles.tradeTypeTabTextActive,
           ]}
         >
           Sell

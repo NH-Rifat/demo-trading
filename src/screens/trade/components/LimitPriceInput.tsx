@@ -1,6 +1,7 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { Text, TextInput, View } from 'react-native';
-import { priceInputStyles, stockSelectorStyles } from '../styles/tradeStyles';
+import { createPriceInputStyles, createStockSelectorStyles } from '../styles/tradeStyles';
 
 interface LimitPriceInputProps {
   limitPrice: string;
@@ -11,17 +12,22 @@ export const LimitPriceInput: React.FC<LimitPriceInputProps> = ({
   limitPrice,
   onChangeLimitPrice,
 }) => {
+  const { colors } = useTheme();
+  const selectorStyles = createStockSelectorStyles(colors);
+  const priceStyles = createPriceInputStyles(colors);
+  
   return (
-    <View style={stockSelectorStyles.section}>
-      <Text style={stockSelectorStyles.sectionLabel}>Limit Price</Text>
-      <View style={priceInputStyles.priceInputContainer}>
-        <Text style={priceInputStyles.currencySymbol}>$</Text>
+    <View style={selectorStyles.section}>
+      <Text style={selectorStyles.sectionLabel}>Limit Price</Text>
+      <View style={priceStyles.priceInputContainer}>
+        <Text style={priceStyles.currencySymbol}>$</Text>
         <TextInput
-          style={priceInputStyles.priceInput}
+          style={priceStyles.priceInput}
           value={limitPrice}
           onChangeText={onChangeLimitPrice}
           keyboardType="decimal-pad"
           placeholder="0.00"
+          placeholderTextColor={colors.textTertiary}
         />
       </View>
     </View>

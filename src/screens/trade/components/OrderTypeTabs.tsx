@@ -1,6 +1,7 @@
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import { orderTypeStyles, stockSelectorStyles } from '../styles/tradeStyles';
+import { createOrderTypeStyles, createStockSelectorStyles } from '../styles/tradeStyles';
 
 interface OrderTypeTabsProps {
   orderType: 'MARKET' | 'LIMIT';
@@ -8,21 +9,25 @@ interface OrderTypeTabsProps {
 }
 
 export const OrderTypeTabs: React.FC<OrderTypeTabsProps> = ({ orderType, onChangeOrderType }) => {
+  const { colors } = useTheme();
+  const selectorStyles = createStockSelectorStyles(colors);
+  const orderStyles = createOrderTypeStyles(colors);
+  
   return (
-    <View style={stockSelectorStyles.section}>
-      <Text style={stockSelectorStyles.sectionLabel}>Order Type</Text>
-      <View style={orderTypeStyles.orderTypeTabs}>
+    <View style={selectorStyles.section}>
+      <Text style={selectorStyles.sectionLabel}>Order Type</Text>
+      <View style={orderStyles.orderTypeTabs}>
         <TouchableOpacity
           style={[
-            orderTypeStyles.orderTypeTab,
-            orderType === 'MARKET' && orderTypeStyles.orderTypeTabActive,
+            orderStyles.orderTypeTab,
+            orderType === 'MARKET' && orderStyles.orderTypeTabActive,
           ]}
           onPress={() => onChangeOrderType('MARKET')}
         >
           <Text
             style={[
-              orderTypeStyles.orderTypeTabText,
-              orderType === 'MARKET' && orderTypeStyles.orderTypeTabTextActive,
+              orderStyles.orderTypeTabText,
+              orderType === 'MARKET' && orderStyles.orderTypeTabTextActive,
             ]}
           >
             Market
@@ -31,15 +36,15 @@ export const OrderTypeTabs: React.FC<OrderTypeTabsProps> = ({ orderType, onChang
 
         <TouchableOpacity
           style={[
-            orderTypeStyles.orderTypeTab,
-            orderType === 'LIMIT' && orderTypeStyles.orderTypeTabActive,
+            orderStyles.orderTypeTab,
+            orderType === 'LIMIT' && orderStyles.orderTypeTabActive,
           ]}
           onPress={() => onChangeOrderType('LIMIT')}
         >
           <Text
             style={[
-              orderTypeStyles.orderTypeTabText,
-              orderType === 'LIMIT' && orderTypeStyles.orderTypeTabTextActive,
+              orderStyles.orderTypeTabText,
+              orderType === 'LIMIT' && orderStyles.orderTypeTabTextActive,
             ]}
           >
             Limit

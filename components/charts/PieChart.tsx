@@ -3,6 +3,7 @@
 // Features: Sector/asset allocation visualization
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import Svg, { Circle, G, Text as SvgText } from 'react-native-svg';
@@ -19,6 +20,8 @@ interface Props {
 }
 
 export default function PieChart({ data, size = 200 }: Props) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const total = data.reduce((sum, item) => sum + item.value, 0);
   const radius = size / 2;
   const center = size / 2;
@@ -75,7 +78,7 @@ export default function PieChart({ data, size = 200 }: Props) {
             textAnchor="middle"
             fontSize="24"
             fontWeight="bold"
-            fill="#111827"
+            fill={colors.text}
           >
             {data.length}
           </SvgText>
@@ -84,7 +87,7 @@ export default function PieChart({ data, size = 200 }: Props) {
             y={center + 15}
             textAnchor="middle"
             fontSize="14"
-            fill="#6b7280"
+            fill={colors.textSecondary}
           >
             Sectors
           </SvgText>
@@ -111,9 +114,9 @@ export default function PieChart({ data, size = 200 }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
+    backgroundColor: colors.card,
     borderRadius: 12,
     padding: 16,
     marginBottom: 16,
@@ -129,7 +132,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     paddingHorizontal: 12,
     marginBottom: 4,
-    backgroundColor: '#f9fafb',
+    backgroundColor: colors.surfaceSecondary,
     borderRadius: 8,
   },
   legendDot: {
@@ -146,12 +149,12 @@ const styles = StyleSheet.create({
   },
   legendLabel: {
     fontSize: 14,
-    color: '#111827',
+    color: colors.text,
     fontWeight: '500',
   },
   legendValue: {
     fontSize: 14,
-    color: '#6b7280',
+    color: colors.textSecondary,
     fontWeight: '600',
   },
 });

@@ -3,8 +3,9 @@
 // Features: Interactive line chart with touch gestures
 // ============================================
 
+import { useTheme } from '@/src/contexts/ThemeContext';
 import React, { useState } from 'react';
-import { Dimensions, StyleSheet, Text, View } from 'react-native';
+import { Dimensions, Platform, StyleSheet, Text, View } from 'react-native';
 import { GestureHandlerRootView, PanGestureHandler } from 'react-native-gesture-handler';
 import Svg, { Circle, Line, Path, Rect, Text as SvgText } from 'react-native-svg';
 
@@ -28,6 +29,8 @@ export default function PerformanceChart({
   title = 'Performance',
   color = '#10b981',
 }: Props) {
+  const { colors } = useTheme();
+  const styles = createStyles(colors);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const firstValue = data[0]?.value || 0;
@@ -108,9 +111,10 @@ export default function PerformanceChart({
   const selectedIsPositive = selectedChange >= 0;
 
   return (
-    <GestureHandlerRootView style={styles.container}>
-      {/* Header */}
-      <View style={styles.header}>
+    <View style={styles.container}>
+      <GestureHandlerRootView style={styles.gestureContainer}>
+        {/* Header */}
+        <View style={styles.header}>
         <View>
           <Text style={styles.title}>{title}</Text>
           <Text style={styles.subtitle}>
@@ -146,7 +150,7 @@ export default function PerformanceChart({
               y1={chartHeight / 2}
               x2={chartWidth - padding}
               y2={chartHeight / 2}
-              stroke="#f3f4f6"
+              stroke={colors.borderLight}
               strokeWidth="1"
               strokeDasharray="5,5"
             />
@@ -170,7 +174,7 @@ export default function PerformanceChart({
                   y1={padding}
                   x2={selectedPoint.x}
                   y2={chartHeight - padding}
-                  stroke="#6b7280"
+                  stroke={colors.textSecondary}
                   strokeWidth="1"
                   strokeDasharray="3,3"
                   opacity={0.5}
@@ -182,7 +186,7 @@ export default function PerformanceChart({
                   y1={selectedPoint.y}
                   x2={chartWidth - padding}
                   y2={selectedPoint.y}
-                  stroke="#6b7280"
+                  stroke={colors.textSecondary}
                   strokeWidth="1"
                   strokeDasharray="3,3"
                   opacity={0.5}
@@ -275,16 +279,33 @@ export default function PerformanceChart({
       {!selectedData && (
         <Text style={styles.hintText}>👆 Touch chart to see details</Text>
       )}
-    </GestureHandlerRootView>
+      </GestureHandlerRootView>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
+const createStyles = (colors: any) => StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
-    borderRadius: 12,
+    backgroundColor: colors.card,
+    borderRadius: 16,
     padding: 16,
+    marginHorizontal: 16,
     marginBottom: 16,
+    overflow: 'hidden',
+    ...Platform.select({
+      ios: {
+        shadowColor: colors.shadow,
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 8,
+      },
+      android: {
+        elevation: 4,
+      },
+    }),
+  },
+  gestureContainer: {
+    flex: 1,
   },
   header: {
     flexDirection: 'row',
@@ -294,13 +315,13 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 14,
-    color: '#6b7280',
+    color: colors.textSecondary,
     marginBottom: 4,
   },
   subtitle: {
     fontSize: 24,
     fontWeight: '700',
-    color: '#111827',
+    color: colors.text,
   },
   changeContainer: {
     alignItems: 'flex-end',
@@ -312,11 +333,10 @@ const styles = StyleSheet.create({
   },
   changeAmount: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   chartContainer: {
     borderRadius: 8,
-    overflow: 'hidden',
   },
   timeLabels: {
     flexDirection: 'row',
@@ -326,11 +346,11 @@ const styles = StyleSheet.create({
   },
   timeLabel: {
     fontSize: 12,
-    color: '#6b7280',
+    color: colors.textSecondary,
   },
   hintText: {
     fontSize: 12,
-    color: '#9ca3af',
+    color: colors.textTertiary,
     textAlign: 'center',
     marginTop: 8,
     fontStyle: 'italic',

@@ -13,6 +13,7 @@ import type { Stock, Watchlist } from '@/src/types';
 import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, FlatList, View } from 'react-native';
+import Animated, { FadeInDown } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CreateWatchlistModal } from './components/CreateWatchlistModal';
 import { EditWatchlistModal } from './components/EditWatchlistModal';
@@ -151,8 +152,11 @@ export default function WatchlistScreen() {
         data={watchlistStocks}
         keyExtractor={(item) => item.id}
         ListHeaderComponent={renderHeader}
-        renderItem={({ item }) => (
-          <View style={styles.stockCardWrapper}>
+        renderItem={({ item, index }) => (
+          <Animated.View 
+            style={styles.stockCardWrapper}
+            entering={FadeInDown.duration(400).delay(index * 80).springify()}
+          >
             <StockCard
               stock={item}
               onPress={() => handleStockPress(item)}
@@ -160,7 +164,7 @@ export default function WatchlistScreen() {
               isInWatchlist={true}
               onToggleWatchlist={() => handleRemoveStock(item.id)}
             />
-          </View>
+          </Animated.View>
         )}
         ListEmptyComponent={
           <EmptyState

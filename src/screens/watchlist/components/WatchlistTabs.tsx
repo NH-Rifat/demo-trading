@@ -2,6 +2,7 @@ import { useTheme } from '@/src/contexts/ThemeContext';
 import type { Watchlist } from '@/src/types';
 import React from 'react';
 import { ScrollView } from 'react-native';
+import Animated, { SlideInRight } from 'react-native-reanimated';
 import { createWatchlistTabStyles } from '../styles/watchlistStyles';
 import { WatchlistTab } from './WatchlistTab';
 
@@ -27,14 +28,18 @@ export const WatchlistTabs: React.FC<WatchlistTabsProps> = ({
       showsHorizontalScrollIndicator={false}
       contentContainerStyle={styles.watchlistTabs}
     >
-      {watchlists.map((watchlist) => (
-        <WatchlistTab
+      {watchlists.map((watchlist, index) => (
+        <Animated.View 
           key={watchlist.id}
-          watchlist={watchlist}
-          isActive={watchlist.id === activeWatchlistId}
-          onPress={() => onSelectWatchlist(watchlist.id)}
-          onEdit={() => onEditWatchlist(watchlist)}
-        />
+          entering={SlideInRight.duration(400).delay(index * 100).springify()}
+        >
+          <WatchlistTab
+            watchlist={watchlist}
+            isActive={watchlist.id === activeWatchlistId}
+            onPress={() => onSelectWatchlist(watchlist.id)}
+            onEdit={() => onEditWatchlist(watchlist)}
+          />
+        </Animated.View>
       ))}
     </ScrollView>
   );

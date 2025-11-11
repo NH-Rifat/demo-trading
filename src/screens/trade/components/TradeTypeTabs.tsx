@@ -2,7 +2,7 @@ import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import Animated, { useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
+import Animated, { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { createTradeTypeStyles } from '../styles/tradeStyles';
 
 interface TradeTypeTabsProps {

@@ -3,7 +3,7 @@ import type { Watchlist } from '@/src/types';
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { Text, TouchableOpacity, View } from 'react-native';
-import Animated, { useAnimatedStyle, withTiming, Easing } from 'react-native-reanimated';
+import Animated, { Easing, useAnimatedStyle, withTiming } from 'react-native-reanimated';
 import { createWatchlistTabStyles } from '../styles/watchlistStyles';
 
 interface WatchlistTabProps {

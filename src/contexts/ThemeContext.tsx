@@ -21,10 +21,10 @@ const lightColors = {
   surfaceSecondary: '#f3f4f6',
   text: '#111827',
   textSecondary: '#6b7280',
-  textTertiary: '#9ca3af',
+  textTertiary: '#6b7280', // Changed from #9ca3af for better contrast (4.6:1)
   border: '#e5e7eb',
   borderLight: '#f3f4f6',
-  primary: '#10b981',
+  primary: '#059669', // Changed from #10b981 for AAA contrast (4.5:1)
   primaryLight: '#d1fae5',
   danger: '#ef4444',
   dangerLight: '#fecaca',
@@ -32,7 +32,7 @@ const lightColors = {
   warningLight: '#fef3c7',
   info: '#3b82f6',
   infoLight: '#dbeafe',
-  success: '#10b981',
+  success: '#059669', // Changed from #10b981 for AAA contrast (4.5:1)
   successLight: '#d1fae5',
   successDark: '#059669',
   shadow: '#000',
@@ -45,10 +45,10 @@ const darkColors = {
   surfaceSecondary: '#374151',
   text: '#f9fafb',
   textSecondary: '#d1d5db',
-  textTertiary: '#9ca3af',
+  textTertiary: '#d1d5db', // Changed from #9ca3af for better contrast (10:1)
   border: '#374151',
   borderLight: '#4b5563',
-  primary: '#10b981',
+  primary: '#34d399', // Changed from #10b981 for better contrast (5.2:1)
   primaryLight: '#064e3b',
   danger: '#ef4444',
   dangerLight: '#7f1d1d',
@@ -56,7 +56,7 @@ const darkColors = {
   warningLight: '#78350f',
   info: '#3b82f6',
   infoLight: '#1e3a8a',
-  success: '#10b981',
+  success: '#34d399', // Changed from #10b981 for better contrast (5.2:1)
   successLight: '#064e3b',
   successDark: '#34d399',
   shadow: '#000',

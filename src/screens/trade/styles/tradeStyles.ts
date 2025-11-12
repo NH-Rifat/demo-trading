@@ -306,7 +306,7 @@ export const createPlaceOrderStyles = (colors: any) => StyleSheet.create({
     backgroundColor: colors.danger,
   },
   placeOrderButtonDisabled: {
-    backgroundColor: colors.disabled,
+    opacity: 0.5,
   },
   placeOrderButtonText: {
     fontSize: 16,

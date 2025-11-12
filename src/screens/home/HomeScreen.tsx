@@ -8,7 +8,6 @@ import { GlobalHeader } from '@/src/components/common/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
 import React, { useState } from 'react';
 import { RefreshControl, ScrollView, View } from 'react-native';
-import Animated, { FadeIn, FadeInDown, FadeInUp, SlideInRight } from 'react-native-reanimated';
 import { AdvanceDecline } from './components/AdvanceDecline';
 import { FeaturedLists } from './components/FeaturedLists';
 import { Header } from './components/Header';
@@ -64,34 +63,24 @@ export default function HomeScreen() {
           <RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor={colors.primary} colors={[colors.primary]} />
         }
       >
-        {/* Index Cards - Fade in from top with delay */}
-        <Animated.View entering={FadeInDown.duration(600).delay(100).springify()}>
-          <IndexCards indices={marketData.indices} />
-        </Animated.View>
+        {/* Index Cards */}
+        <IndexCards indices={marketData.indices} />
 
-        {/* Market Stats - Slide in from right */}
-        <Animated.View entering={SlideInRight.duration(500).delay(200).springify()}>
-          <MarketStats turnover={marketData.turnover} volume={marketData.volume} trade={marketData.trade} />
-        </Animated.View>
+        {/* Market Stats */}
+        <MarketStats turnover={marketData.turnover} volume={marketData.volume} trade={marketData.trade} />
 
-        {/* Advance Decline Chart - Fade in with scale */}
-        <Animated.View entering={FadeIn.duration(600).delay(300)}>
-          <AdvanceDecline advanceDecline={marketData.advanceDecline} />
-        </Animated.View>
+        {/* Advance Decline Chart */}
+        <AdvanceDecline advanceDecline={marketData.advanceDecline} />
 
-        {/* Top Featured Lists - Fade in from bottom */}
-        <Animated.View entering={FadeInUp.duration(600).delay(400).springify()}>
-          <FeaturedLists selectedTab={selectedTab} onTabChange={setSelectedTab} data={featuredListsData} />
-        </Animated.View>
+        {/* Top Featured Lists */}
+        <FeaturedLists selectedTab={selectedTab} onTabChange={setSelectedTab} data={featuredListsData} />
 
-        {/* Top Invested Sectors - Fade in from bottom */}
-        <Animated.View entering={FadeInUp.duration(600).delay(500).springify()}>
-          <TopSectors
-            sectors={topSectorsData}
-            showAll={showAllSectors}
-            onToggleShowAll={() => setShowAllSectors(!showAllSectors)}
-          />
-        </Animated.View>
+        {/* Top Invested Sectors */}
+        <TopSectors
+          sectors={topSectorsData}
+          showAll={showAllSectors}
+          onToggleShowAll={() => setShowAllSectors(!showAllSectors)}
+        />
 
         <View style={{ height: 100 }} />
       </ScrollView>

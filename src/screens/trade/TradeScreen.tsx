@@ -8,7 +8,6 @@ import { formatCurrency } from '@/src/utils/helpers';
 import { useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
-import Animated, { FadeIn, FadeInDown, FadeInUp, SlideInRight } from 'react-native-reanimated';
 import { BalanceInfo } from './components/BalanceInfo';
 import { DripQuantityControl } from './components/DripQuantityControl';
 import { Header } from './components/Header';
@@ -170,44 +169,25 @@ export default function TradeScreen() {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
       >
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Animated.View entering={FadeInDown.duration(500)}>
-            <Header />
-          </Animated.View>
-        <Animated.View entering={SlideInRight.duration(500).delay(100).springify()}>
+          <Header />
           <TradeTypeTabs tradeType={tradeType} onChangeTradeType={setTradeType} />
-        </Animated.View>
-        <Animated.View entering={FadeIn.duration(500).delay(150)}>
           <UserSelector selectedUser={selectedUser} onSelectUser={setSelectedUser} />
-        </Animated.View>
-        <Animated.View entering={FadeIn.duration(500).delay(180)}>
           <BalanceInfo limit={2883.00} balance={2883.00} />
-        </Animated.View>
-        <Animated.View entering={FadeIn.duration(500).delay(200)}>
           <StockSelector
             selectedStock={selectedStock}
             tradeType={tradeType}
             holdingQuantity={holdingQuantity}
             onPress={() => setIsStockPickerVisible(true)}
           />
-        </Animated.View>
-        {selectedStock && <MarketDepth stock={selectedStock} />}
-        <Animated.View entering={FadeInUp.duration(500).delay(300).springify()}>
+          {selectedStock && <MarketDepth stock={selectedStock} />}
           <OrderTypeTabs orderType={orderType} onChangeOrderType={handleChangeOrderType} />
-        </Animated.View>
-        <Animated.View entering={FadeInUp.duration(500).delay(400).springify()}>
           <QuantityControl quantity={quantity} onChangeQuantity={setQuantity} />
-        </Animated.View>
-        {orderType === 'MARKET' && (
-          <Animated.View entering={FadeInUp.duration(400).springify()}>
+          {orderType === 'MARKET' && (
             <DripQuantityControl dripQuantity={dripQuantity} onChangeDripQuantity={setDripQuantity} />
-          </Animated.View>
-        )}
-        {orderType === 'LIMIT' && (
-          <Animated.View entering={FadeInUp.duration(400).springify()}>
+          )}
+          {orderType === 'LIMIT' && (
             <LimitPriceInput limitPrice={limitPrice} onChangeLimitPrice={setLimitPrice} />
-          </Animated.View>
-        )}
-        <Animated.View entering={FadeInUp.duration(500).delay(500).springify()}>
+          )}
           <OrderSummary
             tradeType={tradeType}
             orderType={orderType}
@@ -218,16 +198,13 @@ export default function TradeScreen() {
             availableBalance={availableBalance}
             holdingQuantity={holdingQuantity}
           />
-        </Animated.View>
-        <Animated.View entering={FadeInUp.duration(500).delay(600).springify()}>
           <PlaceOrderButton
             tradeType={tradeType}
             isDisabled={!selectedStock}
             onPress={handlePlaceOrder}
           />
-        </Animated.View>
-        <View style={{ height: 40 }} />
-      </ScrollView>
+          <View style={{ height: 40 }} />
+        </ScrollView>
 
       <StockPickerModal
         visible={isStockPickerVisible}

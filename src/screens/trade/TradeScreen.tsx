@@ -192,7 +192,14 @@ export default function TradeScreen() {
             </View>
           ) : (
             <>
-              <QuantityControl quantity={quantity} onChangeQuantity={setQuantity} />
+              <View style={{ flexDirection: 'row', gap: 12, paddingHorizontal: 16, marginTop: 1 }}>
+                <View style={{ flex: 1 }}>
+                  <QuantityControl quantity={quantity} onChangeQuantity={setQuantity} />
+                </View>
+                <View style={{ flex: 1 }}>
+                  <DripQuantityControl dripQuantity={dripQuantity} onChangeDripQuantity={setDripQuantity} />
+                </View>
+              </View>
               <LimitPriceInput limitPrice={limitPrice} onChangeLimitPrice={setLimitPrice} />
             </>
           )}
@@ -201,7 +208,7 @@ export default function TradeScreen() {
             orderType={orderType}
             selectedStock={selectedStock}
             quantity={quantity}
-            dripQuantity={orderType === 'MARKET' ? dripQuantity : undefined}
+            dripQuantity={dripQuantity}
             orderPrice={orderPrice}
             orderTotal={orderTotal}
             availableBalance={availableBalance}

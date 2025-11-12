@@ -38,7 +38,7 @@ export const LimitPriceInput: React.FC<LimitPriceInputProps> = ({
           onPress={handleDecrease}
           activeOpacity={0.7}
         >
-          <Ionicons name="remove" size={24} color={colors.danger} />
+          <Ionicons name="remove" size={18} color={colors.danger} />
         </TouchableOpacity>
 
         <View style={priceStyles.priceInputWrapper}>
@@ -59,7 +59,7 @@ export const LimitPriceInput: React.FC<LimitPriceInputProps> = ({
           onPress={handleIncrease}
           activeOpacity={0.7}
         >
-          <Ionicons name="add" size={24} color={colors.success} />
+          <Ionicons name="add" size={18} color={colors.success} />
         </TouchableOpacity>
       </View>
     </View>

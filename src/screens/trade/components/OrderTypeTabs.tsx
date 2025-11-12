@@ -46,7 +46,7 @@ export const OrderTypeTabs: React.FC<OrderTypeTabsProps> = ({ orderType, onChang
   
   return (
     <View style={selectorStyles.section}>
-      <Text style={selectorStyles.sectionLabel}>Order Type</Text>
+      <Text style={selectorStyles.sectionLabel}>Price Type</Text>
       <View style={orderStyles.orderTypeTabs}>
         <Animated.View style={[marketAnimatedStyle, { flex: 1 }]}>
           <TouchableOpacity

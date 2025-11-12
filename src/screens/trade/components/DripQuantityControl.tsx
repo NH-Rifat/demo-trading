@@ -34,38 +34,37 @@ export const DripQuantityControl: React.FC<DripQuantityControlProps> = ({
 
   return (
     <View style={selectorStyles.section}>
-              <Text style={selectorStyles.sectionLabel}>
-                Drip Quantity
-              </Text>
-              <View style={priceStyles.priceInputContainer}>
-                <TouchableOpacity
-                  style={priceStyles.priceButton}
-                  onPress={handleDecrement}
-                  activeOpacity={0.7}
-                >
-                  <Ionicons name="remove" size={24} color={colors.danger} />
-                </TouchableOpacity>
-        
-                <View style={priceStyles.priceInputWrapper}>
-                  <TextInput
-                    style={priceStyles.priceInput}
-                    value={dripQuantity}
-                    onChangeText={handleTextChange}
-                    keyboardType="decimal-pad"
-                    textAlign="center"
-                    placeholder="0.00"
-                    placeholderTextColor={colors.textTertiary}
-                  />
-                </View>
-        
-                <TouchableOpacity
-                  style={priceStyles.priceButton}
-                  onPress={handleIncrement}
-                  activeOpacity={0.7}
-                >
-                  <Ionicons name="add" size={24} color={colors.success} />
-                </TouchableOpacity>
-              </View>
-            </View>
+      <Text style={selectorStyles.sectionLabel}>Drip Qty</Text>
+      <View style={priceStyles.priceInputContainer}>
+        <TouchableOpacity
+          style={priceStyles.priceButton}
+          onPress={handleDecrement}
+          activeOpacity={0.7}
+        >
+          <Ionicons name="remove" size={18} color={colors.danger} />
+        </TouchableOpacity>
+
+        <View style={priceStyles.priceInputWrapper}>
+          <TextInput
+            style={priceStyles.priceInput}
+            value={dripQuantity}
+            onChangeText={handleTextChange}
+            keyboardType="number-pad"
+            textAlign="center"
+            placeholder="0"
+            placeholderTextColor={colors.textTertiary}
+            maxLength={9}
+          />
+        </View>
+
+        <TouchableOpacity
+          style={priceStyles.priceButton}
+          onPress={handleIncrement}
+          activeOpacity={0.7}
+        >
+          <Ionicons name="add" size={18} color={colors.success} />
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 };

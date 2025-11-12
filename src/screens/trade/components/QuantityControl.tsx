@@ -43,7 +43,7 @@ export const QuantityControl: React.FC<QuantityControlProps> = ({
               onPress={handleDecrement}
               activeOpacity={0.7}
             >
-              <Ionicons name="remove" size={24} color={colors.danger} />
+              <Ionicons name="remove" size={18} color={colors.danger} />
             </TouchableOpacity>
     
             <View style={priceStyles.priceInputWrapper}>
@@ -51,10 +51,11 @@ export const QuantityControl: React.FC<QuantityControlProps> = ({
                 style={priceStyles.priceInput}
                 value={quantity}
                 onChangeText={handleTextChange}
-                keyboardType="decimal-pad"
+                keyboardType="number-pad"
                 textAlign="center"
-                placeholder="0.00"
+                placeholder="0"
                 placeholderTextColor={colors.textTertiary}
+                maxLength={9}
               />
             </View>
     
@@ -63,7 +64,7 @@ export const QuantityControl: React.FC<QuantityControlProps> = ({
               onPress={handleIncrement}
               activeOpacity={0.7}
             >
-              <Ionicons name="add" size={24} color={colors.success} />
+              <Ionicons name="add" size={18} color={colors.success} />
             </TouchableOpacity>
           </View>
         </View>

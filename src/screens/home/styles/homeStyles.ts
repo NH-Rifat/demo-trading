@@ -215,12 +215,25 @@ export const createMarketStatsStyles = (colors: any, fonts: any) => StyleSheet.c
     flex: 1,
     borderRadius: 12,
     padding: 16,
+    minHeight: 110,
+  },
+  statValueRow: {
+    flexDirection: 'row',
+    alignItems: 'baseline',
+    flexWrap: 'nowrap',
+    marginBottom: 4,
   },
   statValue: {
     fontSize: 16,
     fontFamily: fonts.bold,
     color: colors.text,
-    marginBottom: 4,
+    flexShrink: 1,
+  },
+  statUnit: {
+    fontSize: 14,
+    fontFamily: fonts.medium,
+    color: colors.text,
+    marginLeft: 2,
   },
   statLabel: {
     fontSize: 11,

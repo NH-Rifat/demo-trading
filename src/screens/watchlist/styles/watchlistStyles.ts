@@ -35,7 +35,7 @@ export const createHeaderStyles = (colors: any, fonts: any) => StyleSheet.create
     alignItems: 'center',
     paddingHorizontal: 16,
     marginBottom: 12,
-    marginTop: -50,
+    marginTop: -35,
   },
   headerTitle: {
     fontSize: 28,

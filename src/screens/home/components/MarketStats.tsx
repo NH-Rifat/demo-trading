@@ -26,7 +26,10 @@ export const MarketStats: React.FC<MarketStatsProps> = ({ turnover, volume, trad
         style={[marketStatsStyles.statBox, { backgroundColor: colors.successLight }]}
         entering={FadeInUp.duration(400).delay(0).springify()}
       >
-        <Text style={marketStatsStyles.statValue}>{turnover.value.toFixed(2)} cr</Text>
+        <View style={marketStatsStyles.statValueRow}>
+          <Text style={marketStatsStyles.statValue} numberOfLines={1}>{turnover.value.toFixed(2)}</Text>
+          <Text style={marketStatsStyles.statUnit}>cr</Text>
+        </View>
         <Text style={marketStatsStyles.statLabel}>Turnover</Text>
         <Text style={marketStatsStyles.statPercent}>{turnover.percent.toFixed(2)}%</Text>
         <Text style={marketStatsStyles.statType}>BUY PRESSURE</Text>
@@ -35,14 +38,17 @@ export const MarketStats: React.FC<MarketStatsProps> = ({ turnover, volume, trad
         style={[marketStatsStyles.statBox, { backgroundColor: colors.dangerLight }]}
         entering={FadeInUp.duration(400).delay(100).springify()}
       >
-        <Text style={marketStatsStyles.statValue}>{volume.value.toFixed(2)} cr</Text>
+        <View style={marketStatsStyles.statValueRow}>
+          <Text style={marketStatsStyles.statValue} numberOfLines={1}>{volume.value.toFixed(2)}</Text>
+          <Text style={marketStatsStyles.statUnit}>cr</Text>
+        </View>
         <Text style={marketStatsStyles.statLabel}>Volume</Text>
       </Animated.View>
       <Animated.View 
         style={[marketStatsStyles.statBox, { backgroundColor: colors.dangerLight }]}
         entering={FadeInUp.duration(400).delay(200).springify()}
       >
-        <Text style={marketStatsStyles.statValue}>{trade.value}</Text>
+        <Text style={marketStatsStyles.statValue} numberOfLines={1}>{trade.value}</Text>
         <Text style={marketStatsStyles.statLabel}>Trade</Text>
         <Text style={marketStatsStyles.statPercent}>{trade.percent.toFixed(2)}%</Text>
         <Text style={marketStatsStyles.statType}>SELL PRESSURE</Text>

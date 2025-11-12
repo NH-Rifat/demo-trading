@@ -1,5 +1,6 @@
 import { GlobalHeader } from '@/src/components/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
+import { useMarketDataUpdates } from '@/src/screens/home/hooks/useMarketData';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import { addOrder } from '@/src/store/slices/ordersSlice';
 import type { Stock } from '@/src/types';
@@ -40,6 +41,7 @@ export default function TradeScreen() {
   const dispatch = useAppDispatch();
   const stocks = useAppSelector((state: any) => state.market.stocks);
   const params = useLocalSearchParams<{ stockSymbol?: string; tradeType?: string }>();
+  const marketData = useMarketDataUpdates();
 
   const [tradeType, setTradeType] = useState<TradeType>('BUY');
   const [selectedStock, setSelectedStock] = useState<Stock | null>(null);
@@ -159,9 +161,9 @@ export default function TradeScreen() {
   return (
     <View style={styles.container}>
       <GlobalHeader
-        cashLimit={50000}
-        cscxValue={4872.77}
-        dsexValue={4872.77}
+        cashLimit={marketData.cashLimit}
+        cscxValue={marketData.cscx.value}
+        dsexValue={marketData.dsex.value}
       />
       <KeyboardAvoidingView
         style={{ flex: 1 }}

@@ -7,6 +7,7 @@ import PerformanceChart from '@/components/charts/PerformanceChart';
 import EmptyState from '@/components/common/EmptyState';
 import { GlobalHeader } from '@/src/components/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
+import { useMarketDataUpdates } from '@/src/screens/home/hooks/useMarketData';
 import { useAppSelector } from '@/src/store/hooks';
 import { generatePerformanceData } from '@/src/utils/chartDataGenerator';
 import React, { useMemo, useState } from 'react';
@@ -29,6 +30,7 @@ export default function PortfolioScreen() {
   const portfolio = useAppSelector((state: any) => state.portfolio.portfolio);
   const stocks = useAppSelector((state: any) => state.market.stocks);
   const [refreshing, setRefreshing] = useState(false);
+  const marketData = useMarketDataUpdates();
 
   // Portfolio calculations using custom hooks
   const portfolioValue = usePortfolioValue(portfolio.positions, stocks);
@@ -55,9 +57,9 @@ export default function PortfolioScreen() {
     return (
       <View style={styles.container}>
         <GlobalHeader
-          cashLimit={50000}
-          cscxValue={4872.77}
-          dsexValue={4872.77}
+          cashLimit={marketData.cashLimit}
+          cscxValue={marketData.cscx.value}
+          dsexValue={marketData.dsex.value}
         />
         <Header paddingTop={16} />
         <View style={styles.emptyContainer}>
@@ -74,9 +76,9 @@ export default function PortfolioScreen() {
   return (
     <View style={styles.container}>
       <GlobalHeader
-        cashLimit={50000}
-        cscxValue={4872.77}
-        dsexValue={4872.77}
+        cashLimit={marketData.cashLimit}
+        cscxValue={marketData.cscx.value}
+        dsexValue={marketData.dsex.value}
       />
       <ScrollView
         showsVerticalScrollIndicator={false}

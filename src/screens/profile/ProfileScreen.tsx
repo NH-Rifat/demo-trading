@@ -1,5 +1,6 @@
 import { GlobalHeader } from '@/src/components/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
+import { useMarketDataUpdates } from '@/src/screens/home/hooks/useMarketData';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import { logout } from '@/src/store/slices/authSlice';
 import { Ionicons } from '@expo/vector-icons';
@@ -21,6 +22,7 @@ export default function ProfileScreen() {
   const profileStyles = createProfileStyles(colors);
   const menuStyles = createMenuStyles(colors);
   const [showThemeModal, setShowThemeModal] = useState(false);
+  const marketData = useMarketDataUpdates();
 
   // Redux selectors
   const user = useAppSelector((state: any) => state.auth.user);
@@ -124,9 +126,9 @@ export default function ProfileScreen() {
   return (
     <View style={profileStyles.container}>
       <GlobalHeader
-        cashLimit={50000}
-        cscxValue={4872.77}
-        dsexValue={4872.77}
+        cashLimit={marketData.cashLimit}
+        cscxValue={marketData.cscx.value}
+        dsexValue={marketData.dsex.value}
       />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={profileStyles.scrollContent}>
         <Header />

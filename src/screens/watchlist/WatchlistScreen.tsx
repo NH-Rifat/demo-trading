@@ -2,6 +2,7 @@ import EmptyState from '@/components/common/EmptyState';
 import StockCard from '@/components/common/StockCard';
 import { GlobalHeader } from '@/src/components/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
+import { useMarketDataUpdates } from '@/src/screens/home/hooks/useMarketData';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import {
     createWatchlist,
@@ -27,6 +28,7 @@ export default function WatchlistScreen() {
   const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
   const { colors } = useTheme();
+  const marketData = useMarketDataUpdates();
 
   const watchlists = useAppSelector((state: any) => state.watchlist.watchlists);
   const activeWatchlistId = useAppSelector((state: any) => state.watchlist.activeWatchlistId);
@@ -123,9 +125,9 @@ export default function WatchlistScreen() {
     return (
       <View style={styles.container}>
         <GlobalHeader
-          cashLimit={50000}
-          cscxValue={4872.77}
-          dsexValue={4872.77}
+          cashLimit={marketData.cashLimit}
+          cscxValue={marketData.cscx.value}
+          dsexValue={marketData.dsex.value}
         />
         {renderHeader()}
         <EmptyState
@@ -142,9 +144,9 @@ export default function WatchlistScreen() {
     return (
       <View style={styles.container}>
         <GlobalHeader
-          cashLimit={50000}
-          cscxValue={4872.77}
-          dsexValue={4872.77}
+          cashLimit={marketData.cashLimit}
+          cscxValue={marketData.cscx.value}
+          dsexValue={marketData.dsex.value}
         />
         {renderHeader()}
         <EmptyState
@@ -159,9 +161,9 @@ export default function WatchlistScreen() {
   return (
     <View style={styles.container}>
       <GlobalHeader
-        cashLimit={50000}
-        cscxValue={4872.77}
-        dsexValue={4872.77}
+        cashLimit={marketData.cashLimit}
+        cscxValue={marketData.cscx.value}
+        dsexValue={marketData.dsex.value}
       />
       <FlatList
         data={watchlistStocks}

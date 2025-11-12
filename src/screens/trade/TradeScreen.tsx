@@ -182,7 +182,7 @@ export default function TradeScreen() {
           {selectedStock && <MarketDepth stock={selectedStock} />}
           <OrderTypeTabs orderType={orderType} onChangeOrderType={handleChangeOrderType} />
           {orderType === 'MARKET' ? (
-            <View style={{ flexDirection: 'row', gap: 12, paddingHorizontal: 16, marginTop: 1 }}>
+            <View style={{ flexDirection: 'row', gap: 0, paddingHorizontal: 8, marginTop: 1 }}>
               <View style={{ flex: 1 }}>
                 <QuantityControl quantity={quantity} onChangeQuantity={setQuantity} />
               </View>
@@ -192,7 +192,7 @@ export default function TradeScreen() {
             </View>
           ) : (
             <>
-              <View style={{ flexDirection: 'row', gap: 12, paddingHorizontal: 16, marginTop: 1 }}>
+              <View style={{ flexDirection: 'row', gap: 0, paddingHorizontal: 8, marginTop: 1 }}>
                 <View style={{ flex: 1 }}>
                   <QuantityControl quantity={quantity} onChangeQuantity={setQuantity} />
                 </View>

@@ -1,6 +1,6 @@
 import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { createPriceInputStyles, createStockSelectorStyles } from '../styles/tradeStyles';
 
@@ -16,26 +16,43 @@ export const DripQuantityControl: React.FC<DripQuantityControlProps> = ({
   const { colors, fonts } = useTheme();
   const selectorStyles = createStockSelectorStyles(colors, fonts);
   const priceStyles = createPriceInputStyles(colors, fonts);
+  const [showWarning, setShowWarning] = useState(false);
   
+  useEffect(() => {
+    if (dripQuantity.length >= 9) {
+      setShowWarning(true);
+      const timer = setTimeout(() => setShowWarning(false), 2000);
+      return () => clearTimeout(timer);
+    }
+  }, [dripQuantity]);
+
   const handleDecrement = () => {
     const qty = Math.max(0, parseInt(dripQuantity) - 1);
     onChangeDripQuantity(qty.toString());
   };
 
   const handleIncrement = () => {
-    const qty = parseInt(dripQuantity) + 1;
-    onChangeDripQuantity(qty.toString());
+    const currentQty = parseInt(dripQuantity);
+    if (dripQuantity.length < 9) {
+      const qty = currentQty + 1;
+      onChangeDripQuantity(qty.toString());
+    }
   };
 
   const handleTextChange = (text: string) => {
     const cleaned = text.replace(/[^0-9]/g, '');
-    onChangeDripQuantity(cleaned || '0');
+    if (cleaned.length <= 9) {
+      onChangeDripQuantity(cleaned || '0');
+    }
   };
 
   return (
     <View style={selectorStyles.section}>
       <Text style={selectorStyles.sectionLabel}>Drip Qty</Text>
-      <View style={priceStyles.priceInputContainer}>
+      <View style={[
+        priceStyles.priceInputContainer,
+        showWarning && { borderColor: colors.danger, borderWidth: 1.5 }
+      ]}>
         <TouchableOpacity
           style={priceStyles.priceButton}
           onPress={handleDecrement}
@@ -65,6 +82,16 @@ export const DripQuantityControl: React.FC<DripQuantityControlProps> = ({
           <Ionicons name="add" size={18} color={colors.success} />
         </TouchableOpacity>
       </View>
+      {showWarning && (
+        <Text style={{
+          fontSize: 11,
+          color: colors.danger,
+          marginTop: 4,
+          fontFamily: fonts.medium,
+        }}>
+          Maximum 9 digits allowed
+        </Text>
+      )}
     </View>
   );
 };

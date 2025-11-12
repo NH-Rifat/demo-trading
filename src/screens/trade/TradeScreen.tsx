@@ -46,7 +46,7 @@ export default function TradeScreen() {
   const [selectedStock, setSelectedStock] = useState<Stock | null>(null);
   const [orderType, setOrderType] = useState<OrderType>('MARKET');
   const [quantity, setQuantity] = useState<string>('1');
-  const [dripQuantity, setDripQuantity] = useState<string>('1');
+  const [dripQuantity, setDripQuantity] = useState<string>('0');
   const [limitPrice, setLimitPrice] = useState<string>('');
   const [searchQuery, setSearchQuery] = useState('');
   const [isStockPickerVisible, setIsStockPickerVisible] = useState(false);
@@ -181,18 +181,27 @@ export default function TradeScreen() {
           />
           {selectedStock && <MarketDepth stock={selectedStock} />}
           <OrderTypeTabs orderType={orderType} onChangeOrderType={handleChangeOrderType} />
-          <QuantityControl quantity={quantity} onChangeQuantity={setQuantity} />
-          {orderType === 'MARKET' && (
-            <DripQuantityControl dripQuantity={dripQuantity} onChangeDripQuantity={setDripQuantity} />
-          )}
-          {orderType === 'LIMIT' && (
-            <LimitPriceInput limitPrice={limitPrice} onChangeLimitPrice={setLimitPrice} />
+          {orderType === 'MARKET' ? (
+            <View style={{ flexDirection: 'row', gap: 12, paddingHorizontal: 16, marginTop: 1 }}>
+              <View style={{ flex: 1 }}>
+                <QuantityControl quantity={quantity} onChangeQuantity={setQuantity} />
+              </View>
+              <View style={{ flex: 1 }}>
+                <DripQuantityControl dripQuantity={dripQuantity} onChangeDripQuantity={setDripQuantity} />
+              </View>
+            </View>
+          ) : (
+            <>
+              <QuantityControl quantity={quantity} onChangeQuantity={setQuantity} />
+              <LimitPriceInput limitPrice={limitPrice} onChangeLimitPrice={setLimitPrice} />
+            </>
           )}
           <OrderSummary
             tradeType={tradeType}
             orderType={orderType}
             selectedStock={selectedStock}
             quantity={quantity}
+            dripQuantity={orderType === 'MARKET' ? dripQuantity : undefined}
             orderPrice={orderPrice}
             orderTotal={orderTotal}
             availableBalance={availableBalance}

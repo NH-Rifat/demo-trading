@@ -18,7 +18,7 @@ export const DripQuantityControl: React.FC<DripQuantityControlProps> = ({
   const priceStyles = createPriceInputStyles(colors);
   
   const handleDecrement = () => {
-    const qty = Math.max(1, parseInt(dripQuantity) - 1);
+    const qty = Math.max(0, parseInt(dripQuantity) - 1);
     onChangeDripQuantity(qty.toString());
   };
 

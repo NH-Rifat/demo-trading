@@ -10,6 +10,7 @@ interface OrderSummaryProps {
   orderType: 'MARKET' | 'LIMIT';
   selectedStock: Stock | null;
   quantity: string;
+  dripQuantity?: string;
   orderPrice: number;
   orderTotal: number;
   availableBalance: number;
@@ -21,6 +22,7 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
   orderType,
   selectedStock,
   quantity,
+  dripQuantity,
   orderPrice,
   orderTotal,
   availableBalance,
@@ -51,6 +53,13 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
         <Text style={styles.summaryLabel}>Quantity</Text>
         <Text style={styles.summaryValue}>{quantity} shares</Text>
       </View>
+
+      {dripQuantity && parseInt(dripQuantity) > 1 && (
+        <View style={styles.summaryRow}>
+          <Text style={styles.summaryLabel}>Drip Quantity</Text>
+          <Text style={styles.summaryValue}>{dripQuantity} shares</Text>
+        </View>
+      )}
 
       <View style={styles.summaryDivider} />
 

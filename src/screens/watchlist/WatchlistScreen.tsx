@@ -1,6 +1,6 @@
 import EmptyState from '@/components/common/EmptyState';
 import StockCard from '@/components/common/StockCard';
-import { GlobalHeader } from '@/src/components/GlobalHeader';
+import { GlobalHeader } from '@/src/components/common/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
 import { useMarketDataUpdates } from '@/src/screens/home/hooks/useMarketData';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
@@ -165,6 +165,7 @@ export default function WatchlistScreen() {
         cscxValue={marketData.cscx.value}
         dsexValue={marketData.dsex.value}
       />
+      
       <FlatList
         data={watchlistStocks}
         keyExtractor={(item) => item.id}

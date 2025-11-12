@@ -1,4 +1,4 @@
-import { GlobalHeader } from '@/src/components/GlobalHeader';
+import { GlobalHeader } from '@/src/components/common/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
 import { useMarketDataUpdates } from '@/src/screens/home/hooks/useMarketData';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';

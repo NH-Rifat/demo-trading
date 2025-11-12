@@ -16,6 +16,7 @@ export const createWatchlistStyles = (colors: any) => StyleSheet.create({
 export const createHeaderStyles = (colors: any) => StyleSheet.create({
   header: {
     backgroundColor: colors.surface,
+    paddingBottom: 20,
     ...Platform.select({
       ios: {
         shadowColor: colors.shadow,
@@ -33,8 +34,8 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingTop: 0,
     marginBottom: 12,
+    marginTop: -50,
   },
   headerTitle: {
     fontSize: 28,
@@ -57,6 +58,7 @@ export const createWatchlistTabStyles = (colors: any) => StyleSheet.create({
     gap: 12,
   },
   watchlistTab: {
+    marginTop: 0,
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 16,

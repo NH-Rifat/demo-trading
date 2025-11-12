@@ -94,15 +94,15 @@ export const AdvanceDecline: React.FC<AdvanceDeclineProps> = ({ advanceDecline }
       </Svg>
       <View style={advanceDeclineStyles.legend}>
         <View style={advanceDeclineStyles.legendItem}>
-          <View style={[advanceDeclineStyles.legendDot, { backgroundColor: '#ef4444' }]} />
+          <View style={[advanceDeclineStyles.legendDot, { backgroundColor: '#ea6565ff' }]} />
           <Text style={advanceDeclineStyles.legendText}>NEG: {advanceDecline.neg}</Text>
         </View>
         <View style={advanceDeclineStyles.legendItem}>
-          <View style={[advanceDeclineStyles.legendDot, { backgroundColor: '#6b7280' }]} />
+          <View style={[advanceDeclineStyles.legendDot, { backgroundColor: '#7b7f87ff' }]} />
           <Text style={advanceDeclineStyles.legendText}>NC: {advanceDecline.nc}</Text>
         </View>
         <View style={advanceDeclineStyles.legendItem}>
-          <View style={[advanceDeclineStyles.legendDot, { backgroundColor: '#10b981' }]} />
+          <View style={[advanceDeclineStyles.legendDot, { backgroundColor: '#7dc4acff' }]} />
           <Text style={advanceDeclineStyles.legendText}>POS: {advanceDecline.pos}</Text>
         </View>
       </View>

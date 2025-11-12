@@ -4,7 +4,7 @@
 // Theme-aware with dynamic color support
 // ============================================
 
-import { GlobalHeader } from '@/src/components/GlobalHeader';
+import { GlobalHeader } from '@/src/components/common/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
 import React, { useState } from 'react';
 import { RefreshControl, ScrollView, View } from 'react-native';

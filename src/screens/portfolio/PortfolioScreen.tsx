@@ -5,13 +5,12 @@
 
 import PerformanceChart from '@/components/charts/PerformanceChart';
 import EmptyState from '@/components/common/EmptyState';
-import { GlobalHeader } from '@/src/components/common/GlobalHeader';
+import { GlobalHeader } from '@/src/components/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
 import { useAppSelector } from '@/src/store/hooks';
 import { generatePerformanceData } from '@/src/utils/chartDataGenerator';
 import React, { useMemo, useState } from 'react';
 import { RefreshControl, ScrollView, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Header } from './components/Header';
 import { HoldingsList } from './components/HoldingsList';
 import { PortfolioSummary } from './components/PortfolioSummary';
@@ -27,7 +26,6 @@ import { createPortfolioStyles } from './styles/portfolioStyles';
 export default function PortfolioScreen() {
   const { colors } = useTheme();
   const styles = createPortfolioStyles(colors);
-  const insets = useSafeAreaInsets();
   const portfolio = useAppSelector((state: any) => state.portfolio.portfolio);
   const stocks = useAppSelector((state: any) => state.market.stocks);
   const [refreshing, setRefreshing] = useState(false);
@@ -56,8 +54,12 @@ export default function PortfolioScreen() {
   if (portfolio.positions.length === 0) {
     return (
       <View style={styles.container}>
-        <GlobalHeader cashLimit={2883.00} cscxValue={4872.77} dsexValue={12.02} />
-        <Header paddingTop={insets.top + 16} />
+        <GlobalHeader
+          cashLimit={50000}
+          cscxValue={4872.77}
+          dsexValue={4872.77}
+        />
+        <Header paddingTop={16} />
         <View style={styles.emptyContainer}>
           <EmptyState
             icon="briefcase-outline"
@@ -71,13 +73,17 @@ export default function PortfolioScreen() {
 
   return (
     <View style={styles.container}>
-      <GlobalHeader cashLimit={2883.00} cscxValue={4872.77} dsexValue={12.02} />
+      <GlobalHeader
+        cashLimit={50000}
+        cscxValue={4872.77}
+        dsexValue={4872.77}
+      />
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
       >
         {/* Header */}
-        <Header paddingTop={insets.top + 16} />
+        <Header paddingTop={16} />
 
         {/* Portfolio Summary Card */}
         <PortfolioSummary portfolioValue={portfolioValue} todaysChange={todaysChange} />

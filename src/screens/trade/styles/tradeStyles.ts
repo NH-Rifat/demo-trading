@@ -10,7 +10,7 @@ export const createTradeStyles = (colors: any) => StyleSheet.create({
 export const createHeaderStyles = (colors: any) => StyleSheet.create({
   header: {
     backgroundColor: colors.surface,
-    paddingTop: Platform.OS === 'ios' ? 60 : 48,
+    paddingTop: 8,
     paddingHorizontal: 16,
     paddingBottom: 20,
     ...Platform.select({

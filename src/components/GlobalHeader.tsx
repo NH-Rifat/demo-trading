@@ -65,8 +65,8 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
           {showBalance ? (
             <Animated.Text 
               key="balance"
-              entering={FadeIn.duration(300)} 
-              exiting={FadeOut.duration(300)}
+              entering={FadeIn.duration(600)} 
+              exiting={FadeOut.duration(600)}
               style={styles.cashLimitLabel}
             >
               ৳{cashLimit.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
@@ -147,7 +147,8 @@ const createStyles = (colors: any) => StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'space-between',
     paddingHorizontal: 16,
-    paddingVertical: 12,
+    paddingTop: 12,
+    paddingBottom: 8,
   },
   cashLimitContainer: {
     flexDirection: 'row',

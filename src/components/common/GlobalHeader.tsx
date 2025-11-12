@@ -8,7 +8,7 @@ import { useTheme } from '@/src/contexts/ThemeContext';
 import { Ionicons } from '@expo/vector-icons';
 import React, { useEffect, useRef, useState } from 'react';
 import { Platform, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Animated, { FadeIn, FadeOut } from 'react-native-reanimated';
+import Animated, { FadeIn, FadeOut, useAnimatedStyle, useSharedValue, withRepeat, withSequence, withTiming } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 interface GlobalHeaderProps {
@@ -27,6 +27,26 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
   const styles = createStyles(colors);
   const [showBalance, setShowBalance] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  
+  // Blinking animation for market status dot
+  const opacity = useSharedValue(1);
+
+  useEffect(() => {
+    // Blinking animation: fade in and out repeatedly
+    opacity.value = withRepeat(
+      withSequence(
+        withTiming(0.3, { duration: 800 }),
+        withTiming(1, { duration: 800 })
+      ),
+      -1, // infinite repeat
+      false
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const animatedDotStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
 
   useEffect(() => {
     return () => {
@@ -47,7 +67,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
     // Set timeout to hide balance after 1 second
     timeoutRef.current = setTimeout(() => {
       setShowBalance(false);
-    }, 1000);
+    }, 5000);
   };
 
   return (
@@ -88,7 +108,10 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
 
         {/* CSCX Ticker */}
         <View style={styles.tickerItem}>
-          <Text style={styles.tickerSymbol}>CSCX</Text>
+          <View style={styles.tickerHeader}>
+            <Ionicons name="trending-down" size={12} color={colors.danger} />
+            <Text style={styles.tickerSymbol}>CSCX</Text>
+          </View>
           <Text style={[styles.tickerValue, { color: colors.danger }]}>
             {cscxValue.toFixed(2)}
           </Text>
@@ -99,7 +122,10 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
 
         {/* DSEX Ticker */}
         <View style={styles.tickerItem}>
-          <Text style={styles.tickerSymbol}>DSEX</Text>
+          <View style={styles.tickerHeader}>
+            <Ionicons name="trending-down" size={12} color={colors.danger} />
+            <Text style={styles.tickerSymbol}>DSEX</Text>
+          </View>
           <Text style={[styles.tickerValue, { color: colors.danger }]}>
             {dsexValue.toFixed(2)}
           </Text>
@@ -116,10 +142,17 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
           </View>
         </TouchableOpacity>
 
-        {/* Search Icon */}
-        <TouchableOpacity style={styles.iconButton}>
-          <Ionicons name="search-outline" size={22} color={colors.text} />
-        </TouchableOpacity>
+        {/* Market Status */}
+        <View style={styles.marketStatus}>
+          <Animated.View 
+            style={[
+              styles.marketDot, 
+              { backgroundColor: colors.success },
+              animatedDotStyle
+            ]}
+          />
+          <Text style={styles.marketStatusText}>OPEN</Text>
+        </View>
       </View>
     </View>
   );
@@ -127,9 +160,11 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
 
 const createStyles = (colors: any) => StyleSheet.create({
   headerTopSection: {
+    paddingTop:10,
     backgroundColor: colors.surface,
     borderBottomWidth: 1.5,
     borderBottomColor: colors.border,
+    overflow: 'visible',
     ...Platform.select({
       ios: {
         shadowColor: colors.shadow,
@@ -149,6 +184,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     paddingHorizontal: 16,
     paddingTop: 12,
     paddingBottom: 8,
+    overflow: 'visible',
   },
   cashLimitContainer: {
     flexDirection: 'row',
@@ -175,6 +211,11 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   tickerItem: {
     alignItems: 'center',
+  },
+  tickerHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 4,
   },
   tickerSymbol: {
     fontSize: 10,
@@ -210,5 +251,27 @@ const createStyles = (colors: any) => StyleSheet.create({
     color: '#ffffff',
     fontSize: 9,
     fontWeight: '700',
+  },
+  marketStatus: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+    borderRadius: 12,
+    backgroundColor: colors.successLight || colors.primaryLight,
+    minHeight: 25,
+    overflow: 'visible',
+  },
+  marketDot: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+  },
+  marketStatusText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: colors.success,
+    letterSpacing: 0.5,
   },
 });

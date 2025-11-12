@@ -10,8 +10,8 @@ interface ActionButtonsProps {
 }
 
 export const ActionButtons: React.FC<ActionButtonsProps> = ({ onSell, onBuy }) => {
-  const { colors } = useTheme();
-  const styles = createActionButtonStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createActionButtonStyles(colors, fonts);
   
   return (
     <View style={styles.bottomActions}>

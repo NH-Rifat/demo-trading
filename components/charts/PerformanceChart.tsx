@@ -29,8 +29,8 @@ export default function PerformanceChart({
   title = 'Performance',
   color = '#10b981',
 }: Props) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const firstValue = data[0]?.value || 0;
@@ -284,7 +284,7 @@ export default function PerformanceChart({
   );
 }
 
-const createStyles = (colors: any) => StyleSheet.create({
+const createStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     backgroundColor: colors.card,
     borderRadius: 16,
@@ -320,7 +320,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   subtitle: {
     fontSize: 24,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   changeContainer: {
@@ -328,7 +328,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   changePercent: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     marginBottom: 2,
   },
   changeAmount: {

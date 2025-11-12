@@ -10,8 +10,8 @@ import { createStyles } from '../styles/loginStyles';
 // ============================================
 
 export default function LogoSection() {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
 
   return (
     <View style={styles.logoContainer}>

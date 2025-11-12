@@ -6,7 +6,7 @@
 
 import { Platform, StyleSheet } from 'react-native';
 
-export const createPortfolioStyles = (colors: any) => StyleSheet.create({
+export const createPortfolioStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
@@ -29,12 +29,12 @@ export const createPortfolioStyles = (colors: any) => StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   sectionCount: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
     backgroundColor: colors.surfaceSecondary,
     paddingHorizontal: 10,
@@ -44,7 +44,7 @@ export const createPortfolioStyles = (colors: any) => StyleSheet.create({
 });
 
 // Header Styles
-export const createHeaderStyles = (colors: any) => StyleSheet.create({
+export const createHeaderStyles = (colors: any, fonts: any) => StyleSheet.create({
   header: {
     backgroundColor: colors.surface,
     paddingTop: Platform.OS === 'ios' ? 60 : 48,
@@ -64,13 +64,13 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
   },
   headerTitle: {
     fontSize: 28,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
 });
 
 // Portfolio Summary Styles
-export const createSummaryStyles = (colors: any) => StyleSheet.create({
+export const createSummaryStyles = (colors: any, fonts: any) => StyleSheet.create({
   summaryCard: {
     margin: 16,
     backgroundColor: colors.card,
@@ -97,11 +97,11 @@ export const createSummaryStyles = (colors: any) => StyleSheet.create({
   summaryLabel: {
     fontSize: 14,
     color: colors.textSecondary,
-    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
   summaryValue: {
     fontSize: 32,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 20,
   },
@@ -124,7 +124,7 @@ export const createSummaryStyles = (colors: any) => StyleSheet.create({
   },
   summaryItemValue: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   summaryDivider: {
@@ -149,16 +149,16 @@ export const createSummaryStyles = (colors: any) => StyleSheet.create({
   todaysChangeLabel: {
     fontSize: 14,
     color: colors.textSecondary,
-    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
   todaysChangeValue: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
 });
 
 // Position Card Styles
-export const createPositionStyles = (colors: any) => StyleSheet.create({
+export const createPositionStyles = (colors: any, fonts: any) => StyleSheet.create({
   positionsList: {
     gap: 12,
   },
@@ -186,7 +186,7 @@ export const createPositionStyles = (colors: any) => StyleSheet.create({
   },
   positionSymbol: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   positionName: {
@@ -199,7 +199,7 @@ export const createPositionStyles = (colors: any) => StyleSheet.create({
   },
   positionValue: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   positionChangeRow: {
@@ -210,7 +210,7 @@ export const createPositionStyles = (colors: any) => StyleSheet.create({
   },
   positionChange: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
   positionDivider: {
     height: 1,
@@ -232,7 +232,7 @@ export const createPositionStyles = (colors: any) => StyleSheet.create({
   },
   positionDetailValue: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
   },
   profitLossContainer: {
@@ -247,7 +247,7 @@ export const createPositionStyles = (colors: any) => StyleSheet.create({
   },
   profitLossLabel: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
   },
   profitLossValues: {
@@ -257,16 +257,16 @@ export const createPositionStyles = (colors: any) => StyleSheet.create({
   },
   profitLossAmount: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   profitLossPercent: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
 });
 
 // Sector Card Styles
-export const createSectorStyles = (colors: any) => StyleSheet.create({
+export const createSectorStyles = (colors: any, fonts: any) => StyleSheet.create({
   sectorList: {
     gap: 12,
   },
@@ -304,12 +304,12 @@ export const createSectorStyles = (colors: any) => StyleSheet.create({
   },
   sectorName: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
   },
   sectorPercentage: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   sectorBarContainer: {
@@ -326,6 +326,6 @@ export const createSectorStyles = (colors: any) => StyleSheet.create({
   sectorValue: {
     fontSize: 13,
     color: colors.textSecondary,
-    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
 });

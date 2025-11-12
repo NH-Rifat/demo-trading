@@ -10,9 +10,9 @@ interface OrderTypeTabsProps {
 }
 
 export const OrderTypeTabs: React.FC<OrderTypeTabsProps> = ({ orderType, onChangeOrderType }) => {
-  const { colors } = useTheme();
-  const selectorStyles = createStockSelectorStyles(colors);
-  const orderStyles = createOrderTypeStyles(colors);
+  const { colors, fonts } = useTheme();
+  const selectorStyles = createStockSelectorStyles(colors, fonts);
+  const orderStyles = createOrderTypeStyles(colors, fonts);
   
   const marketAnimatedStyle = useAnimatedStyle(() => {
     return {

@@ -21,8 +21,8 @@ export default function MarketOverview({
   unchanged,
   marketTrend,
 }: Props) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
 
   // Calculate market trend percentage (mock)
   const trendPercent = useMemo(() => {
@@ -105,7 +105,7 @@ export default function MarketOverview({
   );
 }
 
-const createStyles = (colors: any) => StyleSheet.create({
+const createStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     backgroundColor: colors.card,
     borderRadius: 12,
@@ -126,7 +126,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 4,
   },
@@ -144,12 +144,12 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   indexValue: {
     fontSize: 20,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   indexChange: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   indexLabel: {
     fontSize: 10,
@@ -177,7 +177,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   statValue: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 4,
   },
@@ -211,6 +211,6 @@ const createStyles = (colors: any) => StyleSheet.create({
   trendBarLabel: {
     fontSize: 11,
     color: colors.textSecondary,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
 });

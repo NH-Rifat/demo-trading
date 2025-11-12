@@ -22,8 +22,8 @@ export const EditWatchlistModal: React.FC<EditWatchlistModalProps> = ({
   onDelete,
   onClose,
 }) => {
-  const { colors } = useTheme();
-  const styles = createModalStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createModalStyles(colors, fonts);
   
   return (
     <Modal visible={visible} animationType="fade" transparent={true} onRequestClose={onClose}>

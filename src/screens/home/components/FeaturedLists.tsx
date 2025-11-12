@@ -23,8 +23,8 @@ interface FeaturedListsProps {
 }
 
 export const FeaturedLists: React.FC<FeaturedListsProps> = ({ selectedTab, onTabChange, data }) => {
-  const { colors } = useTheme();
-  const featuredListsStyles = createFeaturedListsStyles(colors);
+  const { colors, fonts } = useTheme();
+  const featuredListsStyles = createFeaturedListsStyles(colors, fonts);
 
   const tabs: { key: TabType; label: string }[] = [
     { key: 'gainer', label: 'Top Gainer' },

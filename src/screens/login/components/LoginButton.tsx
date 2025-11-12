@@ -15,8 +15,8 @@ interface Props {
 }
 
 export default function LoginButton({ onPress, isLoading }: Props) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
 
   return (
     <TouchableOpacity

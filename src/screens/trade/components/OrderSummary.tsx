@@ -28,8 +28,8 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
   availableBalance,
   holdingQuantity,
 }) => {
-  const { colors } = useTheme();
-  const styles = createOrderSummaryStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createOrderSummaryStyles(colors, fonts);
   
   return (
     <View style={styles.orderSummary}>

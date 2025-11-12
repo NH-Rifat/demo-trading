@@ -9,8 +9,8 @@ interface BalanceInfoProps {
 }
 
 export const BalanceInfo: React.FC<BalanceInfoProps> = ({ limit, balance }) => {
-  const { colors } = useTheme();
-  const styles = createBalanceInfoStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createBalanceInfoStyles(colors, fonts);
 
   return (
     <View style={styles.container}>

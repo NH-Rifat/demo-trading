@@ -16,8 +16,8 @@ export const BalanceCard: React.FC<BalanceCardProps> = ({
   totalInvestment,
   currentValue,
 }) => {
-  const { colors } = useTheme();
-  const balanceCardStyles = createBalanceCardStyles(colors);
+  const { colors, fonts } = useTheme();
+  const balanceCardStyles = createBalanceCardStyles(colors, fonts);
 
   return (
     <View style={balanceCardStyles.balanceCard}>

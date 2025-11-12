@@ -29,8 +29,8 @@ export const StockPickerModal: React.FC<StockPickerModalProps> = ({
   onSelectStock,
   onClose,
 }) => {
-  const { colors } = useTheme();
-  const styles = createStockPickerStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStockPickerStyles(colors, fonts);
   
   const filteredStocks = stocks.filter(
     (s: Stock) =>

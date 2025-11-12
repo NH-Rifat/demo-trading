@@ -24,8 +24,8 @@ export const PortfolioSummary: React.FC<PortfolioSummaryProps> = ({
   portfolioValue,
   todaysChange,
 }) => {
-  const { colors } = useTheme();
-  const styles = createSummaryStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createSummaryStyles(colors, fonts);
   
   return (
     <View style={styles.summaryCard}>

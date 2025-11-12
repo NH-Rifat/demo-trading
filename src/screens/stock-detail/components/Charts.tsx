@@ -11,8 +11,8 @@ interface ChartsProps {
 }
 
 export const Charts: React.FC<ChartsProps> = ({ candleData, volumeData }) => {
-  const { colors } = useTheme();
-  const styles = createChartStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createChartStyles(colors, fonts);
   
   return (
     <>

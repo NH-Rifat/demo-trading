@@ -20,8 +20,8 @@ interface Props {
 }
 
 export default function PieChart({ data, size = 200 }: Props) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
   const total = data.reduce((sum, item) => sum + item.value, 0);
   const radius = size / 2;
   const center = size / 2;
@@ -114,7 +114,7 @@ export default function PieChart({ data, size = 200 }: Props) {
   );
 }
 
-const createStyles = (colors: any) => StyleSheet.create({
+const createStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     backgroundColor: colors.card,
     borderRadius: 12,
@@ -150,11 +150,11 @@ const createStyles = (colors: any) => StyleSheet.create({
   legendLabel: {
     fontSize: 14,
     color: colors.text,
-    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
   legendValue: {
     fontSize: 14,
     color: colors.textSecondary,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
 });

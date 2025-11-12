@@ -13,9 +13,9 @@ export const DripQuantityControl: React.FC<DripQuantityControlProps> = ({
   dripQuantity,
   onChangeDripQuantity,
 }) => {
-  const { colors } = useTheme();
-  const selectorStyles = createStockSelectorStyles(colors);
-  const priceStyles = createPriceInputStyles(colors);
+  const { colors, fonts } = useTheme();
+  const selectorStyles = createStockSelectorStyles(colors, fonts);
+  const priceStyles = createPriceInputStyles(colors, fonts);
   
   const handleDecrement = () => {
     const qty = Math.max(0, parseInt(dripQuantity) - 1);

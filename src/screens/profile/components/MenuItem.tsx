@@ -19,8 +19,8 @@ export const MenuItem: React.FC<MenuItemProps> = ({
   badge,
   onPress,
 }) => {
-  const { colors } = useTheme();
-  const menuStyles = createMenuStyles(colors);
+  const { colors, fonts } = useTheme();
+  const menuStyles = createMenuStyles(colors, fonts);
 
   return (
     <TouchableOpacity 

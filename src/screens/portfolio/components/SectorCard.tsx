@@ -19,8 +19,8 @@ interface SectorCardProps {
 }
 
 export const SectorCard: React.FC<SectorCardProps> = ({ sector }) => {
-  const { colors } = useTheme();
-  const styles = createSectorStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createSectorStyles(colors, fonts);
   
   return (
     <View style={styles.sectorCard}>

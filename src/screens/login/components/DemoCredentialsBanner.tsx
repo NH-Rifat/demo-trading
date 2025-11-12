@@ -14,8 +14,8 @@ interface Props {
 }
 
 export default function DemoCredentialsBanner({ onPress }: Props) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
 
   return (
     <TouchableOpacity style={styles.demoBanner} onPress={onPress}>

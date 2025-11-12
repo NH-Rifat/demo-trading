@@ -23,8 +23,8 @@ interface Props {
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function VolumeChart({ data, height = 180 }: Props) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   const maxVolume = Math.max(...data.map((d) => d.volume));
@@ -209,7 +209,7 @@ export default function VolumeChart({ data, height = 180 }: Props) {
   );
 }
 
-const createStyles = (colors: any) => StyleSheet.create({
+const createStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     backgroundColor: colors.card,
     borderRadius: 12,
@@ -224,7 +224,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   dateText: {
@@ -246,7 +246,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   statValue: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   chartContainer: {

@@ -9,8 +9,8 @@ import { createStyles } from '../styles/loginStyles';
 // ============================================
 
 export default function ForgotPasswordLink() {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
 
   return (
     <TouchableOpacity style={styles.forgotPassword}>

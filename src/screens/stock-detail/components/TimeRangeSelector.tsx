@@ -16,8 +16,8 @@ export const TimeRangeSelector: React.FC<TimeRangeSelectorProps> = ({
   selectedRange,
   onSelectRange,
 }) => {
-  const { colors } = useTheme();
-  const styles = createTimeRangeStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createTimeRangeStyles(colors, fonts);
   
   return (
     <View style={styles.timeRangeSection}>

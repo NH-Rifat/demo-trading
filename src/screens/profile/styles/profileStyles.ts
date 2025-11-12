@@ -1,6 +1,6 @@
 import { Platform, StyleSheet } from 'react-native';
 
-export const createProfileStyles = (colors: any) => StyleSheet.create({
+export const createProfileStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
@@ -10,7 +10,7 @@ export const createProfileStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createHeaderStyles = (colors: any) => StyleSheet.create({
+export const createHeaderStyles = (colors: any, fonts: any) => StyleSheet.create({
   header: {
     backgroundColor: colors.surface,
     paddingTop: 8,
@@ -30,12 +30,12 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
   },
   headerTitle: {
     fontSize: 28,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
 });
 
-export const createUserCardStyles = (colors: any) => StyleSheet.create({
+export const createUserCardStyles = (colors: any, fonts: any) => StyleSheet.create({
   userCard: {
     margin: 16,
     backgroundColor: colors.card,
@@ -67,7 +67,7 @@ export const createUserCardStyles = (colors: any) => StyleSheet.create({
   },
   userName: {
     fontSize: 22,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 4,
   },
@@ -88,11 +88,11 @@ export const createUserCardStyles = (colors: any) => StyleSheet.create({
   accountNumber: {
     fontSize: 12,
     color: colors.textSecondary,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
 });
 
-export const createBalanceCardStyles = (colors: any) => StyleSheet.create({
+export const createBalanceCardStyles = (colors: any, fonts: any) => StyleSheet.create({
   balanceCard: {
     marginHorizontal: 16,
     marginBottom: 16,
@@ -125,7 +125,7 @@ export const createBalanceCardStyles = (colors: any) => StyleSheet.create({
   balanceLabel: {
     fontSize: 14,
     color: colors.textSecondary,
-    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
   addFundsButton: {
     flexDirection: 'row',
@@ -139,11 +139,11 @@ export const createBalanceCardStyles = (colors: any) => StyleSheet.create({
   addFundsText: {
     fontSize: 12,
     color: colors.success,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
   balanceAmount: {
     fontSize: 32,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 16,
   },
@@ -163,7 +163,7 @@ export const createBalanceCardStyles = (colors: any) => StyleSheet.create({
   },
   balanceStatValue: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   balanceStatDivider: {
@@ -173,7 +173,7 @@ export const createBalanceCardStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createStatsStyles = (colors: any) => StyleSheet.create({
+export const createStatsStyles = (colors: any, fonts: any) => StyleSheet.create({
   statsContainer: {
     flexDirection: 'row',
     paddingHorizontal: 16,
@@ -203,7 +203,7 @@ export const createStatsStyles = (colors: any) => StyleSheet.create({
   },
   statValue: {
     fontSize: 24,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 4,
   },
@@ -214,13 +214,13 @@ export const createStatsStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createMenuStyles = (colors: any) => StyleSheet.create({
+export const createMenuStyles = (colors: any, fonts: any) => StyleSheet.create({
   section: {
     marginBottom: 24,
   },
   sectionTitle: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textTertiary,
     marginLeft: 16,
     marginBottom: 12,
@@ -246,7 +246,7 @@ export const createMenuStyles = (colors: any) => StyleSheet.create({
   menuItemText: {
     fontSize: 16,
     color: colors.text,
-    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
   menuItemRight: {
     flexDirection: 'row',
@@ -269,7 +269,7 @@ export const createMenuStyles = (colors: any) => StyleSheet.create({
   badgeText: {
     fontSize: 11,
     color: '#ffffff',
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   logoutButton: {
     flexDirection: 'row',
@@ -296,12 +296,12 @@ export const createMenuStyles = (colors: any) => StyleSheet.create({
   },
   logoutText: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.danger,
   },
 });
 
-export const createThemeModalStyles = (colors: any) => StyleSheet.create({
+export const createThemeModalStyles = (colors: any, fonts: any) => StyleSheet.create({
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -331,7 +331,7 @@ export const createThemeModalStyles = (colors: any) => StyleSheet.create({
   },
   themeModalTitle: {
     fontSize: 20,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   themeOption: {
     flexDirection: 'row',
@@ -347,7 +347,7 @@ export const createThemeModalStyles = (colors: any) => StyleSheet.create({
   },
   themeOptionTitle: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     marginBottom: 4,
   },
   themeOptionDescription: {

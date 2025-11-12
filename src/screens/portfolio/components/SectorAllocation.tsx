@@ -21,9 +21,9 @@ interface SectorAllocationProps {
 }
 
 export const SectorAllocation: React.FC<SectorAllocationProps> = ({ sectorAllocation }) => {
-  const { colors } = useTheme();
-  const portfolioStyles = createPortfolioStyles(colors);
-  const sectorStyles = createSectorStyles(colors);
+  const { colors, fonts } = useTheme();
+  const portfolioStyles = createPortfolioStyles(colors, fonts);
+  const sectorStyles = createSectorStyles(colors, fonts);
   
   // Prepare sector data for pie chart
   const sectorPieData = sectorAllocation.map((item) => ({

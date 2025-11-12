@@ -17,8 +17,8 @@ export default function LoadingSpinner({
   color,
   message,
 }: LoadingSpinnerProps) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
   const spinnerColor = color || colors.success;
 
   return (
@@ -29,7 +29,7 @@ export default function LoadingSpinner({
   );
 }
 
-const createStyles = (colors: any) => StyleSheet.create({
+const createStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -40,6 +40,6 @@ const createStyles = (colors: any) => StyleSheet.create({
     marginTop: 12,
     fontSize: 14,
     color: colors.textSecondary,
-    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
 });

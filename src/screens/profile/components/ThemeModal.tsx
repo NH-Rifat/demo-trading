@@ -18,8 +18,8 @@ export const ThemeModal: React.FC<ThemeModalProps> = ({
   onClose,
   onSelectTheme,
 }) => {
-  const { colors } = useTheme();
-  const themeModalStyles = createThemeModalStyles(colors);
+  const { colors, fonts } = useTheme();
+  const themeModalStyles = createThemeModalStyles(colors, fonts);
 
   const themeOptions = [
     {

@@ -27,8 +27,8 @@ interface PositionCardProps {
 }
 
 export const PositionCard: React.FC<PositionCardProps> = ({ position }) => {
-  const { colors } = useTheme();
-  const styles = createPositionStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createPositionStyles(colors, fonts);
   const profitColor = getProfitColor(position.profitLoss);
   const changeColor = getProfitColor(position.change);
 

@@ -33,7 +33,7 @@ export default function StockDetailScreen() {
   const router = useRouter();
   const { symbol } = useLocalSearchParams<{ symbol: string }>();
   const dispatch = useAppDispatch();
-  const { colors } = useTheme();
+  const { colors, fonts } = useTheme();
 
   const stocks = useAppSelector((state: any) => state.market.stocks);
   const watchlistItems = useAppSelector((state: any) => state.watchlist.watchlists);
@@ -41,7 +41,7 @@ export default function StockDetailScreen() {
   const [selectedRange, setSelectedRange] = useState<TimeRange>('1D');
   const [isLoading, setIsLoading] = useState(true);
   
-  const styles = createStockDetailStyles(colors);
+  const styles = createStockDetailStyles(colors, fonts);
 
   // Custom hooks
   const stock = useStockBySymbol(symbol);

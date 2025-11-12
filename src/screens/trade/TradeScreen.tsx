@@ -35,8 +35,8 @@ interface User {
 }
 
 export default function TradeScreen() {
-  const { colors } = useTheme();
-  const styles = createTradeStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createTradeStyles(colors, fonts);
   const dispatch = useAppDispatch();
   const stocks = useAppSelector((state: any) => state.market.stocks);
   const params = useLocalSearchParams<{ stockSymbol?: string; tradeType?: string }>();

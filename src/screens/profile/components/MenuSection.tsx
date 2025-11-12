@@ -16,8 +16,8 @@ interface MenuSectionProps {
 }
 
 export const MenuSection: React.FC<MenuSectionProps> = ({ title, items }) => {
-  const { colors } = useTheme();
-  const menuStyles = createMenuStyles(colors);
+  const { colors, fonts } = useTheme();
+  const menuStyles = createMenuStyles(colors, fonts);
 
   return (
     <View style={menuStyles.section}>

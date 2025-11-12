@@ -14,8 +14,8 @@ export const PlaceOrderButton: React.FC<PlaceOrderButtonProps> = ({
   isDisabled,
   onPress,
 }) => {
-  const { colors } = useTheme();
-  const styles = createPlaceOrderStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createPlaceOrderStyles(colors, fonts);
   
   return (
     <TouchableOpacity

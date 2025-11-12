@@ -21,8 +21,8 @@ export const Header: React.FC<HeaderProps> = ({
   onBack,
   onToggleWatchlist,
 }) => {
-  const { colors } = useTheme();
-  const styles = createHeaderStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createHeaderStyles(colors, fonts);
   
   return (
     <View style={[styles.header, { paddingTop: insets.top + 16 }]}>

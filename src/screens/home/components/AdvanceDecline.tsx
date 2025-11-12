@@ -23,8 +23,8 @@ interface AdvanceDeclineProps {
 }
 
 export const AdvanceDecline: React.FC<AdvanceDeclineProps> = ({ advanceDecline }) => {
-  const { colors } = useTheme();
-  const advanceDeclineStyles = createAdvanceDeclineStyles(colors);
+  const { colors, fonts } = useTheme();
+  const advanceDeclineStyles = createAdvanceDeclineStyles(colors, fonts);
 
   return (
     <View style={advanceDeclineStyles.container}>

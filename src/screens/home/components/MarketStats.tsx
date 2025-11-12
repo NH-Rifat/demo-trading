@@ -17,8 +17,8 @@ interface MarketStatsProps {
 }
 
 export const MarketStats: React.FC<MarketStatsProps> = ({ turnover, volume, trade }) => {
-  const { colors } = useTheme();
-  const marketStatsStyles = createMarketStatsStyles(colors);
+  const { colors, fonts } = useTheme();
+  const marketStatsStyles = createMarketStatsStyles(colors, fonts);
 
   return (
     <View style={marketStatsStyles.statsRow}>

@@ -22,7 +22,7 @@ interface DepthLevel {
 }
 
 export const MarketDepth: React.FC<MarketDepthProps> = ({ stock }) => {
-  const { colors } = useTheme();
+  const { colors, fonts } = useTheme();
   const [isExpanded, setIsExpanded] = useState(true);
 
   // Animated values

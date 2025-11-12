@@ -18,8 +18,8 @@ export const WatchlistTabs: React.FC<WatchlistTabsProps> = ({
   onSelectWatchlist,
   onEditWatchlist,
 }) => {
-  const { colors } = useTheme();
-  const styles = createWatchlistTabStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createWatchlistTabStyles(colors, fonts);
   
   return (
     <ScrollView

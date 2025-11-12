@@ -24,8 +24,8 @@ export default function StockCard({
   isInWatchlist = false,
   onToggleWatchlist,
 }: StockCardProps) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
   const priceColor = getProfitColor(stock.change);
   const isPositive = stock.change >= 0;
 
@@ -100,7 +100,7 @@ export default function StockCard({
   );
 }
 
-const createStyles = (colors: any) => StyleSheet.create({
+const createStyles = (colors: any, fonts: any) => StyleSheet.create({
   card: {
     backgroundColor: colors.card,
     borderRadius: 16,
@@ -136,7 +136,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   symbol: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginRight: 6,
   },
@@ -146,14 +146,14 @@ const createStyles = (colors: any) => StyleSheet.create({
   name: {
     fontSize: 13,
     color: colors.textSecondary,
-    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
   rightSection: {
     alignItems: 'flex-end',
   },
   price: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 4,
   },
@@ -166,7 +166,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   change: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     marginLeft: 4,
   },
   bottomSection: {
@@ -184,12 +184,12 @@ const createStyles = (colors: any) => StyleSheet.create({
   infoLabel: {
     fontSize: 11,
     color: colors.textTertiary,
-    fontWeight: '500',
+    fontFamily: fonts.medium,
     marginBottom: 4,
   },
   infoValue: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
   },
   divider: {

@@ -21,8 +21,8 @@ export const KeyStatistics: React.FC<KeyStatisticsProps> = ({
   volume,
   avgVolume,
 }) => {
-  const { colors } = useTheme();
-  const styles = createStatsStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStatsStyles(colors, fonts);
   
   return (
     <View style={styles.section}>

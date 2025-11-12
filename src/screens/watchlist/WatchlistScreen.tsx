@@ -27,7 +27,7 @@ export default function WatchlistScreen() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const insets = useSafeAreaInsets();
-  const { colors } = useTheme();
+  const { colors, fonts } = useTheme();
   const marketData = useMarketDataUpdates();
 
   const watchlists = useAppSelector((state: any) => state.watchlist.watchlists);
@@ -45,8 +45,8 @@ export default function WatchlistScreen() {
   const watchlistStocks = useWatchlistStocks(activeWatchlist);
 
   // Create styles
-  const styles = createWatchlistStyles(colors);
-  const hStyles = createHeaderStyles(colors);
+  const styles = createWatchlistStyles(colors, fonts);
+  const hStyles = createHeaderStyles(colors, fonts);
 
   // Handlers
   const handleCreateWatchlist = () => {

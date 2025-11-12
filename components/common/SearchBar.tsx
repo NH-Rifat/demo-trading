@@ -28,8 +28,8 @@ export default function SearchBar({
   onFocus,
   onBlur,
 }: SearchBarProps) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
   const [isFocused, setIsFocused] = useState(false);
 
   const handleClear = () => {
@@ -68,7 +68,7 @@ export default function SearchBar({
   );
 }
 
-const createStyles = (colors: any) => StyleSheet.create({
+const createStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     paddingHorizontal: 16,
     paddingVertical: 12,
@@ -95,7 +95,7 @@ const createStyles = (colors: any) => StyleSheet.create({
     flex: 1,
     fontSize: 16,
     color: colors.text,
-    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
   clearButton: {
     padding: 4,

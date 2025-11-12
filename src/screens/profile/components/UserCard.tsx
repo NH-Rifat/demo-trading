@@ -13,8 +13,8 @@ interface UserCardProps {
 }
 
 export const UserCard: React.FC<UserCardProps> = ({ user }) => {
-  const { colors } = useTheme();
-  const userCardStyles = createUserCardStyles(colors);
+  const { colors, fonts } = useTheme();
+  const userCardStyles = createUserCardStyles(colors, fonts);
 
   return (
     <View style={userCardStyles.userCard}>

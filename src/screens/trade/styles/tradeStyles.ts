@@ -1,13 +1,13 @@
 import { Platform, StyleSheet } from 'react-native';
 
-export const createTradeStyles = (colors: any) => StyleSheet.create({
+export const createTradeStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
   },
 });
 
-export const createHeaderStyles = (colors: any) => StyleSheet.create({
+export const createHeaderStyles = (colors: any, fonts: any) => StyleSheet.create({
   header: {
     backgroundColor: colors.surface,
     paddingTop: 8,
@@ -27,12 +27,12 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
   },
   headerTitle: {
     fontSize: 28,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
 });
 
-export const createTradeTypeStyles = (colors: any) => StyleSheet.create({
+export const createTradeTypeStyles = (colors: any, fonts: any) => StyleSheet.create({
   tradeTypeTabs: {
     flexDirection: 'row',
     padding: 16,
@@ -60,7 +60,7 @@ export const createTradeTypeStyles = (colors: any) => StyleSheet.create({
   },
   tradeTypeTabText: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
   },
   tradeTypeTabTextActive: {
@@ -68,14 +68,14 @@ export const createTradeTypeStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createStockSelectorStyles = (colors: any) => StyleSheet.create({
+export const createStockSelectorStyles = (colors: any, fonts: any) => StyleSheet.create({
   section: {
     paddingHorizontal: 16,
     marginBottom: 24,
   },
   sectionLabel: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
     marginBottom: 12,
   },
@@ -98,7 +98,7 @@ export const createStockSelectorStyles = (colors: any) => StyleSheet.create({
   },
   selectedStockSymbol: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   selectedStockName: {
@@ -111,12 +111,12 @@ export const createStockSelectorStyles = (colors: any) => StyleSheet.create({
   },
   selectedStockPrice: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
   },
   selectedStockChange: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     marginTop: 2,
   },
   stockSelectorPlaceholder: {
@@ -138,11 +138,11 @@ export const createStockSelectorStyles = (colors: any) => StyleSheet.create({
   holdingInfoText: {
     fontSize: 13,
     color: colors.info,
-    fontWeight: '500',
+    fontFamily: fonts.medium,
   },
 });
 
-export const createOrderTypeStyles = (colors: any) => StyleSheet.create({
+export const createOrderTypeStyles = (colors: any, fonts: any) => StyleSheet.create({
   orderTypeTabs: {
     flexDirection: 'row',
     backgroundColor: colors.surfaceSecondary,
@@ -161,7 +161,7 @@ export const createOrderTypeStyles = (colors: any) => StyleSheet.create({
   },
   orderTypeTabText: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
   },
   orderTypeTabTextActive: {
@@ -169,7 +169,7 @@ export const createOrderTypeStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createQuantityStyles = (colors: any) => StyleSheet.create({
+export const createQuantityStyles = (colors: any, fonts: any) => StyleSheet.create({
   quantityControl: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -188,13 +188,13 @@ export const createQuantityStyles = (colors: any) => StyleSheet.create({
   quantityInput: {
     flex: 1,
     fontSize: 24,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     textAlign: 'center',
   },
 });
 
-export const createPriceInputStyles = (colors: any) => StyleSheet.create({
+export const createPriceInputStyles = (colors: any, fonts: any) => StyleSheet.create({
   priceInputContainer: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -220,21 +220,21 @@ export const createPriceInputStyles = (colors: any) => StyleSheet.create({
   },
   currencySymbol: {
     fontSize: 20,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
     marginRight: 8,
     marginLeft: 8,
   },
   priceInput: {
     fontSize: 24,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     textAlign: 'center',
     minWidth: 100,
   },
 });
 
-export const createOrderSummaryStyles = (colors: any) => StyleSheet.create({
+export const createOrderSummaryStyles = (colors: any, fonts: any) => StyleSheet.create({
   orderSummary: {
     marginHorizontal: 16,
     backgroundColor: colors.card,
@@ -255,7 +255,7 @@ export const createOrderSummaryStyles = (colors: any) => StyleSheet.create({
   },
   orderSummaryTitle: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 16,
   },
@@ -271,7 +271,7 @@ export const createOrderSummaryStyles = (colors: any) => StyleSheet.create({
   },
   summaryValue: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
   },
   summaryDivider: {
@@ -281,17 +281,17 @@ export const createOrderSummaryStyles = (colors: any) => StyleSheet.create({
   },
   summaryLabelTotal: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   summaryValueTotal: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.primary,
   },
 });
 
-export const createPlaceOrderStyles = (colors: any) => StyleSheet.create({
+export const createPlaceOrderStyles = (colors: any, fonts: any) => StyleSheet.create({
   placeOrderButton: {
     marginHorizontal: 16,
     paddingVertical: 18,
@@ -310,12 +310,12 @@ export const createPlaceOrderStyles = (colors: any) => StyleSheet.create({
   },
   placeOrderButtonText: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: '#ffffff',
   },
 });
 
-export const createStockPickerStyles = (colors: any) => StyleSheet.create({
+export const createStockPickerStyles = (colors: any, fonts: any) => StyleSheet.create({
   modalContainer: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -340,7 +340,7 @@ export const createStockPickerStyles = (colors: any) => StyleSheet.create({
   },
   modalTitle: {
     fontSize: 20,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   modalSearchContainer: {
@@ -364,7 +364,7 @@ export const createStockPickerStyles = (colors: any) => StyleSheet.create({
   },
   stockItemSymbol: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   stockItemName: {
@@ -377,17 +377,17 @@ export const createStockPickerStyles = (colors: any) => StyleSheet.create({
   },
   stockItemPrice: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
   },
   stockItemChange: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     marginTop: 2,
   },
 });
 
-export const createUserSelectorStyles = (colors: any) => StyleSheet.create({
+export const createUserSelectorStyles = (colors: any, fonts: any) => StyleSheet.create({
   section: {
     paddingHorizontal: 16,
     marginBottom: 16,
@@ -408,7 +408,7 @@ export const createUserSelectorStyles = (colors: any) => StyleSheet.create({
   },
   userCode: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
   },
   modalOverlay: {
@@ -432,7 +432,7 @@ export const createUserSelectorStyles = (colors: any) => StyleSheet.create({
   },
   modalTitle: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   userItem: {
     flexDirection: 'row',
@@ -446,7 +446,7 @@ export const createUserSelectorStyles = (colors: any) => StyleSheet.create({
   },
   userItemCode: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   userItemName: {
     fontSize: 14,
@@ -454,7 +454,7 @@ export const createUserSelectorStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createBalanceInfoStyles = (colors: any) => StyleSheet.create({
+export const createBalanceInfoStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     flexDirection: 'row',
     paddingHorizontal: 16,
@@ -468,12 +468,12 @@ export const createBalanceInfoStyles = (colors: any) => StyleSheet.create({
   },
   label: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.success,
   },
   value: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.success,
   },
 });

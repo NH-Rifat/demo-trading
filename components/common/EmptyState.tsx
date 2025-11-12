@@ -18,8 +18,8 @@ export default function EmptyState({
   title,
   message,
 }: EmptyStateProps) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
 
   return (
     <View style={styles.container}>
@@ -32,7 +32,7 @@ export default function EmptyState({
   );
 }
 
-const createStyles = (colors: any) => StyleSheet.create({
+const createStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
@@ -51,7 +51,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
     marginBottom: 8,
     textAlign: 'center',

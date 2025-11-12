@@ -5,7 +5,7 @@ import { Platform, StyleSheet } from 'react-native';
 // Organized style groups for login screen components
 // ============================================
 
-export const createStyles = (colors: any) => StyleSheet.create({
+export const createStyles = (colors: any, fonts: any) => StyleSheet.create({
   // Container Styles
   container: {
     flex: 1,
@@ -45,7 +45,7 @@ export const createStyles = (colors: any) => StyleSheet.create({
   },
   appName: {
     fontSize: 32,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 8,
   },
@@ -60,7 +60,7 @@ export const createStyles = (colors: any) => StyleSheet.create({
   },
   welcomeText: {
     fontSize: 28,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 8,
   },
@@ -90,7 +90,7 @@ export const createStyles = (colors: any) => StyleSheet.create({
   demoBannerText: {
     fontSize: 14,
     color: colors.info,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
 
   // Input Field Styles
@@ -99,7 +99,7 @@ export const createStyles = (colors: any) => StyleSheet.create({
   },
   inputLabel: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
     marginBottom: 8,
   },
@@ -140,7 +140,7 @@ export const createStyles = (colors: any) => StyleSheet.create({
   forgotPasswordText: {
     fontSize: 14,
     color: colors.success,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
 
   // Login Button Styles
@@ -169,7 +169,7 @@ export const createStyles = (colors: any) => StyleSheet.create({
   },
   loginButtonText: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: '#ffffff',
   },
 
@@ -191,7 +191,7 @@ export const createStyles = (colors: any) => StyleSheet.create({
     fontSize: 12,
     color: colors.textTertiary,
     marginHorizontal: 12,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
   credentialsBox: {
     backgroundColor: colors.surfaceSecondary,
@@ -223,7 +223,7 @@ export const createStyles = (colors: any) => StyleSheet.create({
   signUpLink: {
     fontSize: 14,
     color: colors.success,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
 
   // Footer Styles

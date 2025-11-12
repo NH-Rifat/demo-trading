@@ -22,8 +22,8 @@ import { createStyles } from './styles/loginStyles';
 
 export default function LoginScreen() {
   const insets = useSafeAreaInsets();
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
   const { handleLogin } = useLoginAuth();
 
   const {

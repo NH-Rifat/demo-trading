@@ -1,6 +1,6 @@
 import { Platform, StyleSheet } from 'react-native';
 
-export const createStockDetailStyles = (colors: any) => StyleSheet.create({
+export const createStockDetailStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
@@ -10,7 +10,7 @@ export const createStockDetailStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createHeaderStyles = (colors: any) => StyleSheet.create({
+export const createHeaderStyles = (colors: any, fonts: any) => StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -45,7 +45,7 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
   },
   headerSymbol: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   headerName: {
@@ -66,7 +66,7 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createPriceSectionStyles = (colors: any) => StyleSheet.create({
+export const createPriceSectionStyles = (colors: any, fonts: any) => StyleSheet.create({
   priceSection: {
     backgroundColor: colors.surface,
     padding: 24,
@@ -74,7 +74,7 @@ export const createPriceSectionStyles = (colors: any) => StyleSheet.create({
   },
   currentPrice: {
     fontSize: 48,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   changeContainer: {
@@ -85,7 +85,7 @@ export const createPriceSectionStyles = (colors: any) => StyleSheet.create({
   },
   changeText: {
     fontSize: 18,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
   lastUpdate: {
     fontSize: 12,
@@ -94,7 +94,7 @@ export const createPriceSectionStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createTimeRangeStyles = (colors: any) => StyleSheet.create({
+export const createTimeRangeStyles = (colors: any, fonts: any) => StyleSheet.create({
   timeRangeSection: {
     backgroundColor: colors.surface,
     paddingVertical: 12,
@@ -115,7 +115,7 @@ export const createTimeRangeStyles = (colors: any) => StyleSheet.create({
   },
   timeRangeText: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
   },
   timeRangeTextActive: {
@@ -123,7 +123,7 @@ export const createTimeRangeStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createChartStyles = (colors: any) => StyleSheet.create({
+export const createChartStyles = (colors: any, fonts: any) => StyleSheet.create({
   chartSection: {
     backgroundColor: colors.surface,
     marginTop: 8,
@@ -131,7 +131,7 @@ export const createChartStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createStatsStyles = (colors: any) => StyleSheet.create({
+export const createStatsStyles = (colors: any, fonts: any) => StyleSheet.create({
   section: {
     backgroundColor: colors.surface,
     marginTop: 8,
@@ -139,7 +139,7 @@ export const createStatsStyles = (colors: any) => StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 16,
   },
@@ -159,12 +159,12 @@ export const createStatsStyles = (colors: any) => StyleSheet.create({
   },
   statValue: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
   },
 });
 
-export const createCompanyInfoStyles = (colors: any) => StyleSheet.create({
+export const createCompanyInfoStyles = (colors: any, fonts: any) => StyleSheet.create({
   infoCard: {
     backgroundColor: colors.surfaceSecondary,
     borderRadius: 12,
@@ -182,7 +182,7 @@ export const createCompanyInfoStyles = (colors: any) => StyleSheet.create({
   },
   infoValue: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
   },
   divider: {
@@ -196,7 +196,7 @@ export const createCompanyInfoStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createActionButtonStyles = (colors: any) => StyleSheet.create({
+export const createActionButtonStyles = (colors: any, fonts: any) => StyleSheet.create({
   bottomActions: {
     position: 'absolute',
     bottom: 0,
@@ -235,7 +235,7 @@ export const createActionButtonStyles = (colors: any) => StyleSheet.create({
   },
   actionButtonText: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: '#ffffff',
   },
 });

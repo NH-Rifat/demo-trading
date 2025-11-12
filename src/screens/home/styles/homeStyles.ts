@@ -6,7 +6,7 @@
 
 import { Platform, StyleSheet } from 'react-native';
 
-export const createHomeStyles = (colors: any) => StyleSheet.create({
+export const createHomeStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
@@ -17,7 +17,7 @@ export const createHomeStyles = (colors: any) => StyleSheet.create({
 });
 
 // Header Styles
-export const createHeaderStyles = (colors: any) => StyleSheet.create({
+export const createHeaderStyles = (colors: any, fonts: any) => StyleSheet.create({
   headerTopSection: {
     backgroundColor: colors.surface,
     paddingHorizontal: 16,
@@ -75,7 +75,7 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
   },
   cashLimitLabel: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
   },
   divider: {
@@ -89,11 +89,11 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
   tickerSymbol: {
     fontSize: 11,
     color: colors.textSecondary,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
   tickerValue: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   iconButton: {
     position: 'relative',
@@ -113,7 +113,7 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
   badgeText: {
     color: '#ffffff',
     fontSize: 9,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   headerMiddle: {
     flexDirection: 'row',
@@ -125,7 +125,7 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
   },
   logoText: {
     fontSize: 24,
-    fontWeight: '900',
+    fontFamily: fonts.bold,
     color: colors.primary,
     letterSpacing: 1,
   },
@@ -145,7 +145,7 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
   },
   exchangeButtonText: {
     fontSize: 13,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.textSecondary,
   },
   exchangeButtonTextActive: {
@@ -154,7 +154,7 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
 });
 
 // Index Cards Styles
-export const createIndexCardStyles = (colors: any) => StyleSheet.create({
+export const createIndexCardStyles = (colors: any, fonts: any) => StyleSheet.create({
   indicesRow: {
     flexDirection: 'row',
     gap: 8,
@@ -180,13 +180,13 @@ export const createIndexCardStyles = (colors: any) => StyleSheet.create({
   },
   indexSymbol: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 4,
   },
   indexValue: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 8,
   },
@@ -195,16 +195,16 @@ export const createIndexCardStyles = (colors: any) => StyleSheet.create({
   },
   indexChange: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
   indexChangePercent: {
     fontSize: 11,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
 });
 
 // Market Stats Styles
-export const createMarketStatsStyles = (colors: any) => StyleSheet.create({
+export const createMarketStatsStyles = (colors: any, fonts: any) => StyleSheet.create({
   statsRow: {
     flexDirection: 'row',
     gap: 8,
@@ -218,7 +218,7 @@ export const createMarketStatsStyles = (colors: any) => StyleSheet.create({
   },
   statValue: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 4,
   },
@@ -229,20 +229,20 @@ export const createMarketStatsStyles = (colors: any) => StyleSheet.create({
   },
   statPercent: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 2,
   },
   statType: {
     fontSize: 9,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
     letterSpacing: 0.5,
   },
 });
 
 // Advance Decline Styles
-export const createAdvanceDeclineStyles = (colors: any) => StyleSheet.create({
+export const createAdvanceDeclineStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     backgroundColor: colors.card,
     borderRadius: 12,
@@ -263,7 +263,7 @@ export const createAdvanceDeclineStyles = (colors: any) => StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 16,
   },
@@ -285,13 +285,13 @@ export const createAdvanceDeclineStyles = (colors: any) => StyleSheet.create({
   },
   legendText: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
   },
 });
 
 // Featured Lists Styles
-export const createFeaturedListsStyles = (colors: any) => StyleSheet.create({
+export const createFeaturedListsStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     backgroundColor: colors.card,
     borderRadius: 12,
@@ -318,7 +318,7 @@ export const createFeaturedListsStyles = (colors: any) => StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   tabsContainer: {
@@ -336,7 +336,7 @@ export const createFeaturedListsStyles = (colors: any) => StyleSheet.create({
   },
   tabText: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
     fontStyle: 'italic',
   },
@@ -358,7 +358,7 @@ export const createFeaturedListsStyles = (colors: any) => StyleSheet.create({
   },
   stockSymbol: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
     marginBottom: 2,
   },
@@ -380,17 +380,17 @@ export const createFeaturedListsStyles = (colors: any) => StyleSheet.create({
   },
   stockChange: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     marginBottom: 2,
   },
   stockChangePercent: {
     fontSize: 11,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
   },
 });
 
 // Top Sectors Styles
-export const createTopSectorsStyles = (colors: any) => StyleSheet.create({
+export const createTopSectorsStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     backgroundColor: colors.card,
     borderRadius: 12,
@@ -417,7 +417,7 @@ export const createTopSectorsStyles = (colors: any) => StyleSheet.create({
   },
   title: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   sectorsList: {
@@ -431,7 +431,7 @@ export const createTopSectorsStyles = (colors: any) => StyleSheet.create({
   sectorName: {
     width: 90,
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
     textAlign: 'right',
   },
@@ -449,7 +449,7 @@ export const createTopSectorsStyles = (colors: any) => StyleSheet.create({
   sectorValue: {
     width: 70,
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
     textAlign: 'left',
   },
@@ -463,7 +463,7 @@ export const createTopSectorsStyles = (colors: any) => StyleSheet.create({
   },
   showMoreText: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.primary,
   },
 });

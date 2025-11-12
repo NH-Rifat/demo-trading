@@ -4,8 +4,8 @@ import { Text, View } from 'react-native';
 import { createHeaderStyles } from '../styles/tradeStyles';
 
 export const Header: React.FC = () => {
-  const { colors } = useTheme();
-  const styles = createHeaderStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createHeaderStyles(colors, fonts);
   
   return (
     <View style={styles.header}>

@@ -20,8 +20,8 @@ export const PriceSection: React.FC<PriceSectionProps> = ({
   priceColor,
   lastUpdate,
 }) => {
-  const { colors } = useTheme();
-  const styles = createPriceSectionStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createPriceSectionStyles(colors, fonts);
   const isPositive = change >= 0;
 
   return (

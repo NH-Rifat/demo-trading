@@ -15,8 +15,8 @@ export const QuickStats: React.FC<QuickStatsProps> = ({
   activeOrders,
   completedOrders,
 }) => {
-  const { colors } = useTheme();
-  const statsStyles = createStatsStyles(colors);
+  const { colors, fonts } = useTheme();
+  const statsStyles = createStatsStyles(colors, fonts);
 
   return (
     <View style={statsStyles.statsContainer}>

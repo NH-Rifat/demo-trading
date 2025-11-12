@@ -18,9 +18,9 @@ import { createMenuStyles, createProfileStyles } from './styles/profileStyles';
 
 export default function ProfileScreen() {
   const dispatch = useAppDispatch();
-  const { themeMode, setThemeMode, colors } = useTheme();
-  const profileStyles = createProfileStyles(colors);
-  const menuStyles = createMenuStyles(colors);
+  const { themeMode, setThemeMode, colors, fonts } = useTheme();
+  const profileStyles = createProfileStyles(colors, fonts);
+  const menuStyles = createMenuStyles(colors, fonts);
   const [showThemeModal, setShowThemeModal] = useState(false);
   const marketData = useMarketDataUpdates();
 

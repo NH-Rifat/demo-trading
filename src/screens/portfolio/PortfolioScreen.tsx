@@ -25,8 +25,8 @@ import {
 import { createPortfolioStyles } from './styles/portfolioStyles';
 
 export default function PortfolioScreen() {
-  const { colors } = useTheme();
-  const styles = createPortfolioStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createPortfolioStyles(colors, fonts);
   const portfolio = useAppSelector((state: any) => state.portfolio.portfolio);
   const stocks = useAppSelector((state: any) => state.market.stocks);
   const [refreshing, setRefreshing] = useState(false);

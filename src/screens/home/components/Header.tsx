@@ -18,8 +18,8 @@ export const Header: React.FC<HeaderProps> = ({
   selectedExchange,
   onExchangeChange,
 }) => {
-  const { colors } = useTheme();
-  const headerStyles = createHeaderStyles(colors);
+  const { colors, fonts } = useTheme();
+  const headerStyles = createHeaderStyles(colors, fonts);
 
   return (
     <View style={headerStyles.headerBottomSection}>

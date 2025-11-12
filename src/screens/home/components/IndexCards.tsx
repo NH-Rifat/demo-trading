@@ -27,8 +27,8 @@ interface IndexCardsProps {
 }
 
 export const IndexCards: React.FC<IndexCardsProps> = ({ indices }) => {
-  const { colors } = useTheme();
-  const indexCardStyles = createIndexCardStyles(colors);
+  const { colors, fonts } = useTheme();
+  const indexCardStyles = createIndexCardStyles(colors, fonts);
 
   return (
     <View style={indexCardStyles.indicesRow}>

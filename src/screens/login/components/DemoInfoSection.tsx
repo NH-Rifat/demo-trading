@@ -11,8 +11,8 @@ import { createStyles } from '../styles/loginStyles';
 // ============================================
 
 export default function DemoInfoSection() {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
 
   return (
     <View style={styles.demoInfoContainer}>

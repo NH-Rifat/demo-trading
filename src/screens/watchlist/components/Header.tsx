@@ -10,8 +10,8 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ insets, onCreatePress }) => {
-  const { colors } = useTheme();
-  const styles = createHeaderStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createHeaderStyles(colors, fonts);
   
   return (
     <View style={[styles.headerTop, { paddingTop: insets.top + 16 }]}>

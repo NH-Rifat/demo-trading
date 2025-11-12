@@ -9,8 +9,8 @@ import { createStyles } from '../styles/loginStyles';
 // ============================================
 
 export default function Footer() {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
 
   return <Text style={styles.footer}>© 2025 Xpert Trading. All rights reserved.</Text>;
 }

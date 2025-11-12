@@ -13,9 +13,9 @@ export const LimitPriceInput: React.FC<LimitPriceInputProps> = ({
   limitPrice,
   onChangeLimitPrice,
 }) => {
-  const { colors } = useTheme();
-  const selectorStyles = createStockSelectorStyles(colors);
-  const priceStyles = createPriceInputStyles(colors);
+  const { colors, fonts } = useTheme();
+  const selectorStyles = createStockSelectorStyles(colors, fonts);
+  const priceStyles = createPriceInputStyles(colors, fonts);
   
   const handleIncrease = () => {
     const currentPrice = parseFloat(limitPrice) || 0;

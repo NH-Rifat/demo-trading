@@ -21,7 +21,7 @@ import { createHomeStyles } from './styles/homeStyles';
 type TabType = 'gainer' | 'loser' | 'trade' | 'value' | 'volume';
 
 export default function HomeScreen() {
-  const { colors } = useTheme();
+  const { colors, fonts } = useTheme();
   const [refreshing, setRefreshing] = useState(false);
   const [selectedExchange, setSelectedExchange] = useState<'DSE' | 'CSE'>('DSE');
   const [selectedTab, setSelectedTab] = useState<TabType>('gainer');
@@ -32,7 +32,7 @@ export default function HomeScreen() {
   const topSectorsData = useSectorDataUpdates();
 
   // Create theme-aware styles
-  const homeStyles = createHomeStyles(colors);
+  const homeStyles = createHomeStyles(colors, fonts);
 
   const onRefresh = async () => {
     setRefreshing(true);

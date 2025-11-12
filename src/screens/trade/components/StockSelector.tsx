@@ -19,8 +19,8 @@ export const StockSelector: React.FC<StockSelectorProps> = ({
   holdingQuantity,
   onPress,
 }) => {
-  const { colors } = useTheme();
-  const styles = createStockSelectorStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStockSelectorStyles(colors, fonts);
   
   return (
     <View style={styles.section}>

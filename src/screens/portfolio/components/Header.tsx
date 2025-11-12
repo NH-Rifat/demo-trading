@@ -13,8 +13,8 @@ interface HeaderProps {
 }
 
 export const Header: React.FC<HeaderProps> = ({ paddingTop }) => {
-  const { colors } = useTheme();
-  const styles = createHeaderStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createHeaderStyles(colors, fonts);
   
   return (
     <View style={[styles.header, { paddingTop }]}>

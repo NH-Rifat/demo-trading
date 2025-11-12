@@ -8,7 +8,7 @@ import { HapticTab } from '@/components/haptic-tab';
 import { useTheme } from '@/src/contexts/ThemeContext';
 
 export default function TabLayout() {
-  const { colors, theme } = useTheme();
+  const { colors, theme, fonts } = useTheme();
   const isDark = theme === 'dark';
   const insets = useSafeAreaInsets();
 
@@ -33,7 +33,7 @@ export default function TabLayout() {
         },
         tabBarLabelStyle: {
           fontSize: 11,
-          fontWeight: '600',
+          fontFamily: fonts.semibold,
         },
       }}>
       <Tabs.Screen

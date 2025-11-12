@@ -26,8 +26,8 @@ interface Props {
 const SCREEN_WIDTH = Dimensions.get('window').width;
 
 export default function CandlestickChart({ data, height = 280 }: Props) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   // Calculate chart dimensions
@@ -260,7 +260,7 @@ export default function CandlestickChart({ data, height = 280 }: Props) {
   );
 }
 
-const createStyles = (colors: any) => StyleSheet.create({
+const createStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     backgroundColor: colors.card,
     borderRadius: 12,
@@ -275,7 +275,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   tooltip: {
@@ -283,7 +283,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   tooltipPrice: {
     fontSize: 18,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   tooltipDate: {
@@ -313,7 +313,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   statValue: {
     fontSize: 14,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   hintText: {

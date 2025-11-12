@@ -19,8 +19,8 @@ export const WatchlistTab: React.FC<WatchlistTabProps> = ({
   onPress,
   onEdit,
 }) => {
-  const { colors } = useTheme();
-  const styles = createWatchlistTabStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createWatchlistTabStyles(colors, fonts);
   const stockCount = watchlist.stocks.length;
 
   const animatedStyle = useAnimatedStyle(() => {

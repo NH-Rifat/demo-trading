@@ -38,8 +38,8 @@ export default function InputField({
   autoCapitalize = 'none',
   autoComplete = 'off',
 }: Props) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
 
   return (
     <View style={styles.inputContainer}>

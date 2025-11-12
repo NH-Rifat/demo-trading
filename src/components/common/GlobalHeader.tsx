@@ -22,9 +22,9 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
   cscxValue,
   dsexValue,
 }) => {
-  const { colors } = useTheme();
+  const { colors, fonts } = useTheme();
   const insets = useSafeAreaInsets();
-  const styles = createStyles(colors);
+  const styles = createStyles(colors, fonts);
   const [showBalance, setShowBalance] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   
@@ -158,7 +158,7 @@ export const GlobalHeader: React.FC<GlobalHeaderProps> = ({
   );
 };
 
-const createStyles = (colors: any) => StyleSheet.create({
+const createStyles = (colors: any, fonts: any) => StyleSheet.create({
   headerTopSection: {
     paddingTop:10,
     backgroundColor: colors.surface,
@@ -201,7 +201,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   cashLimitLabel: {
     fontSize: 12,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
   },
   divider: {
@@ -219,12 +219,12 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   tickerSymbol: {
     fontSize: 10,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
   },
   tickerValue: {
     fontSize: 12,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     marginTop: 2,
   },
   iconButton: {
@@ -250,7 +250,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   badgeText: {
     color: '#ffffff',
     fontSize: 9,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
   },
   marketStatus: {
     flexDirection: 'row',
@@ -270,7 +270,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   marketStatusText: {
     fontSize: 11,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.success,
     letterSpacing: 0.5,
   },

@@ -29,8 +29,8 @@ const categories: CategoryItem[] = [
 ];
 
 export default function CategoryFilter({ selected, onSelect }: CategoryFilterProps) {
-  const { colors } = useTheme();
-  const styles = createStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createStyles(colors, fonts);
 
   return (
     <View style={styles.container}>
@@ -75,7 +75,7 @@ export default function CategoryFilter({ selected, onSelect }: CategoryFilterPro
   );
 }
 
-const createStyles = (colors: any) => StyleSheet.create({
+const createStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     paddingVertical: 12,
     backgroundColor: colors.surface,
@@ -99,7 +99,7 @@ const createStyles = (colors: any) => StyleSheet.create({
   },
   categoryLabel: {
     fontSize: 13,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.text,
   },
   categoryLabelSelected: {

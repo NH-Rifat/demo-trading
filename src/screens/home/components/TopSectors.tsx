@@ -20,8 +20,8 @@ interface TopSectorsProps {
 }
 
 export const TopSectors: React.FC<TopSectorsProps> = ({ sectors, showAll, onToggleShowAll }) => {
-  const { colors } = useTheme();
-  const topSectorsStyles = createTopSectorsStyles(colors);
+  const { colors, fonts } = useTheme();
+  const topSectorsStyles = createTopSectorsStyles(colors, fonts);
 
   const displayedSectors = sectors.slice(0, showAll ? sectors.length : 8);
   const maxDisplayedValue = Math.max(...displayedSectors.map((s) => s.value));

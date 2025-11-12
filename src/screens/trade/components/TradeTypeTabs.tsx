@@ -11,8 +11,8 @@ interface TradeTypeTabsProps {
 }
 
 export const TradeTypeTabs: React.FC<TradeTypeTabsProps> = ({ tradeType, onChangeTradeType }) => {
-  const { colors } = useTheme();
-  const styles = createTradeTypeStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createTradeTypeStyles(colors, fonts);
   
   const buyAnimatedStyle = useAnimatedStyle(() => {
     return {

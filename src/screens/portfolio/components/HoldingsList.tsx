@@ -15,8 +15,8 @@ interface HoldingsListProps {
 }
 
 export const HoldingsList: React.FC<HoldingsListProps> = ({ positions, positionsCount }) => {
-  const { colors } = useTheme();
-  const styles = createPortfolioStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createPortfolioStyles(colors, fonts);
   
   return (
     <View style={styles.section}>

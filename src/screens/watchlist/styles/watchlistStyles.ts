@@ -1,6 +1,6 @@
 import { Platform, StyleSheet } from 'react-native';
 
-export const createWatchlistStyles = (colors: any) => StyleSheet.create({
+export const createWatchlistStyles = (colors: any, fonts: any) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.background,
@@ -13,7 +13,7 @@ export const createWatchlistStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createHeaderStyles = (colors: any) => StyleSheet.create({
+export const createHeaderStyles = (colors: any, fonts: any) => StyleSheet.create({
   header: {
     backgroundColor: colors.surface,
     paddingBottom: 20,
@@ -39,7 +39,7 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
   },
   headerTitle: {
     fontSize: 28,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   createButton: {
@@ -52,7 +52,7 @@ export const createHeaderStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createWatchlistTabStyles = (colors: any) => StyleSheet.create({
+export const createWatchlistTabStyles = (colors: any, fonts: any) => StyleSheet.create({
   watchlistTabs: {
     paddingHorizontal: 16,
     gap: 12,
@@ -77,7 +77,7 @@ export const createWatchlistTabStyles = (colors: any) => StyleSheet.create({
   },
   watchlistTabName: {
     fontSize: 14,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
   },
   watchlistTabNameActive: {
@@ -102,7 +102,7 @@ export const createWatchlistTabStyles = (colors: any) => StyleSheet.create({
   },
 });
 
-export const createModalStyles = (colors: any) => StyleSheet.create({
+export const createModalStyles = (colors: any, fonts: any) => StyleSheet.create({
   modalOverlay: {
     flex: 1,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
@@ -133,7 +133,7 @@ export const createModalStyles = (colors: any) => StyleSheet.create({
   },
   modalTitle: {
     fontSize: 20,
-    fontWeight: '700',
+    fontFamily: fonts.bold,
     color: colors.text,
   },
   input: {
@@ -173,17 +173,17 @@ export const createModalStyles = (colors: any) => StyleSheet.create({
   },
   modalButtonTextCancel: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: colors.textSecondary,
   },
   modalButtonTextCreate: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: '#ffffff',
   },
   modalButtonTextDelete: {
     fontSize: 16,
-    fontWeight: '600',
+    fontFamily: fonts.semibold,
     color: '#ffffff',
   },
 });

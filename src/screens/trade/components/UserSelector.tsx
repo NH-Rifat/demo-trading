@@ -28,8 +28,8 @@ export const UserSelector: React.FC<UserSelectorProps> = ({
   selectedUser,
   onSelectUser,
 }) => {
-  const { colors } = useTheme();
-  const styles = createUserSelectorStyles(colors);
+  const { colors, fonts } = useTheme();
+  const styles = createUserSelectorStyles(colors, fonts);
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const handleSelectUser = (user: User) => {

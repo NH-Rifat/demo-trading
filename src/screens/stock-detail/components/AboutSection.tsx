@@ -19,9 +19,9 @@ export const AboutSection: React.FC<AboutSectionProps> = ({
   price,
   marketCap,
 }) => {
-  const { colors } = useTheme();
-  const statsStyles = createStatsStyles(colors);
-  const infoStyles = createCompanyInfoStyles(colors);
+  const { colors, fonts } = useTheme();
+  const statsStyles = createStatsStyles(colors, fonts);
+  const infoStyles = createCompanyInfoStyles(colors, fonts);
   
   return (
     <View style={statsStyles.section}>

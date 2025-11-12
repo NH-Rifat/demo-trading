@@ -13,9 +13,9 @@ export const QuantityControl: React.FC<QuantityControlProps> = ({
   quantity,
   onChangeQuantity,
 }) => {
-  const { colors } = useTheme();
-    const selectorStyles = createStockSelectorStyles(colors);
-  const priceStyles = createPriceInputStyles(colors);
+  const { colors, fonts } = useTheme();
+    const selectorStyles = createStockSelectorStyles(colors, fonts);
+  const priceStyles = createPriceInputStyles(colors, fonts);
   
   const handleDecrement = () => {
     const qty = Math.max(1, parseInt(quantity) - 1);

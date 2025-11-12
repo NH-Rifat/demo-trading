@@ -5,6 +5,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useColorScheme } from 'react-native';
+import { Fonts } from '@/constants/theme';
 
 type ThemeMode = 'light' | 'dark' | 'system';
 
@@ -13,6 +14,7 @@ interface ThemeContextType {
   themeMode: ThemeMode;
   setThemeMode: (mode: ThemeMode) => void;
   colors: typeof lightColors;
+  fonts: typeof Fonts;
 }
 
 const lightColors = {
@@ -108,7 +110,7 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const colors = theme === 'dark' ? darkColors : lightColors;
 
   return (
-    <ThemeContext.Provider value={{ theme, themeMode, setThemeMode, colors }}>
+    <ThemeContext.Provider value={{ theme, themeMode, setThemeMode, colors, fonts: Fonts }}>
       {children}
     </ThemeContext.Provider>
   );

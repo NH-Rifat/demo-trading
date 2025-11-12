@@ -3,16 +3,12 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import { createHeaderStyles } from '../styles/profileStyles';
 
-interface HeaderProps {
-  insets: { top: number; bottom: number; left: number; right: number };
-}
-
-export const Header: React.FC<HeaderProps> = ({ insets }) => {
+export const Header: React.FC = () => {
   const { colors } = useTheme();
   const headerStyles = createHeaderStyles(colors);
 
   return (
-    <View style={[headerStyles.header, { paddingTop: insets.top + 16 }]}>
+    <View style={headerStyles.header}>
       <Text style={headerStyles.headerTitle}>Profile</Text>
     </View>
   );

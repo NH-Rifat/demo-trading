@@ -1,5 +1,6 @@
 import EmptyState from '@/components/common/EmptyState';
 import StockCard from '@/components/common/StockCard';
+import { GlobalHeader } from '@/src/components/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import {
@@ -106,7 +107,7 @@ export default function WatchlistScreen() {
 
   // Render header
   const renderHeader = () => (
-    <View style={[hStyles.header, { paddingTop: insets.top + 16 }]}>
+    <View style={hStyles.header}>
       <Header insets={insets} onCreatePress={() => setIsCreateModalVisible(true)} />
       <WatchlistTabs
         watchlists={watchlists}
@@ -121,6 +122,11 @@ export default function WatchlistScreen() {
   if (watchlists.length === 0) {
     return (
       <View style={styles.container}>
+        <GlobalHeader
+          cashLimit={50000}
+          cscxValue={4872.77}
+          dsexValue={4872.77}
+        />
         {renderHeader()}
         <EmptyState
           icon="star-outline"
@@ -135,6 +141,11 @@ export default function WatchlistScreen() {
   if (!activeWatchlist) {
     return (
       <View style={styles.container}>
+        <GlobalHeader
+          cashLimit={50000}
+          cscxValue={4872.77}
+          dsexValue={4872.77}
+        />
         {renderHeader()}
         <EmptyState
           icon="list-outline"
@@ -147,6 +158,11 @@ export default function WatchlistScreen() {
 
   return (
     <View style={styles.container}>
+      <GlobalHeader
+        cashLimit={50000}
+        cscxValue={4872.77}
+        dsexValue={4872.77}
+      />
       <FlatList
         data={watchlistStocks}
         keyExtractor={(item) => item.id}

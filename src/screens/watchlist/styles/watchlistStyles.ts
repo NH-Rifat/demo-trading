@@ -16,6 +16,7 @@ export const createWatchlistStyles = (colors: any) => StyleSheet.create({
 export const createHeaderStyles = (colors: any) => StyleSheet.create({
   header: {
     backgroundColor: colors.surface,
+    paddingTop: 16,
     paddingBottom: 16,
     ...Platform.select({
       ios: {

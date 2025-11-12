@@ -1,3 +1,4 @@
+import { GlobalHeader } from '@/src/components/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import { addOrder } from '@/src/store/slices/ordersSlice';
@@ -7,7 +8,6 @@ import { useLocalSearchParams } from 'expo-router';
 import React, { useEffect, useState } from 'react';
 import { Alert, KeyboardAvoidingView, Platform, ScrollView, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeInUp, SlideInRight } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BalanceInfo } from './components/BalanceInfo';
 import { DripQuantityControl } from './components/DripQuantityControl';
 import { Header } from './components/Header';
@@ -38,7 +38,6 @@ export default function TradeScreen() {
   const { colors } = useTheme();
   const styles = createTradeStyles(colors);
   const dispatch = useAppDispatch();
-  const insets = useSafeAreaInsets();
   const stocks = useAppSelector((state: any) => state.market.stocks);
   const params = useLocalSearchParams<{ stockSymbol?: string; tradeType?: string }>();
 
@@ -158,14 +157,20 @@ export default function TradeScreen() {
   };
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <ScrollView showsVerticalScrollIndicator={false}>
-        <Animated.View entering={FadeInDown.duration(500)}>
-          <Header insets={insets} />
-        </Animated.View>
+    <View style={styles.container}>
+      <GlobalHeader
+        cashLimit={50000}
+        cscxValue={4872.77}
+        dsexValue={4872.77}
+      />
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <ScrollView showsVerticalScrollIndicator={false}>
+          <Animated.View entering={FadeInDown.duration(500)}>
+            <Header />
+          </Animated.View>
         <Animated.View entering={SlideInRight.duration(500).delay(100).springify()}>
           <TradeTypeTabs tradeType={tradeType} onChangeTradeType={setTradeType} />
         </Animated.View>
@@ -231,5 +236,6 @@ export default function TradeScreen() {
         onClose={() => setIsStockPickerVisible(false)}
       />
     </KeyboardAvoidingView>
+    </View>
   );
 }

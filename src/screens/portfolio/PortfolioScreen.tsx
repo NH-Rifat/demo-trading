@@ -5,6 +5,7 @@
 
 import PerformanceChart from '@/components/charts/PerformanceChart';
 import EmptyState from '@/components/common/EmptyState';
+import { GlobalHeader } from '@/src/components/common/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
 import { useAppSelector } from '@/src/store/hooks';
 import { generatePerformanceData } from '@/src/utils/chartDataGenerator';
@@ -55,6 +56,7 @@ export default function PortfolioScreen() {
   if (portfolio.positions.length === 0) {
     return (
       <View style={styles.container}>
+        <GlobalHeader cashLimit={2883.00} cscxValue={4872.77} dsexValue={12.02} />
         <Header paddingTop={insets.top + 16} />
         <View style={styles.emptyContainer}>
           <EmptyState
@@ -69,6 +71,7 @@ export default function PortfolioScreen() {
 
   return (
     <View style={styles.container}>
+      <GlobalHeader cashLimit={2883.00} cscxValue={4872.77} dsexValue={12.02} />
       <ScrollView
         showsVerticalScrollIndicator={false}
         refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}

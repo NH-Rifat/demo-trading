@@ -1,3 +1,4 @@
+import { GlobalHeader } from '@/src/components/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
 import { useAppDispatch, useAppSelector } from '@/src/store/hooks';
 import { logout } from '@/src/store/slices/authSlice';
@@ -5,7 +6,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React, { useState } from 'react';
 import { Alert, ScrollView, Text, TouchableOpacity, View } from 'react-native';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { BalanceCard } from './components/BalanceCard';
 import { Header } from './components/Header';
 import { MenuSection } from './components/MenuSection';
@@ -16,7 +16,6 @@ import { useOrderStats } from './hooks/useOrderStats';
 import { createMenuStyles, createProfileStyles } from './styles/profileStyles';
 
 export default function ProfileScreen() {
-  const insets = useSafeAreaInsets();
   const dispatch = useAppDispatch();
   const { themeMode, setThemeMode, colors } = useTheme();
   const profileStyles = createProfileStyles(colors);
@@ -124,8 +123,13 @@ export default function ProfileScreen() {
 
   return (
     <View style={profileStyles.container}>
+      <GlobalHeader
+        cashLimit={50000}
+        cscxValue={4872.77}
+        dsexValue={4872.77}
+      />
       <ScrollView showsVerticalScrollIndicator={false} contentContainerStyle={profileStyles.scrollContent}>
-        <Header insets={insets} />
+        <Header />
         <UserCard user={user} />
         <BalanceCard
           balance={user?.balance || 0}

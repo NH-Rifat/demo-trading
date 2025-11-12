@@ -4,11 +4,11 @@
 // Theme-aware with dynamic color support
 // ============================================
 
+import { GlobalHeader } from '@/src/components/GlobalHeader';
 import { useTheme } from '@/src/contexts/ThemeContext';
 import React, { useState } from 'react';
 import { RefreshControl, ScrollView, View } from 'react-native';
 import Animated, { FadeIn, FadeInDown, FadeInUp, SlideInRight } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AdvanceDecline } from './components/AdvanceDecline';
 import { FeaturedLists } from './components/FeaturedLists';
 import { Header } from './components/Header';
@@ -22,7 +22,6 @@ import { createHomeStyles } from './styles/homeStyles';
 type TabType = 'gainer' | 'loser' | 'trade' | 'value' | 'volume';
 
 export default function HomeScreen() {
-  const insets = useSafeAreaInsets();
   const { colors } = useTheme();
   const [refreshing, setRefreshing] = useState(false);
   const [selectedExchange, setSelectedExchange] = useState<'DSE' | 'CSE'>('DSE');
@@ -43,12 +42,16 @@ export default function HomeScreen() {
   };
 
   return (
-    <View style={[homeStyles.container, { paddingTop: insets.top }]}>
-      {/* Fixed Header */}
-      <Header
+    <View style={homeStyles.container}>
+      {/* Global Tickers Header */}
+      <GlobalHeader
         cashLimit={marketData.cashLimit}
         cscxValue={marketData.cscx.value}
         dsexValue={marketData.dsex.value}
+      />
+      
+      {/* Home Page Logo & Exchange Toggle */}
+      <Header
         selectedExchange={selectedExchange}
         onExchangeChange={setSelectedExchange}
       />

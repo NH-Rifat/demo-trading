@@ -13,9 +13,17 @@ A modern, feature-rich mobile trading application built with React Native and Ex
 
 ## 📱 Download APK
 
-**[Download DemoTrading v1.0 APK](./DemoTrading-v1.0.apk)** (128 MB)
+### Latest Release: v1.0.0
 
-> 📥 Click the link above to download the latest version of the app for Android devices.
+**[📥 Download DemoTrading v1.0 APK (128 MB)](https://github.com/NH-Rifat/demo-trading/releases/download/v1.0.0/DemoTrading-v1.0.apk)**
+
+> **How to Install:**
+> 1. Download the APK file from the link above
+> 2. Enable "Install from Unknown Sources" in your Android settings
+> 3. Open the downloaded APK file and install
+> 4. Launch the app and start trading!
+
+> **Note:** If the download link doesn't work, go to [Releases](https://github.com/NH-Rifat/demo-trading/releases) and download the latest version.
 
 ## ✨ Features
 
@@ -105,7 +113,6 @@ A modern, feature-rich mobile trading application built with React Native and Ex
 ### State Management
 - **Redux Toolkit**: 2.10.1
 - **React Redux**: 9.2.0
-- **Zustand**: 5.0.8
 
 ### Navigation
 - **Expo Router**: ~6.0.14 (File-based routing)
